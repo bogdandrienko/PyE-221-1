@@ -1,0 +1,7 @@
+https://www.python.org/downloads/release/python-3912/
+
+https://www.jetbrains.com/ru-ru/pycharm/download/#section=windows
+
+https://github.com/
+
+https://www.atlassian.com/ru/software/jira
