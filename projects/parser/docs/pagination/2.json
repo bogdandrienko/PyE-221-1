@@ -1,0 +1,137 @@
+{
+    "items": [
+        {
+            "id": "55170661",
+            "premium": false,
+            "name": "Django Backend Developer (middle+)",
+            "department": null,
+            "has_test": false,
+            "response_letter_required": false,
+            "area": {
+                "id": "160",
+                "name": "Алматы",
+                "url": "https://api.hh.ru/areas/160"
+            },
+            "salary": null,
+            "type": {
+                "id": "open",
+                "name": "Открытая"
+            },
+            "address": null,
+            "response_url": null,
+            "sort_point_distance": null,
+            "published_at": "2022-05-03T11:25:10+0300",
+            "created_at": "2022-05-03T11:25:10+0300",
+            "archived": false,
+            "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=55170661",
+            "insider_interview": null,
+            "url": "https://api.hh.ru/vacancies/55170661?host=hh.ru",
+            "alternate_url": "https://hh.ru/vacancy/55170661",
+            "relations": [],
+            "employer": {
+                "id": "818393",
+                "name": "Chocofamily",
+                "url": "https://api.hh.ru/employers/818393",
+                "alternate_url": "https://hh.ru/employer/818393",
+                "logo_urls": {
+                    "240": "https://hhcdn.ru/employer-logo/3808640.jpeg",
+                    "90": "https://hhcdn.ru/employer-logo/3808639.jpeg",
+                    "original": "https://hhcdn.ru/employer-logo-original/841941.jpg"
+                },
+                "vacancies_url": "https://api.hh.ru/vacancies?employer_id=818393",
+                "trusted": true
+            },
+            "snippet": {
+                "requirement": "Уверенный уровень знания фреймворков Django, Django REST framework, FastAPI\\Flask. Умение проектировать модели данных PostgreSql, Mongo, Redis и др. , ",
+                "responsibility": "Интеграции со сторонними сервисами. Разработка\\доработка новых сервисов. Эффективный алгоритм доставки и многое другое."
+            },
+            "contacts": null,
+            "schedule": {
+                "id": "fullDay",
+                "name": "Полный день"
+            },
+            "working_days": [],
+            "working_time_intervals": [],
+            "working_time_modes": [],
+            "accept_temporary": false
+        },
+        {
+            "id": "55170524",
+            "premium": false,
+            "name": "Python (Django) / Node.js Backend Developer",
+            "department": null,
+            "has_test": false,
+            "response_letter_required": false,
+            "area": {
+                "id": "160",
+                "name": "Алматы",
+                "url": "https://api.hh.ru/areas/160"
+            },
+            "salary": {
+                "from": 300000,
+                "to": 800000,
+                "currency": "KZT",
+                "gross": true
+            },
+            "type": {
+                "id": "open",
+                "name": "Открытая"
+            },
+            "address": {
+                "city": "Алматы",
+                "street": "улица Ади Шарипова",
+                "building": "92",
+                "description": null,
+                "lat": 43.246745,
+                "lng": 76.923672,
+                "raw": "Алматы, улица Ади Шарипова, 92",
+                "metro": null,
+                "metro_stations": [],
+                "id": "5680633"
+            },
+            "response_url": null,
+            "sort_point_distance": null,
+            "published_at": "2022-05-03T11:08:04+0300",
+            "created_at": "2022-05-03T11:08:04+0300",
+            "archived": false,
+            "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=55170524",
+            "insider_interview": null,
+            "url": "https://api.hh.ru/vacancies/55170524?host=hh.ru",
+            "alternate_url": "https://hh.ru/vacancy/55170524",
+            "relations": [],
+            "employer": {
+                "id": "5338918",
+                "name": "Arcana Inc.",
+                "url": "https://api.hh.ru/employers/5338918",
+                "alternate_url": "https://hh.ru/employer/5338918",
+                "logo_urls": {
+                    "240": "https://hhcdn.ru/employer-logo/3991776.jpeg",
+                    "90": "https://hhcdn.ru/employer-logo/3991775.jpeg",
+                    "original": "https://hhcdn.ru/employer-logo-original/887769.jpg"
+                },
+                "vacancies_url": "https://api.hh.ru/vacancies?employer_id=5338918",
+                "trusted": true
+            },
+            "snippet": {
+                "requirement": "Опыт работы более 3 лет. Умение подавать материал молодым специалистам. Опыт работы с Docker, Kuber. Умение настраивать CI/CD. ",
+                "responsibility": "Поднимать Backend приложения на Python (Django) и на Node.js. Обучать молодых специалистов и направлять их. Делать код ревью. "
+            },
+            "contacts": null,
+            "schedule": {
+                "id": "fullDay",
+                "name": "Полный день"
+            },
+            "working_days": [],
+            "working_time_intervals": [],
+            "working_time_modes": [],
+            "accept_temporary": false
+        }
+    ],
+    "found": 2,
+    "pages": 1,
+    "per_page": 100,
+    "page": 0,
+    "clusters": null,
+    "arguments": null,
+    "alternate_url": "https://hh.ru/search/vacancy?area=40&enable_snippets=true&items_on_page=100&text=NAME%3ADjango"
+}
