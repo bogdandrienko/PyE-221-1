@@ -52,4 +52,6 @@ for num in var_range:
 # worksheet['A1'] = 42
 
 # сохраняем рабочую книгу в excel-файл(xlsx/xls)
-workbook.save("sample.xlsx")
+workbook.save("sample_example.xlsx")
+
+
