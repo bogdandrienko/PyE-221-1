@@ -1,7 +1,7 @@
 import json
 import requests
 
-url = "https://api.instantwebtools.net/v1/airlines/-10"
+url = "https://api.instantwebtools.net/v1/airlines/10"
 response = requests.get(url)
 # Http - ответ. content - данные, статус код - статус запроса
 print(response.status_code)
@@ -18,28 +18,30 @@ print(type(json_data))
 # print(json_data)
 
 # чтобы превратить строку в JSON -объект - сериализация/десериализация
-airlines = json.loads(json_data)
+airlines = json.loads(json_data)  # [{}, {}, {}] {}
 print(type(airlines))
 # print(airlines[1:1:2])
 # print(type(json.load(json_data)))
 
 for airline in airlines[1:1:2]:
+    # filename = f'temp/data_{airline["id"]}.json'
     # print(airline)
     # менеджер контекста - он открывает файл на чтение и закрывает автоматические после завершения операции
     # with open(f'temp/data_{airline["id"]}.json', 'w') as file:
     #     json.dump(airline, file)
     with open('temp/data_%s.json' % airline["id"], 'w') as file:  # alias - псевдоним
         # записывает объект в файл
-        json.dump(airline, file)
+        json.dump(obj=airline, fp=file)
         # json.dumps(airline)
     #
 
-file_name = 'temp/data_4.json'
+
 
 # with open('data.json', 'w') as file:
 #     json.dump(json_data, file)
 # json.dumps()
 
+file_name = 'temp/data_4.json'
 with open(file_name, 'r') as file:
     # читает объект с файла
     json_new_data = json.load(file)
