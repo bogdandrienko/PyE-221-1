@@ -25,19 +25,40 @@ print(type(max_column))
 index = 0
 for i in range(1, max_row):
 
-    # получение значения с выбранной ячейки, где row - строка, column - колонка
-    # value = worksheet.cell(row=i, column=1).value
+    # # получение значения с выбранной ячейки, где row - строка, column - колонка
+    # # value = worksheet.cell(row=i, column=1).value
+    #
+    # # получение значения с выбранной ячейки, где в квадратных скобках координаты ячейки
+    # value = worksheet[f"A{i}"].value
+    #
+    # # if value is not None:
+    # #     pass
+    # # if len(str(value)) >= 2:
+    # if value:
+    #     print(value)
+    #     print(type(value))
+    #     index += 1
 
-    # получение значения с выбранной ячейки, где в квадратных скобках координаты ячейки
-    value = worksheet[f"A{i}"].value
+    for j in range(1, max_column):
 
-    # if value is not None:
-    #     pass
-    # if len(str(value)) >= 2:
-    if value:
-        print(value)
-        print(type(value))
-        index += 1
+        # получение значения с выбранной ячейки, где row - строка, column - колонка
+        value = worksheet.cell(row=i, column=j).value
+        print(f"index: {i} {j}")
+        # получение значения с выбранной ячейки, где в квадратных скобках координаты ячейки
+        # value = worksheet[f"A{i}"].value
+
+        "Almaty Taraz"
+
+        # if value is not None:
+        #     pass
+        # if len(str(value)) >= 2:
+
+        #         первый                второй
+        if (value == "Almaty") or (value == "Taraz"):
+            print(value)
+            print(type(value))
+            index += 1
+
 print(index)
 # for i in range(1, max_row):
 #     for j in "ABCD":
@@ -50,3 +71,16 @@ print(index)
 #     col = get_column_letter(var_list.index(name) + 1)
 #     # записываем значение в выбранную ячейку
 #     worksheet[f'{col}{row}'] = str(name)
+
+
+light = True
+electro = False
+
+#    первый    второй
+if (light) and not (electro):
+    print("Правда")
+else:
+    print("Ложь")
+
+# or - если хоть один правда = правда
+# and - если оба правда = правда
