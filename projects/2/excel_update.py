@@ -1,6 +1,7 @@
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font
 
 # чтение
 # обрабатываем данные
@@ -65,16 +66,41 @@ def function_len_array(array):  # ['Almaty', 'Nur-Sultan', 'Taraz', 'Ekibastuz',
     return len(array)  # 5
 
 
+# -2 -1 0 1 2
+
 for row in range(0, function_len_array(external_array)):  # [0, 1, 2, 3, 4, ..., 1007]
     # print(f"col_count: {len(external_array[row])}")
-    for col in range(0, function_len_array(external_array[
-                                row])):  # [0, 1, 2, 3, 4, 5]  # external_array[row] == ['Almaty', 'Nur-Sultan', 'Taraz', 'Ekibastuz', '']
+    for col in range(0, function_len_array(external_array[row])):
+        # [0, 1, 2, 3, 4, 5]  # external_array[row] == ['Almaty', 'Nur-Sultan', 'Taraz', 'Ekibastuz', '']
 
-        col_letter = get_column_letter(col + 1)
-        print(col_letter)
-        worksheet[f'{col_letter}{row + 1}'] = ''
-
-        # worksheet_new.cell(row=row, column=col) =
+        worksheet[f'{get_column_letter(col + 1)}{row + 1}'] = external_array[row][col]
+        if row == 0:
+            worksheet[f'{get_column_letter(col + 1)}{row + 1}'].font = Font(bold=True)
         pass
     # print(external_array[row])
     pass
+
+# for char in 'ABCDE':
+# worksheet_new['A1'].font = Font(bold=True)
+# worksheet_new['B1'].font = Font(bold=True)
+# worksheet_new['C1'].font = Font(bold=True)
+# worksheet_new['D1'].font = Font(bold=True)
+# worksheet_new['E1'].font = Font(bold=True)
+
+
+workbook.save('temp/sample_example_new.xlsx')
+
+wb = Workbook()
+ws = wb.active
+ws['B2'] = "Hello1"
+ws['B3'] = "Hello"
+ws['B2'].font = Font(bold=True)
+ws['B3'].font = Font(bold=True)
+wb.save("temp/BoldDemo.xlsx")
+
+# читаем первый файл, второй, третий... файлы
+# складываем значение в каждом уникальном массиве
+# создаём новый файл, который содержит в себе финальное значение (+ форматирование)
+# как получить все имена файлов в папке
+
+# форматирование: жирный, курсив, размер, capitalize, фон, границы, подчёркивание, формулы, объединение, подбор ширины
