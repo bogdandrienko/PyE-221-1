@@ -1,7 +1,6 @@
 import os
 import shutil
 
-
 # first = os.path.abspath(os.path.dirname(__file__))  # содержит абсолютный путь к текущему скрипту
 first = ''  # содержит относительный путь к текущему скрипту
 second = "temp\\junk2.txt"  # \ - изоляция символа   \n - перенос строки, \t - табуляция...
@@ -17,4 +16,3 @@ finally:
     except Exception as error:
         print(error)
         shutil.rmtree('temp')  # удаление не пустой папки
-
