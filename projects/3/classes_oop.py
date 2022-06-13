@@ -1,3 +1,4 @@
+import math
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
@@ -111,7 +112,7 @@ print("\n\n\n**********\n\n\n")
 
 # класс для расчёта периметров и площадей
 class MyClass:
-    def __init__(self, name: str, side1: float, side2: float, side3: float, side4: float):
+    def __init__(self, name: str, side1: float, side2: float, side3: float, side4=0.0):
         self.name = name
         self.side1 = side1
         self.side2 = side2
@@ -127,11 +128,147 @@ class MyClass:
         perimeter_value = self.side1 + self.side2 + self.side3 + self.side4
         return perimeter_value
 
+    def get_square_with_multiply(self, multiply=1.0):
+        if self.side4 > 0:
+            # фигуры с 4 сторонами
+            return (self.side1 * self.side2) * multiply
+        else:
+            side1 = self.side1
+            print(f'side1: {side1}')
+            side2 = self.side2
+            print(f'side2: {side2}')
+            side3 = self.side3
+            print(f'side3: {side3}')
+            p = (side1 + side2 + side3) / 2
+            print(p)
+            value1 = p * (p - side1) * (p - side2) * (p - side3)
+            print(value1)
+            s = math.sqrt(value1)
+            print(s)
+            return s * multiply
+
     def calcuate(self, side=14):
         self.radius = side ** 2
 
 
 figure1 = MyClass(name="квадрат", side4=10, side2=10, side3=10, side1=10)  # квадрат
 figure1.print_name()
-square_perimeter = figure1.get_perimeter()
-print(square_perimeter)
+
+perimeter_perimeter_figure1 = figure1.get_perimeter()
+print(perimeter_perimeter_figure1)
+
+square_perimeter_figure1 = figure1.get_square_with_multiply(multiply=2.5)
+print(square_perimeter_figure1)
+
+figure2 = MyClass(name="прямоугольник", side4=20, side2=20, side3=7, side1=7)  # прямоугольник
+figure2.print_name()
+
+perimeter_perimeter_figure2 = figure2.get_perimeter()
+print(perimeter_perimeter_figure2)
+
+square_perimeter_figure2 = figure2.get_square_with_multiply(0.75)
+print(square_perimeter_figure2)
+
+figure3 = MyClass(name="треугольник", side2=20, side3=15, side1=7)  # треугольник
+figure3.print_name()
+
+perimeter_perimeter_figure3 = figure3.get_perimeter()
+print(perimeter_perimeter_figure3)
+
+square_perimeter_figure3 = figure3.get_square_with_multiply(0.75)
+print(square_perimeter_figure3)
+
+# new_data = float(input("Введите любое число: "))  # возвращает данные, которые ввёл пользователь в виде строки
+# print(new_data)
+# print(type(new_data))
+
+# side1 = float(input("Введите первую сторону: "))
+
+# user_string = input("Введите через запятую стороны объекта (12, 35, 65...): ")  # '12, 56,89, 40'
+# print(user_string)
+# print(type(user_string))
+# # user_string = '12, 56,89, 40'
+#
+# # обработка ошибок
+#
+# sides = []
+# for x in user_string.split(sep=','):
+#     value = float(str(x).strip())
+#     sides.append(value)
+# print(sides)
+#
+# # sides = [x for x in]
+# if len(sides) == 3:
+#     sides.append(0.0)
+# elif len(sides) < 3:
+#     print(f"Вы ввели только {len(sides)} сторону(-ы)!")
+# print(sides)
+#
+# try:
+#     figure4 = MyClass(name="Новый объект", side1=sides[0], side2=sides[1], side3=sides[2], side4=sides[3])  # Новый объект
+# except:
+#     figure4 = MyClass(name="Новый объект", side1=sides[0], side2=sides[1], side3=sides[2])  # Новый объект
+#
+#
+# figure4.print_name()
+#
+# perimeter_perimeter_figure4 = figure4.get_perimeter()
+# print(perimeter_perimeter_figure4)
+#
+# square_perimeter_figure4 = figure4.get_square_with_multiply(0.5)
+# print(square_perimeter_figure4)
+
+
+print("\n\n\n**********\n\n\n")
+
+
+class MyCalculator:
+    def __init__(self, val1: float, val2: float):
+        self.val1 = val1
+        if isinstance(val1, str):
+            self.val1 = float(val1)
+        self.val2 = val2
+
+    def summ2(self):
+        try:
+            return float(self.val1) + float(self.val2)
+        except Exception as error:
+            print(error)
+            return 0.0
+
+    @staticmethod  # декоратор, который делает метод в классе статическим(без параметра селф и инициализации)
+    def summ(val1: float, val2: float):  # статический метод
+        return val1 + val2
+
+
+summ1 = MyCalculator('12', "16")
+
+# print()
+
+# def calc_3(number1, number2, operation="-"):
+#     # print(number1, number2, operation)
+#     if operation == "+":
+#         return number1 + number2
+#     if operation == "-":
+#         return number1 - number2
+#     if operation == "*":
+#         return number1 * number2
+#     if operation == "/":
+#         if number2 == 0:
+#             print("Второе число не может быть 0")
+#         else:
+#             return number1 / number2
+#     if operation == "**":
+#         return number1 ** number2
+#     if operation == "//":
+#         if number2 == 0:
+#             print("Второе число не может быть 0")
+#         else:
+#             return number1 // number2
+#     if operation == "sqrt":
+#         return math.sqrt(number1)
+#     if operation == "%":
+#         if number2 == 0:
+#             print("Второе число не может быть 0")
+#         else:
+#             return number1 % number2
