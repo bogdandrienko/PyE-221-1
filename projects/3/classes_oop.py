@@ -224,9 +224,10 @@ print("\n\n\n**********\n\n\n")
 
 class MyCalculator:
     def __init__(self, val1: float, val2: float):
-        self.val1 = val1
-        if isinstance(val1, str):
+        try:
             self.val1 = float(val1)
+        except Exception as error:
+            self.val1 = input('Введите первое значение ещё раз: ')
         self.val2 = val2
 
     def summ2(self):
@@ -236,14 +237,23 @@ class MyCalculator:
             print(error)
             return 0.0
 
+    def multiply(self):
+        return float(self.val1) * float(self.val2)
+
+    @staticmethod
+    def multiply_static(val1, val2):
+        return float(val1) * float(val2)
+
     @staticmethod  # декоратор, который делает метод в классе статическим(без параметра селф и инициализации)
     def summ(val1: float, val2: float):  # статический метод
         return val1 + val2
 
 
-summ1 = MyCalculator('12', "16")
-
-# print()
+summ1 = MyCalculator('sdfsd1sdg2', "16")
+print(summ1.summ2())
+print(summ1.multiply())
+print(MyCalculator.summ(15, 17))
+print(MyCalculator.multiply_static(15, 17))
 
 # def calc_3(number1, number2, operation="-"):
 #     # print(number1, number2, operation)
