@@ -36,6 +36,7 @@ var_dict1 = {
     "first key": -10.00,
 }
 
+
 var_dict2 = {
     "first key": -10.00,
     "second key": "Иван",
@@ -47,6 +48,22 @@ var_dict2 = {
         "five key": "Иван",
     },
 }
+new = var_dict2["third key"]
+print(new)
+print(type([12, True, 0, -10.00]))
+
+# ()
+
+class New:
+    pass
+
+def new_2():
+    pass
+
+new1 = New()
+new_2()
+
+print("\n\n\n\n\n")
 
 # контанта - "неизменяемый тип данных"
 VAR_TUPLE = 12  # условно-неизменяемая
