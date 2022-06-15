@@ -1,6 +1,10 @@
 import time
 from threading import Thread
 
+import sys
+
+from PySide6.QtCore import *
+from PySide6.QtGui import *
 import requests
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QLabel
 from bs4 import BeautifulSoup
@@ -115,10 +119,6 @@ Thread(target=get_course).start()
 #
 #     sys.exit(app.exec())
 
-import sys
-
-from PySide6.QtCore import *
-from PySide6.QtGui import *
 
 
 class MainWindow(QWidget):

@@ -249,11 +249,13 @@ class MyCalculator:
         return val1 + val2
 
 
-summ1 = MyCalculator('sdfsd1sdg2', "16")
-print(summ1.summ2())
-print(summ1.multiply())
-print(MyCalculator.summ(15, 17))
-print(MyCalculator.multiply_static(15, 17))
+# инициализация калькулятора
+# summ1 = MyCalculator('sdfsd1sdg2', "16")
+# print(summ1.summ2())
+# print(summ1.multiply())
+# print(MyCalculator.summ(15, 17))
+# print(MyCalculator.multiply_static(15, 17))
+
 
 # def calc_3(number1, number2, operation="-"):
 #     # print(number1, number2, operation)
@@ -282,3 +284,35 @@ print(MyCalculator.multiply_static(15, 17))
 #             print("Второе число не может быть 0")
 #         else:
 #             return number1 % number2
+
+class MyTree:
+    def __init__(self, name):
+        self.age = 1
+        self.name = name
+
+    def drow(self, value_: float):  # рост дерева(старение)
+        self.age += value_
+
+    @staticmethod
+    def drow_static(value_: float, name: str):
+        age = 1
+        age += value_
+        # tree = {"name": name, "age": age}
+        # return tree
+        return dict(name=name, age=age)
+
+tree1 = MyTree("дерево 1")  # 1
+print('возраст ', tree1.name, ' = ', tree1.age)  # 1
+tree1.drow(2)  # 3
+print('возраст ', tree1.name, ' = ', tree1.age)  # 3
+tree1.drow(2)  # 5
+print('возраст ', tree1.name, ' = ', tree1.age)  # 5
+
+tree2 = MyTree("дерево 2")  # 1
+print('возраст ', tree2.name, ' = ', tree2.age)  # 1
+tree2.drow(1)  # 2
+print('возраст ', tree2.name, ' = ', tree2.age)  # 2
+
+tree_dict = MyTree.drow_static(2, "дерево 3")
+print(f"имя дерева: '{tree_dict['name']}', возраст дерева: '{tree_dict['age']}'")
+# имя дерева: 'дерево 3', возраст дерева: '3'
