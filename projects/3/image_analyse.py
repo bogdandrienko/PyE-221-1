@@ -71,7 +71,7 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
 
         self.show()
 
-    def check_image_in_path(self):
+    def read_and_check_image_in_path(self):
 
         value = self.line_edit_path.text()
         print(value)
@@ -102,6 +102,7 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         if len(img2) > 0:  # [] - False, [''] - True, '' - False, '1' - True
             has_file = True
             print('изображение успешно прочитано')
+            self.image_data = img2
         else:
             has_file = False
             print('изображение не прочитано!')
