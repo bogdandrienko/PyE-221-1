@@ -9,7 +9,7 @@ import sys
 import requests
 from PySide6 import QtCore
 from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QLabel, QGridLayout, QCheckBox, QPushButton
-from cv2 import cv2
+import cv2
 
 # from threading import Thread
 
@@ -41,7 +41,7 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         self.label_path = QLabel('Путь к файлу: ')  # экзампляр строки текста
         self.layout.addWidget(self.label_path, 1, 1)
 
-        self.line_edit_path = QLineEdit('321')  # экзампляр строки ввода текста
+        self.line_edit_path = QLineEdit('dino.jpg')  # экзампляр строки ввода текста
         self.layout.addWidget(self.line_edit_path, 2, 1)  # вкладываем QLineEdit -> QGridLayout
 
         self.label_check = QLabel('Статус: ')  # экзампляр строки текста
@@ -81,21 +81,31 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         # opencv
         # self.image_data = пиксели
 
-        img = cv2.imread('girl.jpg', cv2.IMREAD_GRAYSCALE)
-        cv2.imshow('girl', img)
-        cv2.waitKey(0)
-        cv2.imwrite('graygirl.jpg', img)
+        # C:\Project\Github_Projects\PyE-221-1\dino.jpg - абсолютный
+        # dino.jpg - относительный
+        # img1 = cv2.imread(value, cv2.IMREAD_GRAYSCALE)  # читаем изображение по пути, с флагом для серого
+        # cv2.imshow('dino_window1', img1)  # рендерит(отрисовывает на экране) массив пикселей - изображение
 
-        # with open(value, 'w') as file:
-        #     data = file.readlines()
-        # if data:
-        #     has_file = True
-        #     print('данные успешно прочитаны')
-        # else:
-        #     has_file = False
-        #     print('данные не прочитаны!')
+        try:
+            img2 = cv2.imread(value, cv2.IMREAD_COLOR)  # читаем изображение по пути, с флагом для цветного
+            cv2.imshow('dino_window2', img2)  # рендерит(отрисовывает на экране) массив пикселей - изображение
+            cv2.waitKey(1)  # для задержки отображения кадра (если изображение, то нужен параметр 1)
+            # cv2.imwrite('dino2.jpg', img)
+        except Exception as error:
+            print(error)
+            img2 = []
 
-        has_file = True
+        print(img2)
+        print(len(img2))
+        print(type(img2))
+
+        if len(img2) > 0:  # [] - False, [''] - True, '' - False, '1' - True
+            has_file = True
+            print('изображение успешно прочитано')
+        else:
+            has_file = False
+            print('изображение не прочитано!')
+
         self.check_box_status.setChecked(has_file)
 
         # self.push_button_check.hide()
