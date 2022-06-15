@@ -9,7 +9,7 @@ import sys
 import requests
 from PySide6 import QtCore
 from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QLabel, QGridLayout, QCheckBox, QPushButton
-import cv2
+import cv2  # pip install opencv-python
 
 # from threading import Thread
 
