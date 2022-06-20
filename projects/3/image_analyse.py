@@ -8,8 +8,10 @@ import time
 import sys
 import requests
 from PySide6 import QtCore
-from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QLabel, QGridLayout, QCheckBox, QPushButton
+from PySide6.QtGui import Qt
+from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QLabel, QGridLayout, QCheckBox, QPushButton, QSlider
 import cv2  # pip install opencv-python
+
 
 # from threading import Thread
 
@@ -41,20 +43,72 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         self.label_path = QLabel('Путь к файлу: ')  # экзампляр строки текста
         self.layout.addWidget(self.label_path, 1, 1)
 
-        self.line_edit_path = QLineEdit('dino.jpg')  # экзампляр строки ввода текста
+        self.line_edit_path = QLineEdit('image_data/dino.jpg')  # экзампляр строки ввода текста
         self.layout.addWidget(self.line_edit_path, 2, 1)  # вкладываем QLineEdit -> QGridLayout
 
         self.label_check = QLabel('Статус: ')  # экзампляр строки текста
         self.layout.addWidget(self.label_check, 1, 2)
 
-        self.check_box_status = QCheckBox()  # экзампляр строки ввода текста
+        self.check_box_status = QCheckBox()  # экзампляр чек бокса
         self.check_box_status.setChecked(False)
-        self.layout.addWidget(self.check_box_status, 2, 2)  # вкладываем QLineEdit -> QGridLayout
+        self.layout.addWidget(self.check_box_status, 2, 2)  # вкладываем QCheckBox -> QGridLayout
 
         self.push_button_check = QPushButton('проверить наличие файла')  # экзампляр строки ввода текста
-        self.push_button_check.clicked.connect(self.check_image_in_path)
+        self.push_button_check.clicked.connect(self.read_and_check_image_in_path)
         # self.push_button_check.setGeometry(QtCore.QRect(200, 150, 93, 28))
         self.layout.addWidget(self.push_button_check, 2, 3)  # вкладываем QLineEdit -> QGridLayout
+
+        self.label_width = QLabel('Ширина: ')
+        self.layout.addWidget(self.label_width, 3, 1)
+
+        self.label_height = QLabel('Высота: ')
+        self.layout.addWidget(self.label_height, 3, 2)
+
+        self.line_edit_width = QLineEdit('0')  # экзампляр строки ввода текста
+        self.layout.addWidget(self.line_edit_width, 4, 1)  # вкладываем QLineEdit -> QGridLayout
+
+        self.line_edit_height = QLineEdit('0')  # экзампляр строки ввода текста
+        self.layout.addWidget(self.line_edit_height, 4, 2)  # вкладываем QLineEdit -> QGridLayout
+
+        self.check_box_wb = QCheckBox()  # экзампляр чек бокса
+        self.check_box_wb.setChecked(False)
+        self.layout.addWidget(self.check_box_wb, 5, 1)  # вкладываем QCheckBox -> QGridLayout
+
+        self.label_check_wb = QLabel('сделать чёрно-белым: ')  # экзампляр строки текста
+        self.layout.addWidget(self.label_check_wb, 5, 2)
+
+        self.check_box_protect = QCheckBox()  # экзампляр чек бокса
+        self.check_box_protect.setChecked(False)
+        self.check_box_protect.stateChanged.connect(self.protect)
+        self.layout.addWidget(self.check_box_protect, 5, 3)  # вкладываем QCheckBox -> QGridLayout
+
+        self.label_check_box_protect = QLabel('подтвердить изменения: ')  # экзампляр строки текста
+        self.layout.addWidget(self.label_check_box_protect, 5, 4)
+
+        # self.slider_quality = QSlider(Qt.Horizontal)
+        self.slider_quality = QSlider()
+        self.slider_quality.setMinimum(1)
+        self.slider_quality.setMaximum(100)
+        self.slider_quality.setValue(95)
+
+        self.layout.addWidget(self.slider_quality, 4, 5)
+
+        self.label_slider_quality = QLabel('качество: ')  # экзампляр строки текста
+        self.layout.addWidget(self.label_slider_quality, 5, 5)
+
+        self.label_1 = QLabel('')
+        self.layout.addWidget(self.label_1, 6, 1)
+
+        self.push_button_start = QPushButton('выполнить')  # экзампляр строки ввода текста
+        self.push_button_start.clicked.connect(self.start)
+        self.push_button_start.setEnabled(False)
+        # self.push_button_check.setGeometry(QtCore.QRect(200, 150, 93, 28))
+        self.layout.addWidget(self.push_button_start, 7, 1)  # вкладываем QLineEdit -> QGridLayout
+
+        self.push_button_stop = QPushButton('отменить')  # экзампляр строки ввода текста
+        self.push_button_stop.clicked.connect(self.stop)
+        # self.push_button_check.setGeometry(QtCore.QRect(200, 150, 93, 28))
+        self.layout.addWidget(self.push_button_stop, 7, 3)  # вкладываем QLineEdit -> QGridLayout
 
         # self.line_edit1 = QLineEdit()  # экзампляр строки ввода текста
         # self.layout2.addWidget(self.line_edit1)  # вкладываем QLineEdit -> QGridLayout
@@ -102,14 +156,55 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         if len(img2) > 0:  # [] - False, [''] - True, '' - False, '1' - True
             has_file = True
             print('изображение успешно прочитано')
+
             self.image_data = img2
+            print(self.image_data.shape)
+            # height, width = self.image_data.shape[:2]  # -> (1920, 1080)
+            height, width, channels = self.image_data.shape  # -> (1920, 1080, 3)
+
+            self.line_edit_width.setText(str(width))
+            self.line_edit_height.setText(str(height))
+
         else:
             has_file = False
             print('изображение не прочитано!')
 
+            self.line_edit_width.setText("0")
+            self.line_edit_height.setText("0")
+
         self.check_box_status.setChecked(has_file)
 
         # self.push_button_check.hide()
+
+    def start(self):
+        print("start")
+
+        quality = int(self.slider_quality.value())
+        white_black = bool(self.check_box_wb.isChecked())
+
+        width = int(self.line_edit_width.text())
+        height = int(self.line_edit_height.text())
+
+        image = self.image_data
+        print(type(image))
+
+        image_white = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # RGB -> BGR
+        cv2.equalizeHist(image_white)
+
+        # image = cv2.imread(self.line_edit_path.text(), cv2.IMREAD_GRAYSCALE)
+        # cv2.imshow('grey scale image', image)
+
+        cv2.imwrite("image_data/dino_new.jpg", image_white)
+
+
+        pass
+
+    def stop(self):
+        print("stop")
+        pass
+
+    def protect(self):
+        self.push_button_start.setEnabled(self.check_box_protect.isChecked())
 
     def render_line_edit(self, parent, default="", row=1, col=1):
         new = QLineEdit(default)

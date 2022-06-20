@@ -1,3 +1,5 @@
+import time
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -13,7 +15,7 @@ if status == 200:
         file.write(content)  # записывае фаил
     soup = BeautifulSoup(response.text, "lxml")  # парсим саит через BeautifulSoup
     # print(type(soup))
-    data = soup.findAll("input", class_="input_calc form-control form-input-sum bestmb") # Ищем по html
+    data = soup.findAll("input", class_="input_calc form-control form-input-sum bestmb")  # Ищем по html
     new_data = str(data).split(sep='inputmode="decimal" type="tel" value="')
     new_data = str(new_data).split(sep='<input class="input_calc form-control form-input-sum bestmb" id="bestmb_')
     # print(new_data[6])
@@ -52,9 +54,10 @@ if status == 200:
             print(valute[0])
             print(result)
 
-
-
-
+    # data = "23"
+    # if (data // 10) % 2 == 1:
+    #     time.sleep(1)
+    #     update()
 
         # for i in new_data:
         #     print(i)
