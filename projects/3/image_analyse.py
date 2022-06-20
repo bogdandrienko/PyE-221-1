@@ -4,16 +4,11 @@
 # выдать данных об итоговом изображении
 # запись (сохранение результата) - перезапись/или сохранить как
 
-import time
 import sys
-import requests
-from PySide6 import QtCore
-from PySide6.QtGui import Qt
-from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QLabel, QGridLayout, QCheckBox, QPushButton, QSlider
+import time
+from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QLabel, QGridLayout, QCheckBox, QPushButton, QSlider, \
+    QComboBox
 import cv2  # pip install opencv-python
-
-
-# from threading import Thread
 
 
 class MainWindow(QWidget):  # MainWindow - класс наследник(дочерний) от класса QWidget(родитель)
@@ -110,6 +105,13 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         # self.push_button_check.setGeometry(QtCore.QRect(200, 150, 93, 28))
         self.layout.addWidget(self.push_button_stop, 7, 3)  # вкладываем QLineEdit -> QGridLayout
 
+        self.combo_box_filter = QComboBox()
+        self.combo_box_filter.addItem("гаусс")
+        self.combo_box_filter.addItem("фильтр 2")
+        self.combo_box_filter.addItems(["фильтр 3", "фильтр 4", "фильтр 5"])
+
+        self.layout.addWidget(self.combo_box_filter, 7, 4)  # вкладываем QComboBox -> QGridLayout
+
         # self.line_edit1 = QLineEdit()  # экзампляр строки ввода текста
         # self.layout2.addWidget(self.line_edit1)  # вкладываем QLineEdit -> QGridLayout
         #
@@ -123,7 +125,12 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
 
         # self.line_edit.textChanged.connect(self.line_edit_text_changed)
 
-        self.show()
+        def delay(seconds: float):
+            time.sleep(seconds)
+            # тут код(поток исполнения)
+            self.show()
+        delay(0.5)
+        # self.show()
 
     def read_and_check_image_in_path(self):
 
@@ -174,30 +181,41 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
 
         self.check_box_status.setChecked(has_file)
 
-        # self.push_button_check.hide()
+        # self.push_button_check.hide()  # прятать элемент интерфейса
 
     def start(self):
         print("start")
 
-        quality = int(self.slider_quality.value())
+        # combo = self.combo_box_filter.itemText(3)
+        combo = self.combo_box_filter.currentText()
+        print(combo)
+
         white_black = bool(self.check_box_wb.isChecked())
 
+        quality = int(self.slider_quality.value())
         width = int(self.line_edit_width.text())
         height = int(self.line_edit_height.text())
 
         image = self.image_data
         print(type(image))
 
-        image_white = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # RGB -> BGR
-        cv2.equalizeHist(image_white)
+        if white_black:
+            image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # BGR(RGB) -> GRAY
+            image = cv2.threshold(image_gray, 127, 255, cv2.THRESH_BINARY)[1]  # GRAY -> WHITE
 
-        # image = cv2.imread(self.line_edit_path.text(), cv2.IMREAD_GRAYSCALE)
-        # cv2.imshow('grey scale image', image)
+        # value = 100  # 0 -> 255
+        # if value > 127:
+        #     value = 1
+        # else:
+        #     value = 0
 
-        cv2.imwrite("image_data/dino_new.jpg", image_white)
+        image = cv2.resize(image, (width, height))
 
+        # 0 200 400
+        #  150 250
+        # image = image[150:250:1]  # обрезка
 
-        pass
+        cv2.imwrite("image_data/dino_new.jpg", image, [cv2.IMWRITE_JPEG_QUALITY, quality])
 
     def stop(self):
         print("stop")
@@ -224,8 +242,12 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
 
 
 app = QApplication(sys.argv)
-mw = MainWindow(640, 480, 'image analyse')
-app.exec()
+mw = MainWindow(640, 480, 'image analyse')  # создаём инстанс (экземпляр) класса
+# пока класс не умрёт, эта часть кода не затронется
+app.exec()  # очистка памяти
+
+app1 = QApplication(sys.argv)
+app1.exec()
 
 # class Base(object):
 #     def __init__(self):
