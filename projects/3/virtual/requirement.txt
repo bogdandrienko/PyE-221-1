@@ -1,0 +1,6 @@
+docx==0.2.4
+et-xmlfile==1.1.0
+lxml==4.9.0
+openpyxl==3.0.9
+Pillow==9.1.1
+python-docx==0.8.11
