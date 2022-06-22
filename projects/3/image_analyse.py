@@ -85,7 +85,6 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         self.slider_quality.setMinimum(1)
         self.slider_quality.setMaximum(100)
         self.slider_quality.setValue(95)
-
         self.layout.addWidget(self.slider_quality, 4, 5)
 
         self.label_slider_quality = QLabel('качество: ')  # экзампляр строки текста
@@ -149,9 +148,6 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
 
         try:
             img2 = cv2.imread(value, cv2.IMREAD_COLOR)  # читаем изображение по пути, с флагом для цветного
-            cv2.imshow('dino_window2', img2)  # рендерит(отрисовывает на экране) массив пикселей - изображение
-            cv2.waitKey(1)  # для задержки отображения кадра (если изображение, то нужен параметр 1)
-            # cv2.imwrite('dino2.jpg', img)
         except Exception as error:
             print(error)
             img2 = []
@@ -161,6 +157,10 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         print(type(img2))
 
         if len(img2) > 0:  # [] - False, [''] - True, '' - False, '1' - True
+            cv2.imshow('dino_window2', img2)  # рендерит(отрисовывает на экране) массив пикселей - изображение
+            cv2.waitKey(1)  # для задержки отображения кадра (если изображение, то нужен параметр 1)
+            # cv2.imwrite('dino2.jpg', img)
+
             has_file = True
             print('изображение успешно прочитано')
 
