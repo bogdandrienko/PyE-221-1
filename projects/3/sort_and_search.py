@@ -34,3 +34,46 @@ print(type(number1))
 # sort and lambda expression
 
 # search in string
+
+print('\n\n\n\n\n**********\n\n\n\n\n')
+
+list5 = [1, 2, 5, 10, 4, 2]
+print(list5)
+list5.sort(reverse=True)
+print(list5)
+
+str1 = "ABCDfff124124wecerwfgyhtyjsafs"
+print(str1)
+arr1 = []
+for x in str1:
+    arr1.append(x)
+print(arr1)
+arr2 = [x for x in str1]  # list comprehansions
+print(arr2)
+arr2.sort(reverse=False)
+print(arr2)
+str3 = ''
+for x in arr2:
+    str3 += x
+print(str3)
+# print(str1)
+str4 = "".join(arr2)
+print(str4)
+
+print('\n\n\n\n\n**********\n\n\n\n\n')
+
+arr6 = [x for x in "ABCDfff124124wecerwfgyhtyjsafs"]
+arr6.sort(reverse=True)
+arr8 = "".join(arr6)
+print(arr8)
+
+print('\n\n\n\n\n**********\n\n\n\n\n')
+
+text1 = 'Идейные соображения высшего порядка, а также сложившаяся структура организации представляет собой интересный' \
+        ' экспCтруктураеримент проверки форм развития. '
+
+substring = 'структура'
+find1 = text1.find(substring)
+print(find1)
+print(text1[find1:find1+len(substring):1])
+
