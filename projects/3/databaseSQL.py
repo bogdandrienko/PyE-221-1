@@ -1,35 +1,35 @@
 import psycopg2
 
 
-password = ''
+# conn_str = (
+#     "DATABASE=example;"
+#     "UID=postgres;"
+#     "PWD=31284bogdan;"
+#     "SERVER=127.0.0.1;"
+#     "PORT=5432;"
+#     )
 
+# Connect to your postgres DB
+conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")  # localhost (127.0.0.1 / 192.168.1.121)
 
+# Open a cursor to perform database operations
+cur = conn.cursor()
 
+# Execute a query
+cur.execute("SELECT * FROM example_table")
 
-
-
-
-
-
-
-
-
-
-
-
-
-conn = psycopg2.connect(
-    dbname='example', user='postgres', password=password, host='localhost'
-)
-cursor = conn.cursor()
-cursor.execute('SELECT * FROM example_table')
-records = cursor.fetchall()
+# Retrieve query results
+records = cur.fetchall()
 
 print(records)
+print(type(records))
 
-cursor.close()
+for i in records:
+    print(i)
+    print(type(i))
+
+
 conn.close()
-
 
 # CRUD
 
