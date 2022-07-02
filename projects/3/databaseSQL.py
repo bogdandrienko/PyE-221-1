@@ -16,7 +16,13 @@ conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")  # 
 cur = conn.cursor()
 
 # Execute a query
-cur.execute("SELECT * FROM example_table")
+
+# read data
+cur.execute("""
+SELECT * FROM public.example_table
+WHERE age > 19
+ORDER BY Age ASC, credits DESC
+""")
 
 # Retrieve query results
 records = cur.fetchall()
@@ -28,8 +34,36 @@ for i in records:
     print(i)
     print(type(i))
 
-
 conn.close()
+
+
+conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")
+cur = conn.cursor()
+
+# ('t', 25, True, 30000.6, 1)
+
+new_arr = [
+    ['w', 25, 'true', 30000.6, 1],
+    ['b', 50, 'false', 30.6, 1],
+    ['y', 25, 'true', 30000.6, 1],
+    ['r', 75, 'false', 500.6, 0],
+    ['u', 88, 'true', 30000.6, 1],
+    ['3', 25, 'true', 305.6, 0],
+]
+
+# create data
+index = 15
+for i in new_arr:
+
+    query_string = f"""
+    INSERT INTO public.example_table (username, age, married, credits, id) 
+    VALUES ('{i[0]}', {i[1]}, {i[2]}, {i[3]}, {index})
+    """
+    index += 1
+
+    cur.execute(query_string)
+    conn.commit()
+# records = cur.fetchall()
 
 # CRUD
 
