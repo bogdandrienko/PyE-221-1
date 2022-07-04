@@ -1,13 +1,16 @@
 import psycopg2
 
 
-# conn_str = (
-#     "DATABASE=example;"
-#     "UID=postgres;"
-#     "PWD=31284bogdan;"
-#     "SERVER=127.0.0.1;"
-#     "PORT=5432;"
-#     )
+
+# CRUD
+
+# Read - чтение(сортировка и фильтрация) из базы и запись в эксель файл
+# Create - вставка новых данных (из эксель файл)
+# Delete - удаление строк по условиям
+# Update - обновление из базы и запись в эксель файл
+
+# READ (SELECT)
+############################################################################
 
 # Connect to your postgres DB
 conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")  # localhost (127.0.0.1 / 192.168.1.121)
@@ -37,6 +40,8 @@ for i in records:
 conn.close()
 
 
+# CREATE (INSERT)
+############################################################################
 conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")
 cur = conn.cursor()
 
@@ -52,7 +57,7 @@ new_arr = [
 ]
 
 # create data
-index = 15
+index = 12
 for i in new_arr:
 
     query_string = f"""
@@ -62,12 +67,71 @@ for i in new_arr:
     index += 1
 
     cur.execute(query_string)
-    conn.commit()
-# records = cur.fetchall()
+    conn.commit()  # применение данных после изменений
 
-# CRUD
+conn.close()
 
-# Create - вставка новых данных (из эксель файл)
-# Read - чтение(сортировка и фильтрация) из базы и запись в эксель файл
-# Update - обновление из базы и запись в эксель файл
-# Delete - удаление строк по условиям
+# DELETE (DELETE)
+############################################################################
+
+conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")
+cur = conn.cursor()
+
+query_string = """
+    DELETE FROM public.example_table
+    WHERE age <= 50 and married = 'true';
+    """
+
+#
+
+cur.execute(query_string)
+conn.commit()
+conn.close()
+
+
+# UPDATE (UPDATE)
+############################################################################
+
+conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")
+cur = conn.cursor()
+
+query_string = """
+UPDATE public.example_table
+SET credits = '666.66' 
+WHERE id = 2;
+"""
+
+#
+
+cur.execute(query_string)
+conn.commit()
+conn.close()
+
+
+# CREATE TABLE
+############################################################################
+
+conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")
+cur = conn.cursor()
+
+query_string = """
+CREATE TABLE public.products
+(
+    tovar text,
+    gruppa text,
+    postavshick text,
+    date_post date,
+    region text,
+    prodashi integer DEFAULT 0,
+    sbit integer DEFAULT 0,
+    pribil boolean NOT NULL DEFAULT false,
+    id SERIAL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE IF EXISTS public.products
+    OWNER to postgres;
+"""
+cur.execute(query_string)
+conn.commit()
+conn.close()
