@@ -1,7 +1,5 @@
 import psycopg2
 
-
-
 # CRUD
 
 # Read - чтение(сортировка и фильтрация) из базы и запись в эксель файл
@@ -39,7 +37,6 @@ for i in records:
 
 conn.close()
 
-
 # CREATE (INSERT)
 ############################################################################
 conn = psycopg2.connect("dbname=example user=postgres password=31284bogdan")
@@ -59,7 +56,6 @@ new_arr = [
 # create data
 index = 12
 for i in new_arr:
-
     query_string = f"""
     INSERT INTO public.example_table (username, age, married, credits, id) 
     VALUES ('{i[0]}', {i[1]}, {i[2]}, {i[3]}, {index})
@@ -88,7 +84,6 @@ cur.execute(query_string)
 conn.commit()
 conn.close()
 
-
 # UPDATE (UPDATE)
 ############################################################################
 
@@ -106,7 +101,6 @@ WHERE id = 2;
 cur.execute(query_string)
 conn.commit()
 conn.close()
-
 
 # CREATE TABLE
 ############################################################################
