@@ -25,7 +25,9 @@ def get_fresh_values():
 
         url = 'https://myfin.by/converter.html'
         headers = {
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/102.0.0.0 Safari/537.36'
+        }
         response = requests.get(url=url, headers=headers)
 
         with open('new_html.html', 'wb') as file:
