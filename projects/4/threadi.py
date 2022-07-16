@@ -1,3 +1,7 @@
+import multiprocessing
+import threading
+import time
+import asyncio
 import requests
 import aiohttp
 
@@ -10,6 +14,7 @@ def data_analyse(func):
         print(type(kwargs))
 
         kwargs["author"] = kwargs["author"] + " !!!"
+
         result = func(*args, **kwargs)
 
         post_result = (result, len(result))  # кортеж из двух элементов, где второй это длина массива
@@ -109,6 +114,21 @@ class Response:
 # print("Тлеген".encode().decode())
 
 
+def time_zamer(func):
+    def obertka(*args, **kwargs):
+        time_start = time.perf_counter_ns()
+
+        result = func(*args, **kwargs)
+
+        time_stop = time.perf_counter_ns()
+
+        print((time_stop - time_start) // 1000000, 'ms')  # 1 424 236 700   - -9 -6 -3
+
+        return result
+
+    return obertka
+
+
 def get_meteo(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                              'Chrome/102.0.0.0 Safari/537.36'}
@@ -134,8 +154,99 @@ city_list = [
     'https://www.gismeteo.kz/weather-kostanay-4628/',
     'https://www.gismeteo.kz/weather-shymkent-5324/',
     'https://www.gismeteo.kz/weather-nur-sultan-5164/',
-    'https://www.gismeteo.kz/weather-almaty-5205/'
+    'https://www.gismeteo.kz/weather-almaty-5205/',
+    'https://www.gismeteo.kz/weather-zhetikara-11043/',
+    'https://www.gismeteo.kz/weather-kostanay-4628/',
+    'https://www.gismeteo.kz/weather-shymkent-5324/'
 ]
 
-for city in city_list:
-    get_meteo(url=city)
+
+@time_zamer
+def sync():  # 1 поток, 1 процесс
+    for city in city_list:
+        get_meteo(url=city)
+
+
+@time_zamer
+def thread():  # несколько потоков, 1 процесс
+    # thread1 = threading.Thread(target=get_meteo, args=('https://www.gismeteo.kz/weather-zhetikara-11043/',))
+    # thread1.start()
+    # thread1.join()
+
+    thread_list = []
+    for city in city_list:
+        new_thread = threading.Thread(target=get_meteo, args=(city,))
+        thread_list.append(new_thread)
+
+    # print(thread_list)
+    # print(type(thread_list[0]))
+
+    for new_thread in thread_list:
+        new_thread.start()
+
+    for new_thread in thread_list:
+        new_thread.join()
+
+
+@time_zamer
+def process():  # 1 поток, несколько процессов
+    # name1 = multiprocessing.Process(target=get_meteo, args=('https://www.gismeteo.kz/weather-zhetikara-11043/',))
+    # name1.start()
+    # name1.join()
+
+    thread_list = []
+    for city in city_list:
+        new_thread = multiprocessing.Process(target=get_meteo, args=(city,))
+        thread_list.append(new_thread)
+
+    # print(thread_list)
+    # print(type(thread_list[0]))
+
+    for new_thread in thread_list:
+        new_thread.start()
+
+    for new_thread in thread_list:
+        new_thread.join()
+
+
+async def async_get_meteo(url):
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                             'Chrome/102.0.0.0 Safari/537.36'}
+    async with aiohttp.ClientSession() as ses:
+        async with ses.get(
+                url=url,
+                headers=headers
+        ) as response:
+            res = await response.read()
+
+    data1 = res.decode().split('''class="weathertabs day-1"''')[1]
+    data2 = data1.split('''Сейчас''')[1].split('''Завтра''')[0].split('''class="unit unit_temperature_c">''')
+    data3 = data2[-2::1]
+    day = ''
+    night = ''
+    for i in data3:
+        if len(data3[1]) == len(i):
+            day = i.split('''</span>''')[0]
+        else:
+            night = i.split('''</span>''')[0]
+    print(f'''темпаратура днём: {day}, а ночью: {night}, город: {url.split('weather-')[1].split('-')[0]}''')
+
+
+@time_zamer
+def async_func():  # 1 поток, 1 процесс
+    # for city in city_list:
+    #     get_meteo(url=city)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(
+        asyncio.gather(
+            *[async_get_meteo(city) for city in city_list]
+        )
+    )
+
+
+if __name__ == '__main__':
+    sync()  # 1950 ms         -> 0 ms
+    # thread()  # 301 ms        -> 1 ms
+    # process()  # 577 ms       -> 262 ms (0,25 s)
+    # async_func()  # 248 ms      -> 0 ms
+    pass

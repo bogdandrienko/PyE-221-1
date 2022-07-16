@@ -1,3 +1,4 @@
+import flask
 from flask import Flask
 import psycopg2
 from flask import jsonify
@@ -11,9 +12,27 @@ from flask import jsonify
 app = Flask(__name__)
 
 
-@app.route("/")  # 'http://192.168.1.121:5000' + '/' - маршрут в браузерной строке
+@app.route("/index")  # 'http://192.168.1.121:5000' + '/' - маршрут в браузерной строке
 def index():
     return "<h1>Index</h1>"
+
+
+@app.route("/")  # 'http://192.168.1.121:5000' + '/' - маршрут в браузерной строке
+def home():
+    context = {
+        "task_list": [
+            {"title": "Помыть кота", "description": "Нужно хорошо помыть кота.", "status": True},
+            {"title": "Помыть собаку", "description": "Нужно хорошо помыть собаку.", "status": False},
+            {"title": "Купить слона", "description": "Нужно купить дорогого слона.", "status": True},
+            {"title": "Помыть кота", "description": "Нужно хорошо помыть кота.", "status": True},
+            {"title": "Помыть собаку", "description": "Нужно хорошо помыть собаку.", "status": False},
+            {"title": "Купить слона", "description": "Нужно купить дорогого слона.", "status": True},
+            {"title": "Помыть кота", "description": "Нужно хорошо помыть кота.", "status": True},
+            {"title": "Помыть собаку", "description": "Нужно хорошо помыть собаку.", "status": False},
+        ],
+        "username": "Роман"
+    }
+    return flask.render_template('login.html', **context)
 
 
 @app.route("/get_all_rows/")
