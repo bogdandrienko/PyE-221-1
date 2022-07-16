@@ -1,7 +1,7 @@
 import sys
 import time
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QPushButton, QLineEdit
-import threading  # операции в другом потоке
+import threadi  # операции в другом потоке
 import asyncio  # асинхронные операции
 import multiprocessing  # операции в другом процессе
 import requests  # библиотека для синхронных HTTP запросов

@@ -1,6 +1,6 @@
 import time
 import requests
-import threading
+import threadi
 import multiprocessing
 import asyncio
 import aiohttp
