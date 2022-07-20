@@ -1,0 +1,32 @@
+{% extends "components/base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+<div class="p-3">
+  <div>
+    <a href="http://127.0.0.1:5000/todo_list" class="btn btn-lg btn-outline-primary">назад</a>
+  </div>
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mb-3 text-center">
+  <div class="card mb-4 rounded-3 shadow-sm">
+    <div class="card-header py-3">
+      <h4 class="my-0 fw-normal">{{ task.title }}</h4>
+    </div>
+    <div class="card-body">
+      <h6 class="card-title pricing-card-title">{{ task.description }}</h6>
+
+
+      {% if task.status %}
+        <button type="button"
+                class="w-100 btn btn-lg btn-outline-warning">
+          в процессе
+        </button>
+      {% else %}
+        <button type="button"
+                class="w-100 btn btn-lg btn-outline-success">
+          выполнено
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

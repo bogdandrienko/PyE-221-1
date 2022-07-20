@@ -4,7 +4,7 @@
 <div class="p-3">
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mb-3 text-center">
   {% for task in task_list %}
-    <div class="col">
+    <a href="http://127.0.0.1:5000/todo/{{task.id}}" class="col text-decoration-none text-dark">
       <div class="card mb-4 rounded-3 shadow-sm">
         <div class="card-header py-3">
           <h4 class="my-0 fw-normal">{{ task.title }}</h4>
@@ -26,7 +26,7 @@
           {% endif %}
         </div>
       </div>
-    </div>
+    </a>
   {% endfor %}
 </div>
 </div>

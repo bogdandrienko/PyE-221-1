@@ -68,7 +68,7 @@ def todo_list():
     records = cur.fetchall()
     cur.close()
     conn.close()
-    task_list = [{"title": x[0], "description": x[1], "status": x[2]} for x in records]
+    task_list = [{"title": x[0], "description": x[1][:5], "status": x[2], "id": x[3]} for x in records]
 
     print(task_list)
     print(type(task_list))
@@ -78,6 +78,26 @@ def todo_list():
         "username": "Роман"
     }
     return flask.render_template('todo_list.html', **context)
+
+
+@app.route("/todo/<todo_id>")  # 'http://192.168.1.121:5000' + '/' - маршрут в браузерной строке
+def todo_by_id(todo_id):
+    conn = psycopg2.connect("dbname=flask_db user=postgres password=31284bogdan")
+    cur = conn.cursor()
+
+    cur.execute(f"""
+        SELECT * FROM public.flask_table
+        WHERE id = '{todo_id}'
+        """)
+    record = cur.fetchall()[0]
+    cur.close()
+    conn.close()
+    print(record)
+    record = {
+        "title": record[0], "description": record[1],
+        "status": record[2], "id": record[3]
+    }
+    return flask.render_template('todo_detail.html', task=record)
 
 
 @app.route("/get_all_rows/")
