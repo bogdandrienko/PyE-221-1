@@ -38,14 +38,36 @@ a = """
 #     else:
 #         get_value(val1-1)
 
-# def get_factorial(num: int):
-#     if num <= 0:
-#         return True
-#     else:
-#         print(num * 2)
-#         get_factorial(num - 1)
-#
-# get_factorial(5)
+def factorial(n):
+    res = 1
+    for i in range(1, n + 1):
+        res *= i
+    return res
+print(factorial(5))
+
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(5))
+
+for i in range(1, 6):
+    print(i, '! = ', factorial(i), sep='')
+
+
+def get_factorial(num: int):
+    start = 1
+    if num <= 0:
+        return True
+    else:
+        print(num * 2)
+        get_factorial(num - 1)
+
+
+get_factorial(2)
+
 
 def is_palindrome(s):
     if len(s) < 1:
@@ -147,4 +169,3 @@ arrrr1.sort(key=lambda item: item % 2 == 0, reverse=False)  # от меньше�
 # '1088'
 # [1088, 1080, 1084, 1080, 1088, "8", 8, 1055, 1074, 1077, 1090, 32, 33]
 print(arrrr1)
-
