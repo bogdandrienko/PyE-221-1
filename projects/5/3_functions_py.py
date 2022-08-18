@@ -2,7 +2,7 @@
 
 # DRY don't repeat yourself!
 
-def func_print_word():
+def func_print_word():  # define - определить funcPrintWord
     print('Hello world')
 
 
@@ -67,3 +67,13 @@ print("Python".encode())
 str1 = b'\x01'
 print(str1.decode())
 
+
+file = open("temp2/new.txt", mode="w", encoding="utf-8")
+file.write("123124")
+file.close()
+
+with open("temp2/new.txt", mode="w", encoding="utf-8") as file:  # alias - псевдоним
+    file.write("123124")
+    # файл всё ещё открыт
+
+# файл закрыт -> file.close()

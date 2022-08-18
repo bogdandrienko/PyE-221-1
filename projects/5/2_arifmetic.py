@@ -16,11 +16,9 @@ abs(val1)
 print(10 * 4)
 print(10 ** 4)
 print(10 / 5)
-print(10 // 5)
+print(10 // 5)  # int(10 / 5) round(10 / 3, 2) 3.33
 
 print(16 ** 0.5)
 
-print(6 % 2)
+print(7 % 2)  # 1
 print(6 % 2 == 0)  # чётное
-
-
