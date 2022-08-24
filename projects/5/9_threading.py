@@ -46,18 +46,24 @@ def synhronus():  # 3.01685
 # многопоточность
 @decor
 def threadings():  # 1.01568
-    new_thread_1 = threading.Thread(target=task, args=('Задача 1',))
-    new_thread_1.start()
 
-    new_thread_2 = threading.Thread(target=task, args=('Задача 2',))
-    new_thread_2.start()
+    def task_new():
+        new_thread_1 = threading.Thread(target=task, args=('Задача 1',))
+        new_thread_1.start()
+        new_thread_1.join()
+
+        new_thread_2 = threading.Thread(target=task, args=('Задача 2',))
+        new_thread_2.start()
+        new_thread_2.join()
+
+    new_thread_4 = threading.Thread(target=task_new, args=('Задача 3',))
+    new_thread_4.start()
 
     new_thread_3 = threading.Thread(target=task, args=('Задача 3',))
     new_thread_3.start()
 
-    new_thread_1.join()
-    new_thread_2.join()
     new_thread_3.join()
+    new_thread_4.join()
 
     print('я главный поток, я закончил работу, я домой')
 
