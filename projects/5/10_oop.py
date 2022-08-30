@@ -95,13 +95,13 @@ class Vehicle(Obj):
 class Some:
     pass
 
+
 som1 = Some()
-
-
 
 veh1 = Vehicle(speed=50.2)
 print(veh1.mass)
 print(veh1.get_parent_mass())
+
 
 #
 # print(Obj.visible)
@@ -132,6 +132,7 @@ class Parall:
     def __init__(self, side1: int, side2: int):
         self.side1 = side1
         self.side2 = side2
+        self.side3 = side1 / 3 * side2
 
     def check_is_square(self) -> bool:
         # if self.side1 == self.side2:
@@ -272,6 +273,147 @@ class HelpPython:
             print(7 % 2)  # 1
             print(6 % 2 == 0)  # чётное
 
+    class ExceptionHelps:
+        class MyException1(Exception):
+            def __init__(self, exception_text: str, sector: str, level_error: int, critical: bool):
+                self.exception_text = exception_text
+                self.datetime = datetime.datetime.now()
+                self.sector = sector
+                self.level_error = level_error
+                self.critical = critical
+
+            def print_error(self):
+                print(f"{self.sector}: {self.exception_text} {self.datetime}")
+
 
 dict1 = {"name": "Python"}
 print(HelpPython.Variable.get_value_from_dict(dictionary=dict1, value="name", default_value="C++", is_logging=False))
+
+
+class MyException(Exception):
+    def __init__(self, exception_text: str, sector: str, level_error: int, critical: bool):
+        self.exception_text = exception_text
+        self.datetime = datetime.datetime.now()
+        self.sector = sector
+        self.level_error = level_error
+        self.critical = critical
+
+    def print_error(self):
+        print(f"{self.sector}: {self.exception_text} {self.datetime}")
+
+
+def test1(a, b):
+    try:
+        if b == 0:
+            raise HelpPython.ExceptionHelps.MyException1(exception_text="кто-то накосячил с кодом",
+                                                         sector="test1 Вычислительное ядро",
+                                                         level_error=3, critical=False)
+        c = a / b
+        return c
+    except HelpPython.ExceptionHelps.MyException1 as error:
+        print(f"MY {error}")
+        print(error.sector)
+        print(error.print_error())
+        return a
+    except Exception as error:
+        print(f"123124124 {error}")
+        return None
+
+
+print(test1(9, 0))
+
+
+class BinaryTree:
+    def __init__(self, data: int):
+        self.left = None
+        self.right = None
+        self.root = data
+
+    def get_data(self):
+        return self.root
+
+    def insert_new_data(self, data: int):
+        if self.root:
+            if data < self.root:
+
+                # левый
+                if self.left is not None:
+                    self.left.insert_new_data(data)
+                else:
+                    self.left = BinaryTree(data)
+                # левый
+
+            elif data > self.root:
+
+                # правый
+                if self.right is not None:
+                    self.right.insert_new_data(data)
+                else:
+                    self.right = BinaryTree(data)
+                # правый
+
+            else:
+                print('Значение повторяется')
+
+        else:
+            self.root = data
+
+    def print_all_edges(self):
+        print(self.root)
+        print(self.left)
+        print(self.right)
+
+
+tree1 = BinaryTree(1)  # создание экземляра класса - создание объекта
+tree1.insert_new_data(2)
+tree1.insert_new_data(3)
+tree1.insert_new_data(9)
+tree1.insert_new_data(6)
+tree1.insert_new_data(11)
+tree1.insert_new_data(15)
+print(f"root: {tree1.root}")
+print(f"root: {tree1.right.root}")
+
+print(f"root: {tree1.right.right.root}")
+
+print(f"root: {tree1.right.right.right.root}")
+
+print(f"root: {tree1.right.right.right.right.root}")
+print(f"root: {tree1.right.right.right.left.root}")
+
+print(f"root: {tree1.right.right.right.right.right.root}")
+
+# class BinaryTree2:
+#     def __init__(self, data: int):
+#         self.left = None
+#         self.right = None
+#         self.root = data
+#
+#
+# tree1 = BinaryTree2(1)  # создание экземляра класса - создание объекта
+# tree2 = BinaryTree2(2)  # присвоение в левую ветку нового объекта
+# tree1.left = tree2  # присвоение в правую ветку нового объекта
+# tree1.right = BinaryTree2(3)  # присвоение в правую ветку нового объекта
+# tree1.right.right = BinaryTree2(6)
+# print(tree1)
+# print(f"root: {tree1.root}")
+# print(f"root: {tree1.left.root}")
+
+index = 0
+def substr(val: int):
+    global index
+    index += 1
+    print(f'вход номер {index}, значение {val}')
+
+    if val == 1:
+        return val
+    else:
+        return substr(val//2)
+
+print(substr(12))
+
+# CreateReadUpdateDelete
+# CRUD
+
+# Date and time is: 2021-07-03 16:21:12.357246
+# Timestamp is: 1625309472.357246
