@@ -89,3 +89,4 @@ while True:
     print(hashlib.sha512(b1.encode()))
     break
 
+p = re.compile('^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?')
