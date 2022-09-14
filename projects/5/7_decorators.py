@@ -1,3 +1,6 @@
+from typing import Union
+
+
 def decor_append_slash_to_request(func):
     def wrapper(url: str):
         # ПРЕДОБРАБОТКА
@@ -97,7 +100,7 @@ lam1 = lambda a, b: a + b
 print(lam1(99, 1))
 
 
-def recur(start_value: int, stop_value: int) -> int:
+def recur(start_value: int, stop_value: Union[int, float]) -> Union[int, None]:
     if start_value < stop_value:
         start_value += 1
         print(start_value)
@@ -106,7 +109,7 @@ def recur(start_value: int, stop_value: int) -> int:
         return start_value
 
 
-recur(start_value=-10, stop_value=10)
+recur(start_value=1, stop_value=10.0)
 
 
 def recur_factorial(n):
