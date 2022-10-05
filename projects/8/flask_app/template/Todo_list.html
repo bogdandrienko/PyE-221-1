@@ -1,0 +1,58 @@
+{% extends "components/base.html" %}
+
+{% block title %}List all todos{% endblock title %}
+{% block main %}
+
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">List all todos</h1>
+        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <p>
+          <a href="/login/" class="btn btn-primary my-2">Login</a>
+          <a href="/parse/" class="btn btn-secondary my-2">Parse</a>
+        </p>
+      </div>
+    </div>
+</section>
+
+<div class="container container-fluid">
+<main class="form-signin">
+  <form action="{{ url_for('todo_create') }}" method="post" enctype="multipart/form-data">
+    <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Please create new task</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" placeholder="please input task name" value="{{username}}" name="username">
+      <label for="floatingInput">Task name</label>
+    </div>
+    <div class="form-floating">
+      <input type="number" class="form-control" id="floatingPassword" placeholder="Password" value="100000" name="salary">
+      <label for="floatingPassword">Task salary</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+  </form>
+</main>
+</div>
+
+<div class="row">
+    {% for todo in todos %}
+        <div class="card col-4 m-3 p-0 border border-warning border-2">
+            <div class="card-header lead fw-bold">{{todo.id}}</div>
+            <div class="card-body">{{todo.name}}</div>
+            <div class="card-footer"><small class="text-danger">{{todo.salary}}</small></div>
+            <a href="/todo_detail/{{todo.id}}" class="btn btn-primary my-2">details</a>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock main %}

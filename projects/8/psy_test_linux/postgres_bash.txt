@@ -1,0 +1,65 @@
+sudo apt update -y
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl status postgresql  # check active
+
+sudo passwd postgres  # input new password
+sudo -i -u postgres
+
+
+createuser flask_user
+psql
+\password # input new password
+
+ALTER USER flask_user WITH ENCRYPTED password '12345qwertY!';
+
+CREATE DATABASE flask_database OWNER flask_user;
+
+
+
+\q
+exit
+
+sudo systemctl stop postgresql && sudo systemctl restart postgresql && sudo systemctl status postgresql
+
+
+sudo -i -u postgres
+psql
+
+\connect flask_database
+
+
+GRANT ALL PRIVILEGES ON DATABASE flask_database to flask_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to flask_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to flask_user;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to flask_user;
+
+
+CREATE TABLE zarplata ( id serial PRIMARY KEY, username VARCHAR ( 50 ) NOT NULL, salary INT NOT NULL );
+
+# ! CREATE TABLE !
+
+select * from zarplata;
+
+INSERT INTO zarplata (username, salary) VALUES ('Bogdan', '60000'), ('Alice', '80000');
+
+# INSERT 0 2
+
+select * from zarplata;
+
+select username from zarplata where salary > 70000;
+
+\q
+exit
+
+sudo apt install -y curl
+
+curl -fsSL https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/pgadmin.gpg
+
+sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list'
+sudo apt update && sudo apt upgrade
+sudo apt install -y pgadmin4-desktop
+
+sudo adduser ubuntu vboxsf # ubuntu = linux account
+
+# https://www.how2shout.com/linux/install-postgresql-pgadmin-4-on-ubuntu-22-04-lts-jammy-linux/
+
