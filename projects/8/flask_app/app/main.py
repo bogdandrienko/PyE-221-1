@@ -3,10 +3,15 @@ import requests
 from bs4 import BeautifulSoup
 import psycopg2
 
-app = Flask(__name__, template_folder='../template')
+app = Flask(__name__, template_folder='../template', static_url_path='/static', static_folder='../static')
 url = 'https://kolesa.kz/mototehnika/'
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                          "Chrome/77.0.3865.90 Safari/537.36"}
+
+
+@app.route("/temp/")
+def temp():
+    return render_template('temporary.html')
 
 
 @app.route("/")
@@ -156,6 +161,7 @@ def todo_list():
 
     # todos = [{"id": x, "name": f"Clear cat #{x}", "salary": 60000 + x * 100} for x in range(1, 30+1)]
     return render_template('Todo_list.html', todos=todos)  # **kwargs
+
 
 @app.route("/todo_detail/<todo_id>/", methods=['GET'])
 def todo_detail(todo_id):
