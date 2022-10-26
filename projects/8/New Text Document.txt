@@ -1,0 +1,34 @@
+Django, Django REST Framework, FastAPI, Flask
+
+
+flake8 (mypy), pytest, unittest
+
+
+
+RabbitMQ, Celery
+
+
+aiohttp
+asyncio, multiprocessing, multithreading
+Selenium, Puppeteer, lxml
+SQLAlchemy,pymysql
+Websockets
+pydantic
+Gunicorn
+
+
+Postgres, MySQL, Redis, MongoDB, Cassandra, Elasticsearch
+
+
+
+JS (опыт работы с React), JavaScript, ES6, Vue
+json
+Linux
+GIT
+ООП
+REST API
+Docker
+
+nginx
+JIRA
+Postman

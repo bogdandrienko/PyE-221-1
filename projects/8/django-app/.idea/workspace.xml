@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="befc9680-de61-44d0-bef2-07dcf9d2970d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/django-app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/templatetags/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/templatetags/extras.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_app/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_settings/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_settings/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_settings/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_settings/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_settings/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static_external/css/my.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/components/footer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/django_app/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/fast_api_app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fast_api_app/templates/home.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2GfwmVVR3gW0fR1KIyiGs1VXBAR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/github_projects/PyE-221-1/projects/8/django-app/django_app/templatetags"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\django_app\templatetags" />
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app" />
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\django_app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external\js\bootstrap" />
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external\css\bootstrap" />
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="befc9680-de61-44d0-bef2-07dcf9d2970d" name="Changes" comment="" />
+      <created>1666793104926</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1666793104926</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
