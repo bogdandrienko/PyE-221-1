@@ -56,6 +56,6 @@ def is_glavvarch(context, text: str, length: int):
     #
     # user
 
-    user = User.objects.get(username=request.user.username)
+    # user = User.objects.get(username=request.user.username)
 
     return text[0:length:1]
