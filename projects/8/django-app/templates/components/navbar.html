@@ -17,8 +17,14 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+
+            {% if not user.is_authenticated %}
+                <a href="{% url 'django_twitter_app:logout' %}" type="button" class="btn btn-outline-danger me-2">Выйти</a>
+            {% else %}
+                <a href="{% url 'django_twitter_app:login' %}" type="button" class="btn btn-outline-primary me-2">Войти</a>
+            {% endif %}
+
+          <a href="{% url 'django_twitter_app:register' %}" type="button" class="btn btn-warning">Зарегистрироваться</a>
         </div>
       </div>
     </div>
