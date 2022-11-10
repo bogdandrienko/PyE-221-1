@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_app',
+    'django_twitter_app',
 ]
 
 MIDDLEWARE = [

@@ -7,4 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('django_app.urls')),
+
+    # TODO префикс
+    path('twitter/', include('django_twitter_app.urls')),
 ]
