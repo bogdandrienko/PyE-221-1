@@ -18,10 +18,10 @@
 
         <div class="text-end">
 
-            {% if not user.is_authenticated %}
-                <a href="{% url 'django_twitter_app:logout' %}" type="button" class="btn btn-outline-danger me-2">Выйти</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'django_twitter_app:logout' %}" type="button" class="btn btn-outline-danger me-2">Выйти ({{ user.username }})</a>
             {% else %}
-                <a href="{% url 'django_twitter_app:login' %}" type="button" class="btn btn-outline-primary me-2">Войти</a>
+                <a href="{% url 'django_twitter_app:login' %}" type="button" class="btn btn-outline-primary me-2">Войти (аноним)</a>
             {% endif %}
 
           <a href="{% url 'django_twitter_app:register' %}" type="button" class="btn btn-warning">Зарегистрироваться</a>

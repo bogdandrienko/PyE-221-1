@@ -12,6 +12,4 @@ urlpatterns = [
 
     path('todo/<int:todo_id>/', views.todo),  # TODO одиночный пост
     path('todo/', views.todo),  # TODO массив постов
-
-
 ]

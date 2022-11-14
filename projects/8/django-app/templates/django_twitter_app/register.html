@@ -17,7 +17,6 @@
 
     <div class="row g-5">
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Billing address</h4>
           <form action="{% url 'django_twitter_app:register' %}"
     method="POST"
     enctype="multipart/form-data"
@@ -44,7 +43,7 @@
               <label for="username" class="form-label">Имя пользователя</label>
               <div class="input-group has-validation">
                 <span class="input-group-text">#</span>
-                <input type="email" class="form-control" id="username" placeholder="Username" required="" name="username">
+                <input type="text" class="form-control" id="username" placeholder="Имя пользователя" required="" name="username">
               <div class="invalid-feedback">
                   Your username is required.
                 </div>
@@ -53,7 +52,7 @@
 
             <div class="col-12">
               <label for="address" class="form-label">Пароль</label>
-              <input type="password" class="form-control" id="address" placeholder="1234 Main St" required="" name="password1">
+              <input type="password" class="form-control" id="address" placeholder="12345Qwerty!..." required="" name="password1">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -61,7 +60,7 @@
 
             <div class="col-12">
               <label for="address2" class="form-label">Повторите пароль</label>
-              <input type="password" class="form-control" id="address2" placeholder="Apartment or suite" name="password2">
+              <input type="password" class="form-control" id="address2" placeholder="12345Qwerty!..." name="password2">
             </div>
           </div>
 

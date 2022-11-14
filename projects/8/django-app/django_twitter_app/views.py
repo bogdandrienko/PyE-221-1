@@ -1,8 +1,10 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, update_last_login
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils import timezone
 from django.views import View
 from django_twitter_app import models
 
@@ -57,20 +59,53 @@ def register(request: HttpRequest) -> HttpResponse:
                 username=username,
                 password=make_password(password1),
             )
-            return redirect(reverse('django_twitter_app:login', args=()))
+            return redirect(reverse('django_twitter_app:login', args=()))  # name=
         else:
             raise Exception("данные не заполнены!")
 
 
+def login_f(request: HttpRequest) -> HttpResponse:
+    if request.method == "GET":
+        context = {}
+        return render(request, 'django_twitter_app/login.html', context=context)
+    if request.method == "POST":
+        username = request.POST.get('username', "").strip()
+        password = request.POST.get('password', "").strip()
+        # print(f"username: {username}", password)
+        # str1 = ""  # 0 False None "" '' [] (,)
+        # if str1:
+        #     print("Правда")
+        # else:
+        #     print("Ложь")
+        # if username is not False and password is not False:
+        #     pass
+        # if len(username) > 0 and len(password) > 0:
+        #     pass
 
-def login(request: HttpRequest) -> HttpResponse:
-    context = {}
-    return render(request, 'django_twitter_app/home.html', context=context)
+        if username and password:  # если оба выражения "правда"
+            # User.objects.get(username=username) = authenticate(username=username, password=password)  # success
+            # None = authenticate(username=username, password=password)  # fail
+            user_obj = authenticate(username=username, password=password)  # проверка на валидность
+            if user_obj:
+                if user_obj.is_active is False:
+                    raise Exception("Ваш аккаунт забанен!")
+                context = {}
+                login(request, user_obj)
+                # login(user_obj)  # вход
+                # logout(request)
+                # update_last_login(sender=None, user=user_obj)
+                return redirect(reverse('django_twitter_app:home', args=()))
+            else:
+                raise Exception("данные не совпадают!")
+        else:
+            raise Exception("данных нет!")
 
 
-def logout(request: HttpRequest) -> HttpResponse:
-    context = {}
-    return render(request, 'django_twitter_app/home.html', context=context)
+def logout_f(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    # context = {}
+    # return render(request, 'django_twitter_app/home.html', context=context)
+    return redirect(reverse('django_twitter_app:login', args=()))
 
 
 def post_create(request: HttpRequest) -> HttpResponse:
@@ -87,6 +122,7 @@ def post_create(request: HttpRequest) -> HttpResponse:
         title = request.POST.get('title', None)
         description = request.POST.get('description', "")
         post = models.Post.objects.create(
+            user=request.user,
             title=title,
             description=description,
         )
@@ -97,7 +133,7 @@ def post_create(request: HttpRequest) -> HttpResponse:
 
 def post_update(request: HttpRequest, pk: int) -> HttpResponse:
     if request.method == "GET":
-        post = models.Post.objects.get(id=pk)
+        post = models.Post.objects.get(id=pk)  # primary key
         context = {"post": post}
         return render(request, 'django_twitter_app/post_update.html', context=context)
     elif request.method == "POST":
@@ -126,18 +162,20 @@ def post_update(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 def post_list(request: HttpRequest) -> HttpResponse:
-    posts = models.Post.objects.all()  # filter order_by
+    posts = models.Post.objects.all()  # filter order_by DjangoORM | SQLAlchemy(Flask) | Pydantic (FastApi)
     context = {"posts": posts}
     return render(request, 'django_twitter_app/post_list.html', context=context)
 
 
 def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
     post = models.Post.objects.get(id=pk)
-    context = {"post": post}
+    comments = models.PostComment.objects.filter(article=post)
+    context = {"post": post, "comments": comments}
     return render(request, 'django_twitter_app/post_detail.html', context=context)
 
 
 def post_delete(request: HttpRequest, pk: int) -> HttpResponse:
+    # models.Post.objects.get(id=pk).delete()
     post = models.Post.objects.get(id=pk)
     post.delete()
     return redirect(reverse('django_twitter_app:post_list', args=()))
@@ -154,3 +192,23 @@ def post_pk_view(request: HttpRequest, pk: int) -> HttpResponse:
     # return HttpResponse(content=b"<h1>Hello World</h1>")
     # return JsonResponse(data={"response": 'res'}, safe=True)
     return render(request, 'django_twitter_app/post_list.html', context=context)
+
+
+def post_comment_create(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.method == "POST":
+        text = request.POST.get('text', None)
+        post = models.Post.objects.get(id=pk)  # определить, к какой статье создали комментарий
+        models.PostComment.objects.create(
+            user=request.user,
+            article=post,
+            text=text,
+            # date_time=timezone.now(), # у нас стоит default
+        )
+        return redirect(reverse('django_twitter_app:post_detail', args=(pk,)))
+
+
+def post_comment_delete(request: HttpRequest, pk: int) -> HttpResponse:
+    comment = models.PostComment.objects.get(id=pk)
+    pk = comment.article.id
+    comment.delete()
+    return redirect(reverse('django_twitter_app:post_detail', args=(pk,)))
