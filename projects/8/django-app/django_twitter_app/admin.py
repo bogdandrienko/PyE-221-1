@@ -35,4 +35,5 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Post, PostAdmin)  # complex register model
 admin.site.register(models.PostComment)  # simple register model
+admin.site.register(models.PostRating)  # simple register model
 # admin.site.register(models.Post)  # simple register model (no filter / no search)

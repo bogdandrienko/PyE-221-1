@@ -2,20 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="befc9680-de61-44d0-bef2-07dcf9d2970d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/django_twitter_app/migrations/0002_post_user_alter_post_description_alter_post_title_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/django_twitter_app/migrations/0003_postcomment_article.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/django_twitter_app/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_twitter_app/migrations/0004_postrating.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image128727.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image261992.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image287123.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image595857.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image715117.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image750755.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image777791.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image801052.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image899225.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp/image967941.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_twitter_app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_twitter_app/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_twitter_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_twitter_app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_twitter_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_twitter_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_twitter_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_twitter_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/navbar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/django_twitter_app/post_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/django_twitter_app/post_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/django_twitter_app/post_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/django_twitter_app/post_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/django_twitter_app/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/django_twitter_app/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +32,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -74,7 +78,7 @@
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main2">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="django-app" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,8 +101,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="django-app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main2" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -114,6 +141,7 @@
       <workItem from="1667480748445" duration="10555000" />
       <workItem from="1668085538250" duration="11073000" />
       <workItem from="1668430225405" duration="11381000" />
+      <workItem from="1668603259150" duration="7555000" />
     </task>
     <servers />
   </component>
@@ -135,6 +163,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/django_app$main2.coverage" NAME="main2 Coverage Results" MODIFIED="1668607543173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/django_app$main.coverage" NAME="main Coverage Results" MODIFIED="1668436634381" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

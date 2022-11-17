@@ -16,6 +16,25 @@
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+
+                    <form action="{% url 'django_twitter_app:post_rating' post.id %}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                      >
+                          {% csrf_token %}
+                          <input type="hidden" value="like" name="status">
+                            <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-thumbs-up"></i> ({{ ratings.0 }})</button>
+                      </form>
+
+                                        <form action="{% url 'django_twitter_app:post_rating' post.id %}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                      >
+                          {% csrf_token %}
+                          <input type="hidden" value="dislike" name="status">
+                            <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-thumbs-down"></i>({{ ratings.1 }})</button>
+                      </form>
+                    ({{ ratings.2 }})
                 </div>
                 <small class="text-muted">
                     <a href="{% url 'django_twitter_app:post_delete' post.id %}" class="text-decoration-none btn"><i class="fa-solid fa-trash-can text-danger"></i></a>

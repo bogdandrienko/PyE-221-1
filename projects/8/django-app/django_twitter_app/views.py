@@ -170,7 +170,12 @@ def post_list(request: HttpRequest) -> HttpResponse:
 def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
     post = models.Post.objects.get(id=pk)
     comments = models.PostComment.objects.filter(article=post)
-    context = {"post": post, "comments": comments}
+
+    # TODO ratings
+    ratings = models.PostRating.objects.all().filter(article=post)  # queryset
+    likes = ratings.filter(status=True)
+    dislikes = ratings.filter(status=False)
+    context = {"post": post, "comments": comments, "ratings": [likes.count(), dislikes.count(), ratings.count()]}
     return render(request, 'django_twitter_app/post_detail.html', context=context)
 
 
@@ -179,6 +184,46 @@ def post_delete(request: HttpRequest, pk: int) -> HttpResponse:
     post = models.Post.objects.get(id=pk)
     post.delete()
     return redirect(reverse('django_twitter_app:post_list', args=()))
+
+
+def post_rating(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.method == "POST":
+        # TODO ratings
+
+        post = models.Post.objects.get(id=pk)
+
+        status = request.POST.get("status", None)
+        if status is None:
+            raise Exception("No status")
+        elif status == "like":
+            try:
+                rating = models.PostRating.objects.get(article=post, user=request.user)
+            except Exception as error:
+                rating = models.PostRating.objects.create(
+                    user=request.user,
+                    article=post
+                )
+            if rating.status is False:
+                rating.status = True
+                rating.save()
+            else:
+                pass
+        elif status == "dislike":
+            try:
+                rating = models.PostRating.objects.get(article=post, user=request.user)
+            except Exception as error:
+                rating = models.PostRating.objects.create(
+                    user=request.user,
+                    article=post
+                )
+            if rating.status is True:
+                rating.status = False
+                rating.save()
+            else:
+                pass
+        else:
+            raise Exception("Error status")
+        return redirect(reverse('django_twitter_app:post_detail', args=(pk,)))
 
 
 def post_pk_view(request: HttpRequest, pk: int) -> HttpResponse:

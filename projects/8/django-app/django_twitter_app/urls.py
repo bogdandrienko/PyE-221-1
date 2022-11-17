@@ -18,6 +18,8 @@ urlpatterns = [
     path('post/<int:pk>/update/', views.post_update, name='post_update'),
     path('post/<int:pk>/delete/', views.post_delete, name='post_delete'),
 
+    path('post/<int:pk>/rating/', views.post_rating, name='post_rating'),
+
     # path('post/<int:pk>/comment/detail/', views.post_detail, name='post_detail'),
     path('post/<int:pk>/comment/create/', views.post_comment_create, name='post_comment_create'),
     # path('post/<int:pk>/comment/update/', views.post_detail, name='post_detail'),
