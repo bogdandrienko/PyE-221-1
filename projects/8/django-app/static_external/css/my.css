@@ -1,0 +1,23 @@
+body {
+    /*background: cyan !important;*/
+    /*color: cyan !important;*/
+    background-image: url("../img/background1.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    /*font-family: ;*/
+}
+
+div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+section {
+    /*background: cyan !important;*/
+    color: cyan !important;
+}
+
+.section-first {
+    /*background: cyan !important;*/
+    color: cyan !important;
+}

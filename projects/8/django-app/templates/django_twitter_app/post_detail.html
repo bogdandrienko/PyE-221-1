@@ -59,14 +59,27 @@
                 </div>
   </form>
         </div>
+    {% include 'components/pagination.html' %}
     <ul class="list-group">
-        {% for comment in comments %}
+        {% for comment in page %}
          <li class="list-group-item">
              <div class="d-flex justify-content-between"><button class="btn btn-light">({{ comment.user }})</button> {{ comment.text }} [{{ comment.created }}] <a href="{% url 'django_twitter_app:post_comment_delete' comment.id %}" class="text-decoration-none btn"><i class="fa-solid fa-trash-can text-danger"></i></a></div>
-             </li>
+             <form action="{% url 'django_twitter_app:notification_create' %}"
+    method="POST"
+    enctype="multipart/form-data"
+                   class="form-control form-control-sm"
+  >
+      {% csrf_token %}
+                <div class="input-group">
+      <input type="text" class="form-control w-50 form-control-sm" placeholder="введите сюда текст жалобы..." maxlength="300" minlength="1" required name="title">
+        <button class="w-25 btn btn-sm btn-danger form-control form-control-sm" type="submit">пожаловаться</button>
+                </div>
+  </form>
+         </li>
         {%  endfor %}
     </ul>
     </div>
+    {% include 'components/pagination.html' %}
 
 
 {% endblock main %}

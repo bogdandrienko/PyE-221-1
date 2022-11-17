@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group, update_last_login
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -155,15 +156,64 @@ def post_update(request: HttpRequest, pk: int) -> HttpResponse:
         post.description = description
         post.save()
 
+        #####################
+        # title = request.data.get('title', [])  # {"title": [{}, {}, {}, {}], "name": "Python"}
+
+        ####################
+
         # TODO перенаправить
         return redirect(reverse('django_twitter_app:post_detail', args=(pk,)))
         # context = {"id": post.id}
         # return redirect(reverse('django_twitter_app:post_list', args=(context, )))
 
 
+class CustomPaginator:
+    @staticmethod
+    def paginate(object_list: any, per_page=5, page_number=1):
+        # https://docs.djangoproject.com/en/4.1/topics/pagination/
+        paginator_instance = Paginator(object_list=object_list, per_page=per_page)
+        try:
+            page = paginator_instance.page(number=page_number)
+        except PageNotAnInteger:
+            page = paginator_instance.page(number=1)
+        except EmptyPage:
+            page = paginator_instance.page(number=paginator_instance.num_pages)
+        return page
+
+
 def post_list(request: HttpRequest) -> HttpResponse:
+    # title  descr
+    # 111111 222222
+    # 22222 33333
     posts = models.Post.objects.all()  # filter order_by DjangoORM | SQLAlchemy(Flask) | Pydantic (FastApi)
-    context = {"posts": posts}
+
+    # todo пагинация ч1
+    selected_page_number = request.GET.get('page', 1)
+    selected_limit_objects_per_page = request.GET.get('limit', 2)
+    # todo пагинация ч1
+
+    if request.method == "POST":
+        selected_page_number = 1
+        selected_limit_objects_per_page = 9999
+        # todo поиск
+        search_by_title = request.POST.get('search', None)
+        if search_by_title is not None:
+            posts = posts.filter(title__contains=str(search_by_title))  # title__icontains
+        # todo поиск
+
+        # todo фильтрация
+        filter_by_user = request.POST.get('filter', None)
+        if filter_by_user is not None:
+            posts = posts.filter(user=User.objects.get(username=filter_by_user))
+        # todo фильтрация
+
+    # todo пагинация ч2
+    page = CustomPaginator.paginate(
+        object_list=posts, per_page=selected_limit_objects_per_page, page_number=selected_page_number
+    )
+    # todo пагинация ч2
+
+    context = {"page": page, "users": User.objects.all()}
     return render(request, 'django_twitter_app/post_list.html', context=context)
 
 
@@ -171,11 +221,17 @@ def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
     post = models.Post.objects.get(id=pk)
     comments = models.PostComment.objects.filter(article=post)
 
+    selected_page_number = request.GET.get('page', 1)
+    selected_limit_objects_per_page = request.GET.get('limit', 2)
+    page = CustomPaginator.paginate(
+        object_list=comments, per_page=selected_limit_objects_per_page, page_number=selected_page_number
+    )
+
     # TODO ratings
     ratings = models.PostRating.objects.all().filter(article=post)  # queryset
     likes = ratings.filter(status=True)
     dislikes = ratings.filter(status=False)
-    context = {"post": post, "comments": comments, "ratings": [likes.count(), dislikes.count(), ratings.count()]}
+    context = {"post": post, "page": page, "ratings": [likes.count(), dislikes.count(), ratings.count()]}
     return render(request, 'django_twitter_app/post_detail.html', context=context)
 
 
@@ -257,3 +313,30 @@ def post_comment_delete(request: HttpRequest, pk: int) -> HttpResponse:
     pk = comment.article.id
     comment.delete()
     return redirect(reverse('django_twitter_app:post_detail', args=(pk,)))
+
+
+def test(request: HttpRequest) -> HttpResponse:
+    status = request.GET.get("status", None)
+    return HttpResponse(f"test: <h1>{status}</h1>")
+
+
+def test_by_filter(request: HttpRequest, filter: str) -> HttpResponse:
+    return HttpResponse(f"test_by_filter: <h1>{filter}</h1>")
+
+
+def notification_create(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        title = request.POST.get('title', None)
+        description = request.POST.get('description', "")
+        # post = models.Post.objects.create(
+        #     user=request.user,
+        #     title=title,
+        #     description=description,
+        # )
+
+        with open("static/media/admin/notification.txt", "a", encoding="utf-8") as opened_file:
+            opened_file.write(f"\n{title} | {timezone.now()}")
+
+        return redirect(reverse('django_twitter_app:post_list', args=()))
+        # context = {"id": post.id}
+        # return redirect(reverse('dja
