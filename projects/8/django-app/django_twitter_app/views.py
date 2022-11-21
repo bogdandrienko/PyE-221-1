@@ -1,3 +1,6 @@
+import datetime
+import random
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group, update_last_login
@@ -8,6 +11,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from django_twitter_app import models
+import openpyxl
+from openpyxl.utils import get_column_letter
 
 
 # Create your views here.
@@ -340,3 +345,145 @@ def notification_create(request: HttpRequest) -> HttpResponse:
         return redirect(reverse('django_twitter_app:post_list', args=()))
         # context = {"id": post.id}
         # return redirect(reverse('dja
+
+
+def export_users(request: HttpRequest) -> HttpResponse:
+    # users = User.objects.all().filter()
+    users = User.objects.filter(is_active=True)  # READ
+
+    path = "static/media/temp/"
+    filename = f"new{random.randint(1, 10000)}{datetime.datetime.now().strftime('%m-%d-%Y, %H-%M-%S')}.xlsx"
+    # new_excel_workbook = openpyxl.Workbook()
+    already_exist_excel_workbook = openpyxl.load_workbook(filename="static/media/admin/export_users.xlsx")
+    new_excel_workbook = already_exist_excel_workbook
+    worksheet = new_excel_workbook.active
+
+    # values = [1, 2, 3]
+    # for index in range(0, len(values)):
+    #     value = values[index]  # лишний код и расчёты !
+
+    # getter = worksheet["A1"].value  # getter
+    # worksheet["A1"] = "123123"  # setter
+    # row_i = 0  # лишний код и расчёты !
+    for index, value in enumerate(["username", "password", "email", "is_staff", "is_superuser"], 1):
+        worksheet.cell(1, index, value)  # setter
+
+    for row_index, user in enumerate(users, 2):
+
+        #  0  1  2  3
+        # [1, 2, 2, 3]
+        # 0  1   1
+
+        # row_i_ = users.index(user)  # берёт первое совпадение!!! если значения не уникальные нельзя!!!
+        # row_i += 1  # лишний код и расчёты !
+        username = user.username
+        password = user.password
+        email = user.email
+        is_staff = user.is_staff
+        is_superuser = user.is_superuser
+        cols = [username, password, email, is_staff, is_superuser]
+        for col_index, value in enumerate(cols, 1):
+            # getter = worksheet.cell(1, 1).value  # getter
+            worksheet.cell(row_index, col_index, value)  # setter
+
+    new_excel_workbook.save(path + filename)
+    return HttpResponse("<h1>Success</h1>")
+
+
+# HTTP/IP - протокол транспортного уровня
+# UDP - не создаёт соединение (просто кидает данные в одну сторону)
+
+
+def create_users(request: HttpRequest) -> HttpResponse:  # MVTemplate - html
+    if request.method == "GET":
+        context = {}
+        return render(request, 'django_twitter_app/create_users.html', context=context)
+    if request.method == "POST":
+        # uploaded_excel_file = request.GET.get('excel', None)  # https://hh.ru/search/vacancy? @text=python@ &from=suggest_post&area=154
+        # uploaded_excel_file = request.POST.get('excel', None)  # {"name": "Bogdan"...}
+        uploaded_excel_file = request.FILES.get('excel', None)  # <image> / <file>
+
+        # todo read excel
+        already_exist_excel_workbook = openpyxl.load_workbook(uploaded_excel_file)
+        # already_exist_excel_workbook.active = already_exist_excel_workbook['Лист 2']
+        worksheet = already_exist_excel_workbook.active
+
+        class Profile:
+            def __int__(self, username_: str, password_: str):
+                self.username_ = username_
+                self.password_ = password_
+                pass
+
+        rows = []  # {"username": "Bogdan"...}
+        for i in range(1, worksheet.max_row):
+            row = []
+            for j in range(1, worksheet.max_column):
+                cell = worksheet[f"{get_column_letter(j)}{i}"].value
+                row.append(cell)
+            rows.append(row)
+        print(rows)
+
+        def prettify(value_str: str, length: int) -> str:
+            while len(value_str) < length:
+                value_str += " "
+            return value_str
+
+        # for row in rows:
+        #     matrix = []
+        #     for index, value in enumerate(row):
+        #         value = prettify(value_str=str(value), length=30)
+        #         matrix.append(value)
+        #     print(matrix)
+        # todo read excel
+
+        # todo create users
+        for row in rows:
+            try:
+                username = row[0]
+                if len(username) < 2:
+                    continue
+                password = row[1]
+                email = row[2]
+                surname = str(row[3]).strip()
+                is_staff = True if str(row[4]).strip().lower() == "true".lower() else False
+                user = User.objects.create(
+                    username=username,
+                    password=make_password(password),
+                    email=email,
+                    first_name=surname,
+                    is_staff=is_staff,
+                    is_superuser=False,
+                )
+            except Exception as error:
+                print(error)
+            # user = User.objects.create_user()
+            # user = User.objects.create_superuser()
+
+        return redirect(reverse('django_twitter_app:create_users', args=()))
+
+
+# REST api - mobile (kotlin - java / swift - object c) web(react / angular / vue, next, nuxt...) desktop (electron,
+# pyqt6, qt...) console ()
+
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
+def test2(request: HttpRequest) -> HttpResponse:
+    if request.method == "GET":
+        print(request.GET)
+        print(request.POST)
+        print(request.FILES)
+        return HttpResponse("GET method")
+    if request.method == "POST":
+        try:
+            # print(request.META)
+            print(request.GET)
+            print(request.POST)
+            print(request.FILES)
+        except Exception as error:
+            return JsonResponse(data={"message": str(error)}, safe=False, status=400)
+            # return HttpResponse(str(error))
+        else:
+            return JsonResponse(data={"message": "successful"}, safe=False, status=200)
+            # return HttpResponse("successful")

@@ -2,18 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="befc9680-de61-44d0-bef2-07dcf9d2970d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static/media/admin/notification.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static_external/img/background1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/components/pagination.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main4.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/media/admin/export_users.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/media/temp/New Microsoft Excel Worksheet.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/media/temp/new572111-21-2022, 19-51-19.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/media/temp/new779011-21-2022, 19-50-59.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/django_twitter_app/create_users.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_settings/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_settings/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_app/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_twitter_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_twitter_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_twitter_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_twitter_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/main2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_external/css/my.css" beforeDir="false" afterPath="$PROJECT_DIR$/static_external/css/my.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/django_twitter_app/post_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/django_twitter_app/post_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/django_twitter_app/post_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/django_twitter_app/post_list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,17 +53,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/github_projects/PyE-221-1/projects/8/django-app/templates/components",
+    "last_opened_file_path": "C:/github_projects/PyE-221-1/projects/8/django-app/static",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\templates\components" />
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static" />
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\templates\django_twitter_app" />
+      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\templates\components" />
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\templates" />
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\django_twitter_app" />
-      <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\django_app\templatetags" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external\js\bootstrap" />
@@ -72,7 +71,7 @@
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main2">
+  <component name="RunManager" selected="Python.main4">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="django-app" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -117,8 +116,77 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="django-app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="django-app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main4.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="django-app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/django_twitter_app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/django_twitter_app/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main4" />
+        <item itemvalue="Python.views" />
+        <item itemvalue="Python.main3" />
         <item itemvalue="Python.main2" />
         <item itemvalue="Python.main" />
       </list>
@@ -137,6 +205,7 @@
       <workItem from="1668430225405" duration="11381000" />
       <workItem from="1668603259150" duration="7555000" />
       <workItem from="1668689710340" duration="11109000" />
+      <workItem from="1669036110727" duration="10305000" />
     </task>
     <servers />
   </component>
@@ -158,7 +227,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/django_app$main3.coverage" NAME="main3 Coverage Results" MODIFIED="1669037539494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/django_app$main2.coverage" NAME="main2 Coverage Results" MODIFIED="1668693612959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/django_app$main.coverage" NAME="main Coverage Results" MODIFIED="1668436634381" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/django_app$views.coverage" NAME="views Coverage Results" MODIFIED="1669045409169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/django_twitter_app" />
+    <SUITE FILE_PATH="coverage/django_app$main4.coverage" NAME="main4 Coverage Results" MODIFIED="1669045975459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

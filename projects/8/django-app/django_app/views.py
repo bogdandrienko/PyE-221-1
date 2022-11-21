@@ -1,5 +1,6 @@
 import random
 
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.shortcuts import render
 

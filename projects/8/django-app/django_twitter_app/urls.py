@@ -29,4 +29,9 @@ urlpatterns = [
     path('test/<str:filter>/', views.test_by_filter, name='test_by_filter'),
 
     path('notification/create/', views.notification_create, name='notification_create'),
+
+    path('export_users/', views.export_users, name='export_users'),
+    path('create_users/', views.create_users, name='create_users'),
+
+    path('test2/', views.test2, name='test2'),
 ]
