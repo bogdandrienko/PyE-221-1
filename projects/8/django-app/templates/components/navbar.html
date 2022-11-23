@@ -6,10 +6,13 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'django_twitter_app:home' %}" class="nav-link px-2 text-secondary">Домашняя</a></li>
-          <li><a href="{% url 'django_twitter_app:post_list' %}" class="nav-link px-2 text-white">Все посты</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Лучшие посты</a></li>
-          <li><a href="{% url 'django_twitter_app:post_create' %}" class="nav-link px-2 text-white">Добавить пост</a></li>
+          <li class="custom-hover"><a href="{% url 'django_twitter_app:home' %}" class="nav-link px-2 text-secondary">Домашняя</a></li>
+          <li class="custom-hover"><a href="{% url 'django_twitter_app:post_list' %}" class="nav-link px-2 text-white">Все посты</a></li>
+          <li class="custom-hover"><a href="#" class="nav-link px-2 text-white">Лучшие посты<i class="fa-solid fa-list-ol text-warning p-2"></i></a></li>
+          <li class="custom-hover"><a href="{% url 'django_twitter_app:post_create' %}" class="nav-link px-2 text-white">
+              Добавить пост
+              <i class="fa-solid fa-plus text-success p-2"></i>
+          </a></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
