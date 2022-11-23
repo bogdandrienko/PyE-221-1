@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="befc9680-de61-44d0-bef2-07dcf9d2970d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static_external/fonts/Rubik.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/image.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/image338197.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/image541352.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/image852188.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/new_image.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main4.py" beforeDir="false" afterPath="$PROJECT_DIR$/main4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_external/css/my.css" beforeDir="false" afterPath="$PROJECT_DIR$/static_external/css/my.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image128727.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image261992.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image287123.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image595857.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image715117.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image750755.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image777791.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image801052.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image899225.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/image967941.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main3.py" beforeDir="false" afterPath="$PROJECT_DIR$/main3.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +62,7 @@
       <recent name="C:\github_projects\PyE-221-1\projects\8\django-app\static_external" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main4">
+  <component name="RunManager" selected="Python.main3">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="django-app" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -195,9 +175,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main3" />
         <item itemvalue="Python.main4" />
         <item itemvalue="Python.views" />
-        <item itemvalue="Python.main3" />
         <item itemvalue="Python.main2" />
         <item itemvalue="Python.main" />
       </list>
@@ -217,7 +197,7 @@
       <workItem from="1668603259150" duration="7555000" />
       <workItem from="1668689710340" duration="11109000" />
       <workItem from="1669036110727" duration="10305000" />
-      <workItem from="1669209448480" duration="4196000" />
+      <workItem from="1669209448480" duration="6168000" />
     </task>
     <servers />
   </component>
@@ -239,7 +219,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/django_app$main3.coverage" NAME="main3 Coverage Results" MODIFIED="1669037539494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/django_app$main3.coverage" NAME="main3 Coverage Results" MODIFIED="1669214893501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/django_app$main2.coverage" NAME="main2 Coverage Results" MODIFIED="1668693612959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/django_app$main.coverage" NAME="main Coverage Results" MODIFIED="1668436634381" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/django_app$views.coverage" NAME="views Coverage Results" MODIFIED="1669045409169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/django_twitter_app" />
