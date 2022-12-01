@@ -59,7 +59,7 @@ sudo apt update -y
 sudo apt install -y postgresql postgresql-contrib
 sudo passwd postgres
 sudo -i -u postgres
-sudo su - postgres
+#sudo su - postgres
 createuser django_user
 createdb django_database -O django_user
 psql django_database
@@ -68,6 +68,9 @@ alter user django_user with password '12345Qwerty!';
 
 CREATE DATABASE django_database OWNER django_user;
 GRANT ALL PRIVILEGES ON DATABASE django_database TO django_user;
+
+\q
+exit
 
 sudo nano /etc/postgresql/14/main/postgresql.conf
 # listen_addresses = '*'
@@ -78,6 +81,7 @@ sudo nano /etc/postgresql/14/main/pg_hba.conf
 sudo systemctl stop postgresql
 sudo systemctl status postgresql
 sudo systemctl restart postgresql
+sudo systemctl status postgresql
 
 
 sudo -i -u postgres
@@ -128,14 +132,115 @@ gunicorn --bind 0.0.0.0:8000 django_settings.wsgi
 ####################################################################
 
 
+#############################################################
+# gunicorn
 
+sudo nano /etc/systemd/system/gunicorn.socket
+<file>
+[Unit]
+Description=gunicorn socket
 
+[Socket]
+ListenStream=/run/gunicorn.sock
 
+[Install]
+WantedBy=sockets.target
+</file>
 
+sudo nano /etc/systemd/system/gunicorn.service
+<file>
+[Unit]
+Description=Gunicorn for the Django example project
+Requires=gunicorn.socket
+After=network.target
 
+[Service]
+Type=notify
 
+User=user
+Group=www-data
 
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/user/Downloads/web2
+ExecStart=/home/user/Downloads/web2/env/bin/gunicorn --workers 9 --bind unix:/run/gunicorn.sock django_settings.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
 
+[Install]
+WantedBy=multi-user.target
+</file>
 
+sudo systemctl daemon-reload
+sudo systemctl start gunicorn
+sudo systemctl enable --now gunicorn.service
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+sudo systemctl status gunicorn.service
+#sudo systemctl disable gunicorn
+#sudo systemctl stop gunicorn
 
+####################################################################
 
+#############################################################
+# nginx
+
+sudo nano /etc/nginx/sites-available/192.168.0.116-http.conf
+<file>
+server {
+listen 80;
+listen [::]:80;
+
+server_name 192.168.0.116;
+
+root /home/user/Download/web2;
+
+location /.well-known/acme-challenge/ {}
+
+location /favicon.ico {
+    alias /home/user/Download/web2/static/logo.png;
+
+    access_log off; log_not_found off;
+
+    expires max;
+}
+
+location /robots.txt {
+    alias /home/user/Download/web2/static/robots.txt;
+
+    access_log off; log_not_found off;
+
+    expires max;
+}
+
+location /static/ {
+    alias /home/user/Download/web2/static/;
+
+    expires max;
+}
+
+location /media/ {
+    alias /home/user/Download/web2/static/media/;
+
+    expires max;
+}
+
+location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_buffering off;
+    proxy_pass http://unix:/run/gunicorn.sock;
+}
+}
+</file>
+
+sudo ln -s /etc/nginx/sites-available/192.168.0.116-http.conf /etc/nginx/sites-enabled/192.168.0.116-http.conf
+sudo nginx -t
+sudo service nginx start
+sudo systemctl status nginx.service
+sudo ufw allow 'Nginx Full'
+sudo systemctl reload nginx.service
+####################################################################
