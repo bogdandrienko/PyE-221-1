@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/my.css' %}">
+    <title>Title</title>
+</head>
+
+<body>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                    <th>Стоимость без накрутки</th>
+                    <th>% накрутки</th>
+                    <th>Итоговая стоимость</th>
+                    <th>Стоимость с НДС</th>
+                    <th>Итоговая</th>
+                    <th>del</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in data_arr %}
+                <tr>
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.amount }}</td>
+                    <td>{{ data.first_cost }}</td>
+                    <td>{{ data.percent }}</td>
+                    <td>{{ data.total }}</td>
+                    <td>{{ data.vat_cost }}</td>
+                    <td>{{ data.total }}</td>
+                    <td><a href="{% url 'delete' data.id  %}"
+                            class="btn btn-sm btn-outline-secondary btn-outline-danger">delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <form method="POST" class="form-signin form-control w-50" action="{% url 'create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="lead">Заполните поля, для добавления нового товара</label>
+        <input style="margin: 3px" type="text" name="name" class="form-control" placeholder="Наименование" required>
+        <input style="margin: 3px" type="number" name="amount" class="form-control" placeholder="Количество" required>
+        <input style="margin: 3px" type="number" name="first_cost" class="form-control"
+            placeholder="Стоимость без накрутки" required>
+        <input style="margin: 3px" type="number" name="percent" class="form-control" placeholder="% накрутки" required>
+        <button type="submit" class="btn btn-lg btn-success btn-block" style="margin-left: 80px">Отправить
+            данные</button>
+    </form>
+
+    <form method="POST" class="form-control w-50" action="{% url 'import_data' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="lead">Вставьте заполненный файл для отправки</label>
+        <div class="input-group">
+            <input type="file" accept=".xlsx, .xls" class="form-control w-50" name="excel_file" />
+            <button type="submit" class="btn btn-md btn-outline-warning">отправить</button>
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
