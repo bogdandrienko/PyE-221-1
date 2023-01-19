@@ -4,6 +4,10 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import TodoList from "./pages/TodoList";
+import TodoDetail from "./pages/TodoDetail";
+import HttpPage from "./components/Counter";
+import "./css/bootstrap/bootstrap.css";
 
 createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
@@ -11,6 +15,9 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
+        <Route path="/http" element={<HttpPage />}></Route>
+        <Route path="/todos" element={<TodoList />}></Route>
+        <Route path="/todos/:id" element={<TodoDetail />}></Route>
         {/*<Route path="/tasks" element={<TaskListPage />}></Route>*/}
         {/*<Route path="/tasks/:id" element={<TaskPage />}></Route>*/}
       </Routes>
