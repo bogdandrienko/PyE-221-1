@@ -67,11 +67,11 @@ export default function Page() {
   useEffect(()=> {
       console.log(webStore)
   }, [webStore])
-
   return (
     <bases.Base1 title={"Hello"}>
       <h1>Home page</h1>
         <div>{webStore.load === true ? "загрузка идёт" : "загрузка остановилась"}</div>
+      
       <Todos1 />
       <button onClick={() => getData()}>get</button>
 

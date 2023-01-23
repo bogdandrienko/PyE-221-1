@@ -11,6 +11,7 @@ export const reducer = combineReducers({
   todosStore: TodosReducer,
   webStore: WebReducer,
   todoListStore: reducers.reducerTodoList,
+  //todoListStore: reducers.constructorReducer(),
   todoDetailStore: reducers.reducerTodoDetail,
 });
 

@@ -1,5 +1,28 @@
 import * as constants from "./constants";
 
+export function constructorReducer(
+  // @ts-ignore
+  constant={load: string, success: string, fail: string, error: string, reset: string}){
+  return function (state = {},
+    action: { type: string; payload: any }){
+      //@ts-ignore
+    switch (action.type) {
+      case constant.load:
+        return { load: true }; // data: undefined
+      case constant.success:
+        return { load: false, data: action.payload }; // fail: undefined
+      case constant.fail:
+        return { load: false, fail: action.payload }; // error: undefined
+      case constant.error:
+        return { load: false, error: action.payload }; // fail: undefined
+      case constant.reset:
+        return {};
+      default:
+        return state;
+    }
+  }
+}
+
 export function reducerTodoList(
   state = {},
   action: { type: string; payload: any }
