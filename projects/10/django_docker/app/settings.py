@@ -9,22 +9,26 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env()
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@qz#b35%g17@lfs&(n97(s9(67*ea(+%k8y3*k4_=6fo25-4d3'
+SECRET_KEY = 'django-insecure-1u&kp$m7x%(-8w4$0i@17-^z4=8d(ahv(!-%yz7_qcqpjh!7u-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG_VAR')
 
 ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -35,19 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'django_app'
 ]
 
 MIDDLEWARE = [
-    # 'django.middleware.cache.UpdateCacheMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
-
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -59,7 +56,7 @@ ROOT_URLCONF = 'django_settings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_settings.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -81,68 +79,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'special': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-CACHES = {
-    # без кэша: долго
-    # кэш в базе: дешёвый и медленный, но лучше чем просчитывать заново
-    # кэш в оперативе: дорогой и быстрый, не масштабируемый
-    # кэш в внешнем сервисе(redis): быстрый и масштабируемый, но дорогой
-
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',  # python manage.py createcachetable
-        'LOCATION': 'chache_table',
-        'TIMEOUT': '120',
-        'OPTIONS': {
-            'MAX_ENTIES': 200,
-        }
-    },
-    # Event - текущие (20+ gb / 100 000 000 rows)
-    # Event_History1 (20+ gb / 100 000 000 rows) (truncate)
-    # Event_History2 (20+ gb / 100 000 000 rows) (truncate)
-    # Event_History3 (20+ gb / 100 000 000 rows) (truncate)
-    # Event_History4 (20+ gb / 100 000 000 rows) (truncate)
-    'special': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'chache_mem_table',
-    },
-    # RPS - количество ответов в секунду (12000/2000*1.2=7)
-    # 1 % 3 = 1 | 2 % 3 = 2 | 3 % 3 = 0 | 4 % 3 = 1 | 5 % 3 = 2 | 6 % 3 = 0
-    'special0': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # id % 3 = 0
-        'LOCATION': 'chache_mem_table0',
-    },
-    'special1': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # id % 3 = 1
-        'LOCATION': 'chache_mem_table1',
-    },
-    'special2': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # id % 3 = 2
-        'LOCATION': 'chache_mem_table2',
-    },
-    "extra": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        'TIMEOUT': '600',
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }   
-    # 'extra': {
-    #     'BACKEND': 'django_redis.cache.RedisCache',
-    #     'LOCATION': 'rediss://12345qwertY!@127.0.0.1:6379/0',
-    #     'TIMEOUT': '120',
-    #     'OPTIONS': {
-    #         'MAX_ENTIES': 200,
-    #         'PASSWORD': '12345qwertY!',
-    #     }
-    # },
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -162,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -172,6 +112,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

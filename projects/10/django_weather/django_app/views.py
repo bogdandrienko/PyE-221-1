@@ -12,6 +12,7 @@ from django.core.cache import caches
 
 DatabaseCache = caches["default"]
 LocMemCache = caches["special"]
+RedisCache = caches["extra"]
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -70,11 +71,11 @@ def usr(request):
 
     caches_res = ""
     caches_res = "Cache find"
-    users = LocMemCache.get("users")
+    users = RedisCache.get("hotNews")
     if users is None:
         caches_res = "Cache not found"
         users = User.objects.all()
-        LocMemCache.set("users", users, timeout=5)
+        RedisCache.set("hotNews", users, timeout=5)
     # users = User.objects.all()
     # for i in users:
     #     print(i.username)

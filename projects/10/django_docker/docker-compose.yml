@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_DB=django_db
+      - POSTGRES_USER=django_usr
+      - POSTGRES_PASSWORD=Qwerty12345!
+    ports:
+      - "5433:5433"
+  cache:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+  web:
+    build: ./web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/web_build
+    ports:
+      - '8000:8000'
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - cache
