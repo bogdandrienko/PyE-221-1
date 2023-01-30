@@ -1,0 +1,9 @@
+.offcanvas-top-custom-1 {
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 45vh;
+  max-height: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  transform: translateY(-100%);
+}

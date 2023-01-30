@@ -31,7 +31,7 @@ export async function getTodoList(dispatch) {
 // @ts-ignore
 export async function getTodoDetail(dispatch, id) {
   try {
-    dispatch({ type: constants.loadTodoDetail });
+    dispatch({ type: constants.detailTodo.load });
     const response = await axios.get(
       `https://jsonplaceholder.typicode.com/todos/${id}`
     );
@@ -40,17 +40,48 @@ export async function getTodoDetail(dispatch, id) {
       // @ts-ignore
       (response.status === 200 && response.status === 201)
     ) {
-      dispatch({ type: constants.successTodoDetail, payload: response.data });
+      dispatch({ type: constants.detailTodo.success, payload: response.data });
       console.log(response.data);
     } else {
       dispatch({
-        type: constants.errorTodoDetail,
+        type: constants.detailTodo.error,
         payload: response.statusText,
       });
       console.log(response.status, response.statusText);
     }
   } catch (error: any) {
-    dispatch({ type: constants.failTodoDetail, payload: error.toString() });
+    dispatch({ type: constants.detailTodo.fail, payload: error.toString() });
+    console.log("error: ", error);
+  }
+}
+
+// @ts-ignore
+export async function postRegisterUser(dispatch, url, data) {
+  try {
+    dispatch({ type: constants.constantRegisterUser.load });
+    const response = await axios.post(url, data);
+    if (
+      response.data ||
+      // @ts-ignore
+      (response.status === 200 && response.status === 201)
+    ) {
+      dispatch({
+        type: constants.constantRegisterUser.success,
+        payload: response.data,
+      });
+      console.log(response.data);
+    } else {
+      dispatch({
+        type: constants.constantRegisterUser.error,
+        payload: response.statusText,
+      });
+      console.log(response.status, response.statusText);
+    }
+  } catch (error: any) {
+    dispatch({
+      type: constants.constantRegisterUser.fail,
+      payload: error.toString(),
+    });
     console.log("error: ", error);
   }
 }

@@ -1,11 +1,21 @@
 import * as constants from "./constants";
 
 export function constructorReducer(
-  // @ts-ignore
-  constant={load: string, success: string, fail: string, error: string, reset: string}){
-  return function (state = {},
-    action: { type: string; payload: any }){
-      //@ts-ignore
+  constant = {
+    // @ts-ignore
+    load: string,
+    // @ts-ignore
+    success: string,
+    // @ts-ignore
+    fail: string,
+    // @ts-ignore
+    error: string,
+    // @ts-ignore
+    reset: string,
+  }
+) {
+  return function (state = {}, action: { type: string; payload: any }) {
+    //@ts-ignore
     switch (action.type) {
       case constant.load:
         return { load: true }; // data: undefined
@@ -20,7 +30,7 @@ export function constructorReducer(
       default:
         return state;
     }
-  }
+  };
 }
 
 export function reducerTodoList(
@@ -50,15 +60,15 @@ export function reducerTodoDetail(
 ) {
   //@ts-ignore
   switch (action.type) {
-    case constants.loadTodoDetail:
+    case constants.detailTodo.load:
       return { load: true }; // data: undefined
-    case constants.successTodoDetail:
+    case constants.detailTodo.success:
       return { load: false, data: action.payload }; // fail: undefined
-    case constants.failTodoDetail:
+    case constants.detailTodo.fail:
       return { load: false, fail: action.payload }; // error: undefined
-    case constants.errorTodoDetail:
+    case constants.detailTodo.error:
       return { load: false, error: action.payload }; // fail: undefined
-    case constants.resetTodoDetail:
+    case constants.detailTodo.reset:
       return {};
     default:
       return state;
