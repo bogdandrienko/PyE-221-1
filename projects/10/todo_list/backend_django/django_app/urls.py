@@ -1,22 +1,18 @@
-"""django_settings URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django_app import views
 
+
 urlpatterns = [
-    path('todos/', views.todos, name="todos"),
-    path('todos/<todo_id>', views.todos_id, name="todo_id"),
+    path('', views.home, name="home"),
+    path('class/', views.GetAllTodos.as_view(), name="class"),
+
+    path('api/', views.routes, name="routes"),
+    path('api/get_all_users/', views.get_all_users, name="get_all_users"),
+
+    path('api/todos1/', views.todos, name="todos"),  # Read all, Create new
+    path('api/todos1/<todo_id>', views.todos_id, name="todo_id"),  # Read detail, Delete, Update
+
+    # TODO REST
+    re_path(r"^api/todos/$", views.todos_new),               # todo GET all | POST | ...
+    re_path(r"^api/todos/(?P<pk>\d+)/$", views.todos_new_id),  # todo GET one | PUT | DELETE | ...
 ]

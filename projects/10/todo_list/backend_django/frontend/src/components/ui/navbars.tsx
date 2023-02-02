@@ -5,13 +5,17 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 
 // @ts-ignore
-export function OffCanvasExample({ name, title, ...props }) {
+export function Navbar1({ name, title, ...props }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
     <div>
-      <Button variant="primary" onClick={handleShow} className={"w-100 p-3"}>
+      <Button
+        variant="light"
+        onClick={handleShow}
+        className={"w-100 p-3 border border-1 border-dark"}
+      >
         {name}
       </Button>
       <Offcanvas
@@ -57,7 +61,14 @@ export function OffCanvasExample({ name, title, ...props }) {
               </Link>
             </NavDropdown>
             <NavDropdown title="Tasks" id="nav-dropdown">
-              <NavDropdown.Item eventKey="4.1">Task list</NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link
+                  to={"/todos"}
+                  className={"text-decoration-none text-dark"}
+                >
+                  Todo list
+                </Link>
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item eventKey="4.2">
                 Create a new task

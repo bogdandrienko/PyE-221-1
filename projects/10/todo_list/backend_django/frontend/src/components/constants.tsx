@@ -12,6 +12,7 @@ export const resetTodoList = "resetTodoList";
 
 export const detailTodo = constructorConstant("detailTodo");
 export const createTodo = constructorConstant("createTodo");
+export const listTodos = constructorConstant("listTodos");
 export const constantRegisterUser = constructorConstant("constantRegisterUser");
 
 function constructorConstant(name: string) {

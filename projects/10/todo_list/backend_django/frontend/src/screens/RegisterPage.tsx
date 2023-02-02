@@ -32,7 +32,7 @@ export default function Page() {
 
   // @ts-ignore
   return (
-    <bases.Base2 title={"top"}>
+    <bases.Base2>
       <div className={"container container-fluid"}>
         <form onSubmit={(event) => sendForm(event)} className={"form-signin"}>
           <div className={"card"}>

@@ -1,5 +1,6 @@
 import * as constants from "./constants";
 import axios from "axios";
+import { Dispatch } from "react";
 
 // @ts-ignore
 export async function getTodoList(dispatch) {
@@ -84,4 +85,68 @@ export async function postRegisterUser(dispatch, url, data) {
     });
     console.log("error: ", error);
   }
+}
+
+export function getDetailTodo(id: number) {
+  return constructorAction({
+    // url: `https://jsonplaceholder.typicode.com/todos/${id}`,
+    url: `http://127.0.0.1:8000/api/todos/${id}/`,
+    constant: constants.detailTodo,
+  });
+}
+
+export function getAllTodos() {
+  return constructorAction({
+    // url: `https://jsonplaceholder.typicode.com/todos/`,
+    url: `http://127.0.0.1:8000/api/todos/`,
+    constant: constants.listTodos,
+  });
+}
+
+export function constructorAction(
+  props = {
+    // @ts-ignore
+    url,
+    constant: {
+      // @ts-ignore
+      load: string,
+      // @ts-ignore
+      success: string,
+      // @ts-ignore
+      fail: string,
+      // @ts-ignore
+      error: string,
+      // @ts-ignore
+      reset: string,
+    },
+  }
+) {
+  return async function (dispatch: any) {
+    try {
+      // TODO load
+      dispatch({ type: props.constant.load });
+      const response = await axios.get(props.url); // todo откуда берём данные
+      if (response.status === 200 || response.status === 201) {
+        // TODO success
+        dispatch({
+          type: props.constant.success, // todo куда ложим успешные данные
+          payload: response.data,
+        });
+      } else {
+        // TODO error
+        dispatch({
+          type: props.constant.error,
+          payload: response.statusText,
+        });
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      // TODO fail
+      dispatch({
+        type: props.constant.fail,
+        // @ts-ignore
+        payload: error.toString(),
+      });
+    }
+  };
 }

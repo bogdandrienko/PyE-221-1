@@ -1,36 +1,123 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import * as actions from "../components/actions";
+import * as bases from "../components/ui/base";
+import * as constants from "../components/constants";
 
 export default function Page() {
   const dispatch = useDispatch();
   // @ts-ignore
+  const todoListStoreOld = useSelector((state) => state.todoListStoreOld);
+  // @ts-ignore
   const todoListStore = useSelector((state) => state.todoListStore);
+  // @ts-ignore
+  const todoDetailStore1 = useSelector((state) => state.todoDetailStore1);
 
   useEffect(() => {
-    actions.getTodoList(dispatch);
+    // actions.getTodoList(dispatch);
   }, []);
 
+  useEffect(() => {
+    console.log(todoListStore);
+  }, [todoListStore]);
+
+  useEffect(() => {
+    console.log(todoDetailStore1);
+  }, [todoDetailStore1]);
+
+  async function getTodos1() {
+    console.log("getTodos1");
+
+    // @ts-ignore
+    dispatch(actions.getAllTodos());
+    // @ts-ignore
+    dispatch(actions.getDetailTodo(1));
+
+    // actions.getDetailTodo(1);
+  }
+
+  async function getTodos() {
+    try {
+      // TODO load
+      dispatch({ type: constants.listTodos.load });
+      // const response = await axios.get("http://127.0.0.1:8000/api/todos/");
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/todos"
+      );
+      if (response.status === 200 || response.status === 201) {
+        // TODO success
+        dispatch({ type: constants.listTodos.success, payload: response.data });
+      } else {
+        // TODO error
+        dispatch({
+          type: constants.listTodos.error,
+          payload: response.statusText,
+        });
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      // TODO fail
+      dispatch({
+        type: constants.listTodos.fail,
+        // @ts-ignore
+        payload: error.toString(),
+      });
+    }
+  }
+
+  async function getTodo(id: number) {
+    try {
+      // TODO load
+      dispatch({ type: constants.listTodos.load });
+      // const response = await axios.get("http://127.0.0.1:8000/api/todos/");
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/todos/${id}`
+      );
+      if (response.status === 200 || response.status === 201) {
+        // TODO success
+        dispatch({ type: constants.listTodos.success, payload: response.data });
+      } else {
+        // TODO error
+        dispatch({
+          type: constants.listTodos.error,
+          payload: response.statusText,
+        });
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      // TODO fail
+      dispatch({
+        type: constants.listTodos.fail,
+        // @ts-ignore
+        payload: error.toString(),
+      });
+    }
+  }
+
   return (
-    <div>
+    <bases.Base2>
       <h1 className={"lead text-danger text-center"}>Todos list</h1>
+      <button className={"btn btn-danger"} onClick={getTodos1}>
+        getTodos 2
+      </button>
       <div className={"container container-fluid text-center"}>
-        {todoListStore.load === true && (
+        {todoListStoreOld.load === true && (
           <div className={"small fw-light"}>Идёт загрузка</div>
         )}
-        {todoListStore.fail && (
+        {todoListStoreOld.fail && (
           <div className={"small fw-light"}>Обратитесь к администатору</div>
         )}
-        {todoListStore.error && (
-          <div className={"small fw-light"}>{todoListStore.error}</div>
+        {todoListStoreOld.error && (
+          <div className={"small fw-light"}>{todoListStoreOld.error}</div>
         )}
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {!todoListStore.data
+          {!todoListStoreOld.data
             ? "данных пока нет"
             : // @ts-ignore
-              todoListStore.data.map((item, index) => (
+              todoListStoreOld.data.map((item, index) => (
                 <div key={item.id} className="col">
                   <div className="card shadow-sm">
                     <svg
@@ -87,6 +174,6 @@ export default function Page() {
               ))}
         </div>
       </div>
-    </div>
+    </bases.Base2>
   );
 }

@@ -7,18 +7,21 @@ import { reducerAboutCounter } from "../pages/AboutPage";
 
 import * as reducers from "../components/reducers";
 import * as constants from "../components/constants";
+import { listTodos } from "../components/constants";
 
 // @ts-ignore
 export const reducer = combineReducers({
   todosStore: TodosReducer,
   webStore: WebReducer,
-  todoListStore: reducers.reducerTodoList,
-  //todoListStore: reducers.constructorReducer(),
+  todoListStoreOld: reducers.reducerTodoList,
+  //todoListStoreOld: reducers.constructorReducer(),
   todoDetailStore: reducers.reducerTodoDetail,
   aboutStoreCounter: reducerAboutCounter,
   storeRegisterUser: reducers.constructorReducer(
     constants.constantRegisterUser
   ),
+  todoListStore: reducers.constructorReducer(constants.listTodos),
+  todoDetailStore1: reducers.constructorReducer(constants.detailTodo),
 });
 
 const preloadedState = {
