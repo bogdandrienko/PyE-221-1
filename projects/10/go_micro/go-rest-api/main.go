@@ -8,7 +8,9 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
+	"os"
 	"reflect"
+	"time"
 )
 
 func a1Variables() {
@@ -279,7 +281,8 @@ func a7Loops() {
 func MiddlewareLogger(next gin.HandlerFunc) gin.HandlerFunc {
 	return func(request *gin.Context) {
 		// todo
-		fmt.Println("I'm a logger:", request.Request.Method, request.Request.RequestURI)
+
+		fmt.Println("I'm a logger:", time.Now(), request.Request.Method, request.Request.RequestURI)
 		// todo
 
 		next(request)
@@ -346,14 +349,53 @@ func helloWorld(c *gin.Context) {
 	// ассоциативный массив
 }
 
+type Data struct {
+	Text   string `json:"text"`
+	Count  int32  `json:"count"`
+	IsHide bool   `json:"is_hide"` // !CAPITAL
+}
+
+func postLogger(c *gin.Context) {
+	name := "new"
+	//file, err := os.OpenFile(fmt.Sprintf("%s_log.txt", name), os.O_RDWR|os.O_CREATE, 0644)
+	file, err := os.OpenFile(fmt.Sprintf("%s_log.txt", name), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	defer file.Close()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]any{"error": err.Error()})
+		return
+	}
+
+	var data Data
+	if err := c.BindJSON(&data); err != nil {
+		c.JSON(http.StatusBadRequest, map[string]any{"error": err.Error()})
+		return
+	}
+	if len(data.Text) < 1 {
+		c.JSON(http.StatusBadRequest, map[string]any{"error": errors.New("no data").Error()})
+		return
+	}
+	text := ""
+	if data.IsHide == true {
+		text = "Забанен"
+	} else {
+		text = "Не забанен"
+	}
+	_, err = file.WriteString(data.Text + fmt.Sprintf("[%d] (%s)", data.Count, text) + "\n")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]any{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, map[string]any{"response": "Success"})
+}
+
 func ginRun() {
 	gin.SetMode(gin.DebugMode)
-	//r := gin.New()
-	var r *gin.Engine = gin.New()
+	var r = gin.New()
 
 	// router - маршрутизация
-	r.GET("/home", MiddlewareLogger(MiddlewareAuth(helloWorld)))
-	//r.POST()
+	r.GET("/", MiddlewareLogger(MiddlewareAuth(helloWorld)))
+	r.GET("/home", MiddlewareLogger(MiddlewareAuth(helloWorld)))        // curl -v -X GET 127.0.0.1:8000/home
+	r.POST("/api/logger", MiddlewareLogger(MiddlewareAuth(postLogger))) // curl -v -X POST 127.0.0.1:8000/api/logger -d '{"text":"Hello Go", "count": 12, "is_hide": true}'
 	//r.PUT()
 	//r.DELETE()
 
@@ -375,4 +417,10 @@ func main() {
 
 	// https://habr.com/ru/post/188010/
 	ginRun()
+	//err := postLogger("hello world")
+	//if err != nil {
+	//	log.Fatal(err)
+	//	return
+	//}
+
 }
