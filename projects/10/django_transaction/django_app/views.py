@@ -1,11 +1,12 @@
 import datetime
-
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.db import transaction
 from django_app import models
+import re
 
 # Create your views here.
 
@@ -190,12 +191,31 @@ def check(request):
         # mass read
 
         """
-        select id, title from public.django_app_book;
-        select id, title from public.django_app_book where title='Война и мир';
+        select * from public.django_app_book;
+        select * from public.django_app_book where title='Война и мир';
+        
+        select * from public.django_app_book ORDER BY id DESC, title ASC;
+        select * from public.django_app_book WHERE R <= 2;
+        select id, title from public.django_app_book WHERE R <= 2;
+        select * from public.django_app_book WHERE id > 2;
+        select * from public.django_app_book WHERE id = 2;
+        SELECT ... WHERE headline ILIKE '%Lennon%';
+        SELECT ... WHERE headline LIKE 'Lennon%';
+        SELECT ... WHERE headline LIKE '%Lennon';
         """
+
+        # https://docs.djangoproject.com/en/4.1/ref/models/querysets/
 
         # books = models.Book.objects.all()
         # books = models.Book.objects.filter(title='Война и мир')
+        # books = models.Book.objects.order_by('-id', 'title')
+        # books = models.Book.objects.all()[:2]
+        # books = models.Book.objects.only("id", "title")
+        # books = models.Book.objects.filter(id__gte=2, id__le=10) # greater than
+        # books = models.Book.objects.filter(id__eq=2) # equal
+        # Entry.objects.get(headline__icontains='Lennon') WithLennon
+        # Entry.objects.filter(headline__startswith='Lennon') WithLennon
+        Entry.objects.filter(headline__endswith='Lennon')
         # print(books)
 
         # todo READ ####################################################################
@@ -255,6 +275,7 @@ def check(request):
 
     return HttpResponse("<h1>Успешно создано!</h1>")
 
+
 # хэширование - одностронне - нельзя повернуть вспять (hash, hashlib, dictionary O(1) - константное)
 # O(log(n)) - логарифмический
 # O(N) - линейная сложность, цикл одномерный
@@ -262,10 +283,52 @@ def check(request):
 # шифрование - двухстороння - ecrypt(source, key) -> shifr | decrypt(shifr, key) -> source
 
 
-def get_all_books(request):
+def get_public_all_books(request):
     if request.method == "GET":
-        request.user
+        return JsonResponse(data=None, safe=False, status=200)
+        # if request.user.is_authenticated:
+        books = [{"id": i.id, "title": i.title} for i in models.Book.objects.all() if i.id % 2 == 0]
+        return JsonResponse(data=books, safe=False)
+        # else:
+        #     return JsonResponse(data=None, safe=False, status=401)
+    raise Exception("Method Not Allowed")
 
+
+def get_private_all_books(request):
+    if request.method == "GET":
+        return JsonResponse(data=None, safe=False, status=200)
+        # if request.user.is_authenticated:
         books = [{"id": i.id, "title": i.title} for i in models.Book.objects.all()]
         return JsonResponse(data=books, safe=False)
+        # else:
+        #     return JsonResponse(data=None, safe=False, status=401)
     raise Exception("Method Not Allowed")
+
+
+@csrf_exempt
+def post_create_user(request):
+    try:
+        # Trip              # Trip | Trip* | *Trip | *Trip*
+        # TripVehicle       # Trip* | *Trip*
+        # DataTripVehicle   # *Trip*
+        # Data_Trip         # *Trip | *Trip*
+
+        # Trip*
+        # *.jp*g | *.xlsx
+
+        username = request.POST["username"]
+        password = request.POST["password"]
+
+        if not re.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[_-])(?=.*?[0-9]).{8,}$", username):
+            print("Имя пользователя не соответствует уровню")
+            return JsonResponse(data={"detail": "Имя пользователя не соответствует уровню"}, safe=False, status=500)
+        if not re.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!$%^&*-])(?=.*?[0-9]).{12,}$", password):
+            print("Пароль не соответствует уровню")
+            return JsonResponse(data={"detail": "Пароль не соответствует уровню"}, safe=False, status=500)
+
+        User.objects.create_user(username=username, password=password)
+    except Exception as error:
+        print(error)
+        return JsonResponse(data={"detail": f"{error}"}, safe=False, status=500)
+    else:
+        return JsonResponse(data={"detail": "success"}, safe=False, status=200)
