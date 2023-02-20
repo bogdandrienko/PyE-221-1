@@ -1,0 +1,43 @@
+{% load app_django_extras %}
+
+<nav class="container-fluid navbar navbar-expand-lg navbar-light custom-background-transparent-middle-hard">
+    <a class="navbar-brand" href="{% url 'app_name_django_app:' %}">MAIN</a>
+    <a class="navbar-brand" href="{% url 'app_name_django_app:home' %}">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% access_tag 'module_modules' as module_modules %}
+    {% if module_modules %}
+        <ul class="navbar-nav navbar-collapse collapse" id="navbarSupportedContent">
+            {% access_tag 'superuser' as superuser %}
+            {% if superuser %}
+                <li class="dropend">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                        Task list
+                        <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill"> {{ task_count }}</i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <strong class="dropdown-header">Todo list</strong>
+                            {% access_tag 'develop' as develop %}
+                            {% if develop %}
+                                <a class="dropdown-item" href="{% url '' %}">
+                                    <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                                    task create
+                                </a>
+                            {% endif %}
+                            {% access_tag 'develop' as develop %}
+                            {% if develop %}
+                                <a class="dropdown-item" href="{% url '' %}">
+                                    <i class="fa-solid fa-list m-0 p-1"></i>
+                                    task list
+                                    <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill"> {{ task_count }}</i>
+                                </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</nav>

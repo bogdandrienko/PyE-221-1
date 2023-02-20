@@ -1,0 +1,86 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block title %}All posts{% endblock title %}
+{% block main %}
+
+    <section class="">11111111111111111111111</section>
+    <div class="section-first">2222222222222</div>
+
+    <div class="container container-fluid">
+
+    <nav aria-label="Page navigation example">
+
+
+    {% include 'components/pagination.html' %}
+
+</nav>
+<div class="d-flex">
+    <form action="{% url 'django_twitter_app:post_list' %}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+      {% csrf_token %}
+        <div class="input-group m-3">
+
+    <input type="search" class="form-control p-3 w-50" required placeholder="введите сюда часть названия..." name="search">
+    <select class="form-select form-select-lg mb-3" required aria-label=".form-select-lg example" name="filter">
+  <option selected>Выберите пользователя для фильтрации</option>
+    {% for i in users %}
+        <option value="{{ i.username }}">{{ i.username }}</option>
+    {% endfor %}
+</select>
+            <button class="btn btn-lg btn-primary" type="submit">искать</button>
+        </div>
+  </form>
+
+        <form action="{% url 'django_twitter_app:post_list' %}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+      {% csrf_token %}
+
+        <div class="input-group m-3">
+<select class="form-select form-select-lg mb-3" required aria-label=".form-select-lg example" name="filter">
+  <option selected>Выберите пользователя для фильтрации</option>
+    {% for i in users %}
+        <option value="{{ i.username }}">{{ i.username }}</option>
+    {% endfor %}
+</select>
+    <button class="btn btn-lg btn-primary" type="submit">искать</button>
+        </div>
+  </form>
+</div>
+
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        {% for post in page %}
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ post.title }}</text></svg>
+                <div class="card-header">{{ post.title }}</div>
+                <div class="card-body">
+                  <p class="card-text">{{ post.description }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{% url 'django_twitter_app:post_detail' post.id %}" type="button" class="btn btn-sm btn-outline-secondary">Подробнее..</a>
+                      <a href="{% url 'django_twitter_app:post_update' post.id %}" type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                    </div>
+                    <small class="text-muted">
+                        <a href="{% url 'django_twitter_app:post_delete' post.id %}" class="text-decoration-none btn"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                    </small>
+                  </div>
+                </div>
+
+              </div>
+            {{ forloop.counter }}
+            <div class="btn btn-outline-dark">автор: {{ post.user }}</div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+
+
+    {% include 'components/pagination.html' %}
+{% endblock main %}

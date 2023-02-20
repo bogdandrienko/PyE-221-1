@@ -1,0 +1,100 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+
+{% block main %}
+    Post List
+
+    <div class="container d-flex justify-content-center align-self-center">
+        {% include 'components/paginator.html' %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+
+        {% for post in page %}
+            <div class="col">
+                <div class="card border border-1 border-dark custom-background-transparent-middle m-1 p-0">
+                    <div class="card-header">
+                        <div class="m-0 p-3">
+                            <div class="d-flex justify-content-around">
+                                <a class="text-decoration-none text-dark" href="">
+                                    <h5>{{ post.title }}</h5>
+                                </a>
+                                <form action="{% url 'app_name_django_app:update' post.id %}"
+                                      method="POST"
+                                      target="_self"
+                                      enctype="multipart/form-data"
+                                      autocomplete="on"
+                                      class="m-0 p-0"
+                                >
+                                    {% csrf_token %}
+                                    <div>
+                                        <input type="hidden"
+                                           name="is_completed"
+                                           required=""
+                                           placeholder=""
+                                           {% if task.is_completed %}
+                                                value="False"
+                                           {% else %}
+                                                value="True"
+                                           {% endif %}
+                                           minlength="1"
+                                           maxlength="32"
+                                           class="form-control form-control-sm"
+                                    />
+                                    </div>
+                                    <div class="btn-group m-0 p-1">
+                                        {% if task.is_completed %}
+                                            <button class="btn btn-sm btn-outline-danger m-0 p-1" type="submit">
+                                                <i class="fa-solid fa-circle-xmark text-danger m-0 p-1"></i>
+                                                not complete
+                                            </button>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-outline-success m-0 p-1" type="submit">
+                                                <i class="fa-solid fa-circle-check text-success m-0 p-1"></i>
+                                                complete
+                                            </button>
+                                        {% endif %}
+                                        <a class="dropdown-item" href="{% url '' %}">
+                                            <i class="fa-solid fa-list m-0 p-1"></i>
+                                            task list
+                                            <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill"> {{ task_count }}</i>
+                                        </a>
+
+
+                                        {% is_your_post post.id as is_my_post %}
+                                        {% if is_my_post %}
+                                            <a href="{% url 'app_name_django_app:delete' post.id %}" class="btn btn-sm btn-outline-danger m-0 p-1">
+                                                <i class="fa-solid fa-circle-minus text-danger m-0 p-1"></i>
+                                                delete
+                                            </a>
+                                        {% else %}
+                                            Вам недостаточно прав
+                                        {% endif %}
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="card-body">
+                        <div class="m-0 p-3">
+                            <div class="d-flex justify-content-around">
+                                <a class="text-decoration-none text-dark" href="">
+                                    <h5>{{ post.description|slice:10 }}</h5>
+                                    <h5>{{ post.description|slice:10 }}</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="container d-flex justify-content-center align-self-center">
+        {% include 'components/paginator.html' %}
+    </div>
+
+{% endblock main %}

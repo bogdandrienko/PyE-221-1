@@ -1,0 +1,30 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block title %}Create users{% endblock title %}
+{% block main %}
+
+<section class="py-5 text-center container">
+    <main class="form-signin">
+  <form action="{% url 'django_twitter_app:create_users' %}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+      {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Введите свои данные</h1>
+
+    <div class="form-floating">
+      <input type="file" accept=".xls, .xlsx, .xlsx" class="form-control" id="floatingInput" placeholder="name@example.com" required name="excel">
+      <label for="floatingInput">Вставьте файл</label>
+    </div>
+      <div class="input-group">
+          <a href="{% static "media/admin/export_users.xlsx" %}" class="w-50 btn btn-lg btn-danger" type="submit">скачать шаблон</a>
+          <button class="w-50 btn btn-lg btn-primary" type="submit">Загрузить</button>
+      </div>
+
+  </form>
+</main>
+</section>
+
+
+{% endblock main %}

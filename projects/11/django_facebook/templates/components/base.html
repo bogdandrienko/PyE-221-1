@@ -1,0 +1,50 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="just for fun">
+    <meta name="author" content="Bogdan">
+    <meta name="generator" content="Custom">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block head %}{% endblock head %}
+    <title>
+        {% block title %}Page Title{% endblock title %}
+    </title>
+    {% block prestyle %}{% endblock prestyle %}
+    {% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+    {#<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/bootstrap/bootstrap.min.bootstrap">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-5.2.3/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-6.3.0/css/bootstrap/all.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font_zen/style.bootstrap' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}">
+    {% block poststyle %}{% endblock poststyle %}
+</head>
+<body class="d-flex flex-column h-100 custom_body_1" style="min-height: 100vh;">
+    {% block navbar %}{% endblock navbar %}
+    <main class="flex-shrink-0">
+        <div class="container-fluid">
+            <div class="container">
+                <div class="container-fluid">
+                    <div class="text-center">
+                        <h1 class="display-5 fw-bold fst-italic">{% block header %}{% endblock header %}</h1>
+                        <div class="col-lg-6 mx-auto">
+                            <p class="lead mb-4">{% block description %}{% endblock description %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <main class="container p-0 custom_main_1">
+                {% block main %}{% endblock main %}
+            </main>
+        </div>
+    </main>
+    {% block footer %}{% endblock footer %}
+    {% block prescript %}{% endblock prescript %}
+    <script src="{% static 'js/bootstrap-5.2.3/bootstrap.min.js' %}"></script>
+    {% block postscript %}{% endblock postscript %}
+</body>
+</html>

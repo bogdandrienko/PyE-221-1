@@ -1,0 +1,85 @@
+{% extends "components/base.html" %}
+
+{% block title %}Detail post{% endblock title %}
+{% block main %}
+
+    <div class="container container-fluid">
+
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-1">
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ post.title }}</text></svg>
+            <div class="card-header">{{ post.title }}</div>
+            <div class="card-body">
+              <p class="card-text">{{ post.description }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+
+                    <form action="{% url 'django_twitter_app:post_rating' post.id %}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                      >
+                          {% csrf_token %}
+                          <input type="hidden" value="like" name="status">
+                            <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-thumbs-up"></i> ({{ ratings.0 }})</button>
+                      </form>
+
+                                        <form action="{% url 'django_twitter_app:post_rating' post.id %}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                      >
+                          {% csrf_token %}
+                          <input type="hidden" value="dislike" name="status">
+                            <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-thumbs-down"></i>({{ ratings.1 }})</button>
+                      </form>
+                    ({{ ratings.2 }})
+                </div>
+                <small class="text-muted">
+                    <a href="{% url 'django_twitter_app:post_delete' post.id %}" class="text-decoration-none btn"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="border m-3 border-dark border-2">
+            Комментарии:
+            <form action="{% url 'django_twitter_app:post_comment_create' post.id %}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+      {% csrf_token %}
+    <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Отправьте своё мнение!</h1>
+                <div class="input-group">
+      <input type="text" class="form-control w-75" placeholder="введите сюда текст комментария..." maxlength="300" minlength="1" required name="text">
+        <button class="w-25 btn btn-sm btn-primary form-control" type="submit">комментировать</button>
+                </div>
+  </form>
+        </div>
+    {% include 'components/pagination.html' %}
+    <ul class="list-group">
+        {% for comment in page %}
+         <li class="list-group-item">
+             <div class="d-flex justify-content-between"><button class="btn btn-light">({{ comment.user }})</button> {{ comment.text }} [{{ comment.created }}] <a href="{% url 'django_twitter_app:post_comment_delete' comment.id %}" class="text-decoration-none btn"><i class="fa-solid fa-trash-can text-danger"></i></a></div>
+             <form action="{% url 'django_twitter_app:notification_create' %}"
+    method="POST"
+    enctype="multipart/form-data"
+                   class="form-control form-control-sm"
+  >
+      {% csrf_token %}
+                <div class="input-group">
+      <input type="text" class="form-control w-50 form-control-sm" placeholder="введите сюда текст жалобы..." maxlength="300" minlength="1" required name="title">
+        <button class="w-25 btn btn-sm btn-danger form-control form-control-sm" type="submit">пожаловаться</button>
+                </div>
+  </form>
+         </li>
+        {%  endfor %}
+    </ul>
+    </div>
+    {% include 'components/pagination.html' %}
+
+
+{% endblock main %}
