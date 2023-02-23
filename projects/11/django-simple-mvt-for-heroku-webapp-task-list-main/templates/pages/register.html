@@ -1,0 +1,46 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='Home page' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}Register{% endblock header %}
+
+{% block description %}this page contains global information about project{% endblock description %}
+
+{% block main %}
+
+    <form method="POST" action="{% url "app_name_task_list:register" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="usernameHelp" placeholder="Ваш логин" required name="username"/>
+    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ваш пароль" required name="password"/>
+  </div>
+  <button type="submit" class="btn btn-primary">Создать</button>
+</form>
+
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}
