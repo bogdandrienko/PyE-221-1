@@ -1,0 +1,115 @@
+
+
+################### WINDOWS ############################################################################################
+
+#
+#
+#
+
+# обновляет "глобально" версию пакетов pip
+python.exe -m pip install --upgrade pip
+
+# устанавливает "глобально" библиотеку для создания виртуальных окружений
+pip install env
+
+# создаёт виртуальное окружение
+python -m venv env
+
+# активация виртуального окружения
+call .\env\Scripts\activate.bat
+
+# обновляет "локально" версию пакетов pip
+pip install --upgrade pip
+
+#
+#
+#
+
+# "построчно" читает данные с файла и устанавливает эти библиотеки в уже активированное виртуальное окружение
+pip install -r requirements.txt
+
+# "замораживает" установленные библиотеки из виртуального окружения
+pip freeze > requirements.txt
+
+#
+#
+#
+
+# устанавливает библиотеку Django-web-framework
+pip install django
+
+
+pip install django-cors-headers
+pip install Pillow
+pip install lxml
+pip install djangorestframework
+
+# создание Django-проекта с именем "settings" в этой же директории
+django-admin startproject django_settings .
+
+# создание Django-приложение с именем "app_django" в этой же директории
+django-admin startapp app_django
+
+#
+#
+#
+
+# создание миграций к базе данных
+python manage.py makemigrations
+
+# применение миграций к базе данных
+python manage.py migrate
+
+#
+#
+#
+
+# сбор всей статики по проекту, перед этим надо переключить settings.DEBUG = False
+python manage.py collectstatic --noinput
+
+
+#
+#
+#
+
+# создание суперпользователя с именем "Bogdan" и почтой "bogdandrienko@gmail.com", затем нужно задать пароль
+python manage.py createsuperuser --username Bogdan --email bogdandrienko@gmail.com
+
+#
+#
+#
+
+# запускает "development"(сервер для разработки) на адресе "127.0.0.1" и порту № "8000"
+python manage.py runserver 127.0.0.1:8000
+
+# запускает "development"(сервер для разработки) на адресе "localhost" и порту № "8080"
+python manage.py runserver localhost:8080
+
+# запускает "development"(сервер для разработки) на собственном ip-адресе и порту № "8000"
+python manage.py runserver 0.0.0.0:8000
+
+#
+#
+#
+
+# инициализация NPM и установка пакета Prettier для автоматического форматирования html
+npm init
+npm i prettier
+
+#
+#
+#
+
+################### LINUX ##############################################################################################
+
+#
+#
+#
+
+
+
+#
+#
+#
+
+

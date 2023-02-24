@@ -43,3 +43,22 @@ def cut(value, arg):
 def lower(value):  # Only one argument.
     """Converts a string into all lowercase"""
     return value.lower()
+
+
+@register.filter(name='cut_string_50')
+def cut_string_50(source):
+    if len(source) > 50:
+        return source[0:50]
+    else:
+        return source
+
+
+@register.simple_tag
+def today(is_word):
+    if is_word == True:
+        now = datetime.datetime.now().weekday() + 1  # TODO get day_off_week by name
+        return now
+        # print(datetime.datetime.weekday())
+    else:
+        now = datetime.datetime.now().weekday() + 1
+        return now

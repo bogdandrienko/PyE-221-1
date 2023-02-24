@@ -48,12 +48,22 @@ def home(request):
     return render(request, 'pages/home.html', context)
 
 
+
+def post(request):
+    posts = models.Post.objects.all()
+    context = {
+        'names':
+             posts
+    }
+    return render(request, 'pages/Post_detail.html', context)
+
+
 def create(request):
     if request.method == 'POST':
         title = request.POST.get("title", "")
         description = request.POST.get("description", "")
         models.Task.objects.create(
-            author = User.objects.get(id=1), # todo temporary!!!
+            author=request.user,
             title=title,
             description=description,
             is_completed=False,
@@ -126,5 +136,11 @@ def update(request, task_id=None):
 
 
 def delete(request, task_id=None):
-    models.Task.objects.get(id=task_id).delete()
+    # models.Task.objects.get(id=task_id).delete()
+    task = models.Task.objects.get(id=task_id)
+    if task.author == request.user:
+        task.delete()
+    else:
+        pass  # TODO Logging invalid action
+
     return redirect(reverse('app_name_task_list:read_list', args=()))

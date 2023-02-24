@@ -1,0 +1,63 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='Home page' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}Home page{% endblock header %}
+
+{% block description %}this page contains global information about project{% endblock description %}
+
+{% block main %}
+<div class="px-4 pt-5 text-center border-bottom">
+    <h1 class="display-4 fw-bold">'task list' project</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead">
+            Custom created Django 'Native' web-app. Native - is UI(User Interface) based develop only on Django-templates(MVT) without any frontend framework(react/vue/angular).
+        </p>
+        <p class="lead mb-4">This simple project contains:
+            <ul class=" custom-background-transparent-middle">
+                <li class="">django: based on MVT (Model-View-Template) pattern</li>
+                <li class="">django: CRUD(Create-Read-Update-Delete)-like endpoints</li>
+                <li class="">django: with 'static' data and external 'templates' folder</li>
+                <li class="">django: custom templatetags, filters, context-processors</li>
+                <li class="">django-template: scalable extends/include structure</li>
+                <li class="">django-template: Paginator</li>
+                <li class="">production: with all cmd+sh scripts (+ comments)</li>
+                <li class="">bootstrap css styles + js scripts</li>
+                <li class="">custom css styles (with font-family: 'Zen Kaku Gothic Antique')</li>
+                <li class="">and more...</li>
+            </ul>
+        </p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+        <a class="text-decoration-none lead btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'app_name_task_list:read_list' %}">
+            START!
+        </a>
+    </div>
+    </div>
+    <div class="overflow-hidden" style="max-height: 30vh;">
+        <div class="container px-5">
+            <img src="{% static 'img/prstcreen.png' %}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+        </div>
+    </div>
+</div>
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}

@@ -1,10 +1,11 @@
 """
-0) Писать по pep8(типизация...)
-1) Спрятать настройки ключи, пароли и тд. в файл .env
-3) Добавить авторизацию(добавить models tasks)
-4) Написать свой context processor(Вывод footer и navbar и количество зарегистрированных пользователей
+# Перенести admin на навбар
+# 0) Писать по pep8(типизация...)
+# 1) Спрятать настройки ключи, пароли и тд. в файл .env
+# 3) Добавить авторизацию(добавить models tasks)
+# 4) Написать свой context processor(Вывод footer и navbar и количество зарегистрированных пользователей
 5) Написать собственный middleware
-6) написать собственный фильтр
+# 6) написать собственный фильтр
 7) Написать свой simple tag
 8) Написать свой чат(web sockets)
 9) Написать views через класс BaseView(HttpResponse, Json, Html)
@@ -19,24 +20,40 @@
 18) Добавить скрыть\показать пароль(native js)
 19) Обработчик ошибок
 20) Защита доступа к защищенным старницам другим пользователям
+21) Логирование
 """
 
 from pathlib import Path
+import environ
+import os
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    SECRET_KEY = (str, 'key_1'),
+    ALLOWED_HOSTS = (str, ''),
+)
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, "django_settings", '.env' ))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l+2qgm1=#9zgqkk(4o3cwm@s^*s_m4k=$p1_*2u!g5kz5@4lb@'
+# SECRET_KEY = ''
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = [f'{env("ALLOWED_HOSTS")}']
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -86,6 +103,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'django.template.context_processors.request',
+                'app_django.context_processors.user_count',
                 'app_django.context_processors.task_count',
             ],
         },

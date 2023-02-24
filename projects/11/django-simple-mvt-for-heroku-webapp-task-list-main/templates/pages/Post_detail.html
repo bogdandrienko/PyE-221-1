@@ -1,0 +1,22 @@
+{% load app_django_extras %}
+{% today True as develop %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hi</h1>
+
+<ul>
+{% for i in names %}
+    <li>{{ i.title}} {{i.description|upper}}<li>
+
+{% endfor %}
+
+
+</ul>
+
+</body>
+</html>

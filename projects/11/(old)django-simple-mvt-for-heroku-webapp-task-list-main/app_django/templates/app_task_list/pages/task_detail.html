@@ -1,0 +1,125 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='task details' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}task details{% endblock header %}
+
+{% block description %}this page contains detail data from selected task{% endblock description %}
+
+{% block main %}
+<div class="container shadow-lg m-0 p-0">
+    <div class="shadow border-bottom m-0 p-0">
+        <div class="d-flex justify-content-around">
+            <a class="text-decoration-none lead btn btn-sm btn-outline-primary m-1 p-2" href="{% url 'app_name_task_list:read_list' %}">
+                <= all tasks <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">{{ task_count }}</i>
+            </a>
+            <a class="text-decoration-none btn btn-sm btn-outline-success m-1 p-2" href="{% url 'app_name_task_list:create' %}">
+                <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                create new task
+            </a>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1">
+        <div class="col">
+            <div class="card custom-background-transparent-middle">
+                <div class="card-header">
+                    <div class="m-0 p-3">
+                        <div class="d-flex justify-content-around">
+                            <h5>{{task.title}}</h5>
+                            <form action="{% url 'app_name_task_list:update' task.id %}"
+                                  method="POST"
+                                  target="_self"
+                                  enctype="multipart/form-data"
+                                  name="idea_create"
+                                  autocomplete="on"
+                                  class="m-0 p-0"
+                            >
+                                {% csrf_token %}
+                                <div>
+                                    <input type="hidden"
+                                       name="is_completed"
+                                       required=""
+                                       placeholder=""
+                                       {% if task.is_completed %}
+                                            value="False"
+                                       {% else %}
+                                            value="True"
+                                       {% endif %}
+                                       minlength="1"
+                                       maxlength="32"
+                                       class="form-control form-control-lg"
+                                />
+                                </div>
+                                <div class="btn-group m-0 p-1">
+                                    {% if task.is_completed %}
+                                        <button class="btn btn-sm btn-outline-danger m-0 p-1" type="submit">
+                                            <i class="fa-solid fa-circle-xmark text-danger m-0 p-1"></i>
+                                            not complete
+                                        </button>
+                                    {% else %}
+                                        <button class="btn btn-sm btn-outline-success m-0 p-1" type="submit">
+                                            <i class="fa-solid fa-circle-check text-success m-0 p-1"></i>
+                                            complete
+                                        </button>
+                                    {% endif %}
+                                    <a href="{% url 'app_name_task_list:update' task.id %}" class="btn btn-sm btn-outline-warning m-0 p-1">
+                                        <i class="fa-solid fa-screwdriver-wrench text-warning m-0 p-1"></i>
+                                        change
+                                    </a>
+                                    <a href="{% url 'app_name_task_list:delete' task.id %}" class="btn btn-sm btn-outline-danger m-0 p-1">
+                                        <i class="fa-solid fa-circle-minus text-danger m-0 p-1"></i>
+                                        delete
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                        {% if task.is_completed %}
+                            <div class="feature-icon bg-success bg-gradient text-white">
+                                <p class="m-0 p-1"></p>
+                            </div>
+                        {% else %}
+                            <div class="feature-icon bg-danger bg-gradient text-white">
+                                <p class="m-0 p-1"></p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="m-0 p-3">{{ task.description }}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between m-0 p-1">
+                        <small class="text-warning">
+                            {{ task.created }} [created]
+                        </small>
+                        <small class="text-success">
+                            {{ task.updated }} [updated]
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}

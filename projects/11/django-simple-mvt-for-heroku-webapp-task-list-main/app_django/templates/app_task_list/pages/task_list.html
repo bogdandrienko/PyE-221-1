@@ -84,7 +84,7 @@
                                 <div class="m-0 p-3">
                                     <div class="d-flex justify-content-around">
                                         <a class="text-decoration-none text-dark" href="{% url 'app_name_task_list:read' task.id %}">
-                                            <h5>{{ task.title|cut_string:30 }}</h5>
+                                            <h5>{{ task.title|cut_string:30 }} ({{task.author}})</h5>
                                         </a>
                                         <form action="{% url 'app_name_task_list:update' task.id %}"
                                               method="POST"
@@ -122,10 +122,13 @@
                                                         complete
                                                     </button>
                                                 {% endif %}
+                                                {% if task.author == request.user %}
                                                 <a href="{% url 'app_name_task_list:delete' task.id %}" class="btn btn-sm btn-outline-danger m-0 p-1">
                                                     <i class="fa-solid fa-circle-minus text-danger m-0 p-1"></i>
-                                                    delete
+                                                    delete ({{task.author}} {{request.user.username}})
+
                                                 </a>
+                                                {% endif %}
                                             </div>
                                         </form>
                                     </div>
