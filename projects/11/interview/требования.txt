@@ -98,8 +98,174 @@ SOLID, DRY, KISS
 
 
 
+Как добавить middleware в проект Django?
+Какие пакеты(в каком смысле пакеты) Django используются для работы с формами?
+Что значит кастомная (например чем отличается миграция от кастомной миграции)
+Что такое CBV (Class Based Views) в Django?
+Как создать CBV в Django?
+Как использовать миксины в Django?
+Как создать свой кастомный миксин в Django?
+Как работать с сигналами в Django?
+Как создать свой собственный сигнал в Django?
+Как использовать Celery для асинхронных задач в Django?
+Как использовать Django с RESTful API?
+Как использовать Django с AWS?
 
 
+
+"Git
+OOP
+Обучение и развитие
+HTML/CSS
+Умение работать в команде
+Организация внешнего обучения
+Python
+Django Framework"
+"Python
+Django Framework
+Typescript
+Git
+Docker
+Vue.js"
+"API
+Удаленная работа
+Python
+Django Framework
+Docker
+Celery
+PostgreSQL
+Redis
+amoCRM"
+"Python
+Django Framework
+PostgreSQL
+SQL
+CSS
+Git
+RabbitMQ"
+"Python
+Django Framework
+SQL (Postgress)
+Docker
+Git
+Будет плючом:
+NoSQL
+JavaScript\TypeScript, WebSocket, gRPC
+Kafka, RabbitMQ и Redis
+ClickHouse\MongoDB\PostgresSQL
+Kubernetes"
+"Python
+PostgreSQL
+Django Framework
+Linux
+JavaScript
+Django Rest Framework
+Английский — A2 — Элементарный"
+"Python
+Rest API
+Python + Flask/Django
+Git, Selenium
+unix"
+"Python
+Удаленная работа
+Высшее образование
+Django Framework
+Flask
+Qt"
+"CSS
+Git
+JavaScript
+API
+HTML
+SQL
+Nginx
+Python
+Gunicorn
+Flask"
+"Python
+Linux
+MySQL
+Vuetify 3 + Nuxt 3
+Fronend
+Ubuntu Server
+Docker
+Celery, Redis
+MongoDB
+Высокий уровень самоорганизации
+Решение нестандартных задач
+asyncio
+Docker-compose
+Энтузиазм
+LibreOffice
+Работа в условиях многозадачности
+Лояльность
+Умение работать в условиях многозадачности
+Умение изучать
+Английский — B1 — Средний"
+"Python
+Django Framework
+Aiohttp
+Kubernetes
+Terraform
+Docker"
+"Python3
+
+Django (Django Rest Framework)
+
+PostgreSQL
+
+ClickHouse
+
+Redis
+
+Git (Gitlab)
+
+Celery+RabbitMQ (Django-RQ)
+Git
+Linux
+ООП
+Django Framework
+PostgreSQL
+Python
+Flask
+OpenAPI
+MongoDB
+RESTful API
+Английский — B1 — Средний"
+Python, django, mysql, celery, rabbitmq
+"Python
+Django
+Pytest"
+"fastcgi
+highload
+С/С++/С#
+golang
+Python
+Django
+Yii
+OpenCart
+Laravel
+Raspberry Pi
+Arduino
+web
+backend developer
+Flash MySQL
+Nginx
+MySQL
+JavaScript
+HTML5
+backend
+Pl/Python
+PHP
+C#
+MS SQL
+PostgreSQL
+Joomla CMS
+SQL
+C/C++
+Docker
+Kubernetes
+Yandex Cloud"
 
 
 
