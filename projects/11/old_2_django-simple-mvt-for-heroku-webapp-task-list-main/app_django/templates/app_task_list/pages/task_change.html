@@ -1,0 +1,93 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='task change' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}task change{% endblock header %}
+
+{% block description %}this page contains form with task data fields for send data to change task{% endblock description %}
+
+{% block main %}
+<div class="container shadow-lg m-0 p-0">
+    <div class="shadow border-bottom">
+        <div class="d-flex text-start">
+            <a class="text-decoration-none lead btn btn-sm btn-outline-primary m-1 p-2" href="{% url 'app_name_task_list:read_list' %}">
+                <= all tasks <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">{{ task_count }}</i>
+            </a>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 custom-background-transparent-middle m-0 p-0">
+        <form action="{% url 'app_name_task_list:update' task.id %}"
+                  method="POST"
+                  target="_self"
+                  enctype="multipart/form-data"
+                  name="idea_create"
+                  autocomplete="on"
+                  class="text-center"
+        >
+            {% csrf_token %}
+            <div>
+                <div>
+                    <label class="form-control-sm w-50 m-1">
+                        Title:
+                        <input type="text"
+                               name="title"
+                               required=""
+                               placeholder="input 'title' here..."
+                               value="{{ task.title }}"
+                               minlength="1"
+                               maxlength="300"
+                               class="form-control form-control-sm"
+                        />
+                        <small class="text-muted">chars count: <= 300</small>
+                    </label>
+                    <label class="form-control-sm w-75 m-1">
+                        Description:
+                        <textarea type="text"
+                                  name="description"
+                                  required=""
+                                  placeholder="input 'description' here..."
+                                  minlength="1"
+                                  maxlength="3000"
+                                  rows="3"
+                                  class="form-control form-control-sm"
+                        >{{ task.description }}</textarea>
+                        <small class="text-muted">chars count: <= 3000</small>
+                    </label>
+                </div>
+            </div>
+            <hr/>
+            <div class="container-fluid text-center">
+                <ul class="row row-cols-auto row-cols-md-auto row-cols-lg-auto nav justify-content-center">
+                    <li class="m-1">
+                        <button class="btn btn-sm btn-outline-primary" type="submit">submit</button>
+                    </li>
+                    <li class="m-1">
+                        <button class="btn btn-sm btn-outline-warning" type="reset">reset</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}

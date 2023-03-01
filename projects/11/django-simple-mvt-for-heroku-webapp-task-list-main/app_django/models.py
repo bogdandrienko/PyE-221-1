@@ -5,10 +5,20 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Post(models.Model):
     title = models.CharField('Заголовок', max_length=200)
     description = models.TextField('Описание', default="")
 
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-title',)
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
+        # db_table = 'comment_task_list_model_table'
+
+    def __str__(self):
+        return f"{self.title} | {self.description}"
 
 
 class Task(models.Model):
@@ -104,7 +114,6 @@ class Task(models.Model):
         auto_now_add=False,
     )
 
-
     class Meta:
         app_label = 'app_django'
         ordering = ('-updated',)
@@ -118,3 +127,36 @@ class Task(models.Model):
         else:
             completed = "Неактивно"
         return f"{self.title} | {self.description[0:30]}... | {completed} | {self.updated}"
+
+
+class PostComment(models.Model):
+    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+    date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-date',)
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comment'
+        # db_table = 'comment_task_list_model_table'
+
+    def __str__(self):
+        return f"{self.article} | {self.author} | {self.date} | {self.description}"
+
+
+class PostLike(models.Model):
+    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.BooleanField()
+
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-id',)
+        verbose_name = 'Like'
+        verbose_name_plural = 'Likes'
+        db_table = 'like_task_list_model_table'
+
+    def __str__(self):
+        return f"{self.article} | {self.author} | {self.status}"

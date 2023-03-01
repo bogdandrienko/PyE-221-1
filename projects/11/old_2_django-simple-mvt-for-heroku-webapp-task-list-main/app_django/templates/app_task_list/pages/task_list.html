@@ -1,0 +1,211 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
+
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='task list' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}task list{% endblock header %}
+
+{% block description %}this page contains all tasks{% endblock description %}
+
+{% block main %}
+<div class="container shadow-lg custom-background-transparent-hard m-0 p-0">
+    <div class="shadow border-bottom m-0 p-0">
+        <div class="d-flex justify-content-around">
+            <h6 class="lead fw-bold m-1 p-2">tasks <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">{{ task_count }}</i>:</h6>
+            <a class="text-decoration-none btn btn-sm btn-outline-success m-1 p-2" href="{% url 'app_name_task_list:create' %}">
+                <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                create new task
+            </a>
+        </div>
+    </div>
+    <div class="text-end">
+        <form action="{% url 'app_name_task_list:read_list' %}"
+        method="GET"
+        target="_self"
+        enctype="multipart/form-data"
+        name="idea_create"
+        autocomplete="on"
+        class="m-0 p-0"
+        >
+        {% csrf_token %}
+        <div>
+        <input type="hidden"
+           name="is_detail_view"
+           required=""
+           placeholder=""
+           {% if is_detail_view %}
+                value="False"
+           {% else %}
+                value="True"
+           {% endif %}
+           minlength="1"
+           maxlength="32"
+           class="form-control form-control-sm"
+        />
+        </div>
+        {% if is_detail_view %}
+            <button class="btn btn-lg m-0 p-1" type="submit">
+                <i class="fa-solid fa-list-check text-secondary m-0 p-1"></i>
+                list view
+            </button>
+        {% else %}
+            <button class="btn btn-lg m-0 p-1" type="submit">
+                <i class="fa-solid fa-calendar-week text-secondary m-0 p-"></i>
+                detail view
+            </button>
+        {% endif %}
+        </form>
+    </div>
+
+    {% if page %}
+        <div class="container d-flex justify-content-center align-self-center">
+            {% include 'components/paginator.html' %}
+        </div>
+
+        {% if is_detail_view %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                {% for task in page %}
+                    <div class="col">
+                        <div class="card border border-1 border-dark custom-background-transparent-middle m-1 p-0">
+                            <div class="card-header">
+                                <div class="m-0 p-3">
+                                    <div class="d-flex justify-content-around">
+                                        <a class="text-decoration-none text-dark" href="{% url 'app_name_task_list:read' task.id %}">
+                                            <h5>{{ task.title|cut_string:30 }} ({{task.author}})</h5>
+                                        </a>
+                                        <form action="{% url 'app_name_task_list:update' task.id %}"
+                                              method="POST"
+                                              target="_self"
+                                              enctype="multipart/form-data"
+                                              name="idea_create"
+                                              autocomplete="on"
+                                              class="m-0 p-0"
+                                        >
+                                            {% csrf_token %}
+                                            <div>
+                                                <input type="hidden"
+                                                   name="is_completed"
+                                                   required=""
+                                                   placeholder=""
+                                                   {% if task.is_completed %}
+                                                        value="False"
+                                                   {% else %}
+                                                        value="True"
+                                                   {% endif %}
+                                                   minlength="1"
+                                                   maxlength="32"
+                                                   class="form-control form-control-sm"
+                                            />
+                                            </div>
+                                            <div class="btn-group m-0 p-1">
+                                                {% if task.is_completed %}
+                                                    <button class="btn btn-sm btn-outline-danger m-0 p-1" type="submit">
+                                                        <i class="fa-solid fa-circle-xmark text-danger m-0 p-1"></i>
+                                                        not complete
+                                                    </button>
+                                                {% else %}
+                                                    <button class="btn btn-sm btn-outline-success m-0 p-1" type="submit">
+                                                        <i class="fa-solid fa-circle-check text-success m-0 p-1"></i>
+                                                        complete
+                                                    </button>
+                                                {% endif %}
+                                                {% if task.author == request.user %}
+                                                <a href="{% url 'app_name_task_list:delete' task.id %}" class="btn btn-sm btn-outline-danger m-0 p-1">
+                                                    <i class="fa-solid fa-circle-minus text-danger m-0 p-1"></i>
+                                                    delete ({{task.author}} {{request.user.username}})
+
+                                                </a>
+                                                {% endif %}
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% if task.is_completed %}
+                                        <div class="feature-icon bg-success bg-gradient text-white">
+                                            <p class="m-0 p-1"></p>
+                                        </div>
+                                    {% else %}
+                                        <div class="feature-icon bg-danger bg-gradient text-white">
+                                            <p class="m-0 p-1"></p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="m-0 p-3">{{ task.description|cut_string:100 }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between m-0 p-1">
+                                    <small class="text-warning m-1 p-0">
+                                        {{ task.created }} [created]
+                                    </small>
+                                    <small class="text-success m-1 p-0">
+                                        {{ task.updated }} [updated]
+                                    </small>
+                                </div>
+                                <a class="text-decoration-none text-dark" href="{% url 'app_name_task_list:read' task.id %}">
+                                    <button class="btn btn-sm btn-outline-primary w-100 m-0 p-1" type="submit">
+                                        <i class="fa-solid fa-circle-info m-0 p-1"></i>
+                                        details
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="m-0 p-1">
+                <ul class="m-0">
+                    {% for task in page %}
+                        <li class="text-start m-0 p-0 border border-1 border-dark p-1">
+                            {% if task.is_completed %}
+                                <div class="feature-icon bg-success d-flex justify-content-between">
+                            {% else %}
+                                <div class="feature-icon bg-danger d-flex justify-content-between">
+                            {% endif %}
+                                <a class="text-decoration-none text-white small w-50" href="{% url 'app_name_task_list:read' task.id %}">
+                                    <div class="d-flex">
+                                        <h6 class="lead m-1 p-1">{{ task.description|cut_string:20 }}</h6>
+                                        <small class="m-0 p-2">{{ task.description|cut_string:30 }}</small>
+                                    </div>
+                                </a>
+                                <div class="m-1 p-1">
+                                    <small class="text-white m-1 p-0">
+                                        {{ task.updated }} [updated]
+                                    </small>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="container d-flex justify-content-center align-self-center">
+            {% include 'components/paginator.html' %}
+        </div>
+    {% else %}
+        {% include 'components/aborted.html' %}
+    {% endif %}
+</div>
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}

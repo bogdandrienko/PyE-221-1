@@ -55,3 +55,5 @@ class TaskAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Task, TaskAdmin)
 admin.site.register(models.Post)
+admin.site.register(models.PostComment)
+admin.site.register(models.PostLike)

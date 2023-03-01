@@ -1,0 +1,54 @@
+{% load app_django_extras %}
+
+<nav class="container-fluid navbar navbar-expand-lg navbar-light custom-background-transparent-middle-hard">
+    <a class="navbar-brand" href="{% url 'app_name_task_list:' %}">MAIN</a>
+    <a class="navbar-brand" href="{% url 'app_name_task_list:home' %}">Home</a>
+    <a class="navbar-brand" target="_blank" href="/admin">Admin</a>
+
+    {% if request.user.is_authenticated %}
+        <a class="m-1 text-danger" href="{% url 'app_name_task_list:logout' %}">Logout<i class="fa-solid fa-door-open"></i></a>
+        <div>[{{request.user.username}}]</div>
+    {% else %}
+
+        <a class="m-1 text-secondary" href="{% url 'app_name_task_list:sign_in' %}">Sign In<i class="fa-solid fa-right-to-bracket"></i></a>
+        <a class="m-1 text-secondary" href="{% url 'app_name_task_list:register' %}">Sign Up <i class="fa-solid fa-user-plus"></i></a>
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% access_tag 'module_modules' as module_modules %}
+    {% if module_modules %}
+        <ul class="navbar-nav navbar-collapse collapse" id="navbarSupportedContent">
+            {% access_tag 'superuser' as superuser %}
+            {% if superuser %}
+                <li class="dropend">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                        Task list
+                        <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill"> {{ task_count }}</i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <strong class="dropdown-header">Todo list</strong>
+                            {% access_tag 'develop' as develop %}
+                            {% if develop %}
+                                <a class="dropdown-item" href="{% url 'app_name_task_list:create' %}">
+                                    <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                                    task create
+                                </a>
+                            {% endif %}
+                            {% access_tag 'develop' as develop %}
+                            {% if develop %}
+                                <a class="dropdown-item" href="{% url 'app_name_task_list:read_list' %}">
+                                    <i class="fa-solid fa-list m-0 p-1"></i>
+                                    <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill"> {{ user_count }}, usere</i>
+                                    task list
+                                    <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill"> {{ task_count }}</i>
+                                </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</nav>

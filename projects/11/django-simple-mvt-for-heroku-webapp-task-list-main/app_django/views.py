@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.urls import reverse
 from django.utils import timezone
 from . import models
@@ -48,14 +48,24 @@ def home(request):
     return render(request, 'pages/home.html', context)
 
 
-
 def post(request):
     posts = models.Post.objects.all()
+    post_comment = models.PostComment.objects.filter(article=posts[0])
+    print(post_comment)
+    # post = models.Post.objects.get(id=post_id)
     context = {
         'names':
-             posts
+            posts
     }
     return render(request, 'pages/Post_detail.html', context)
+
+
+def post_detail(request: HttpRequest, pk: int):
+    post_ = models.Post.objects.get(id=pk)
+    context = {
+        "posts": post_
+    }
+    return render(request, 'app_task_list/pages/post_detail.html', context=context)
 
 
 def create(request):
@@ -83,7 +93,6 @@ def read(request, task_id=None):
 
 
 def read_list(request):
-
     is_detail_view = request.GET.get("is_detail_view", True)
     if is_detail_view == "False":
         is_detail_view = False
@@ -144,3 +153,19 @@ def delete(request, task_id=None):
         pass  # TODO Logging invalid action
 
     return redirect(reverse('app_name_task_list:read_list', args=()))
+
+
+def post_ph(request, post_id=None):
+    print(post_id)
+    post_new = models.Post.objects.get(id=post_id)
+    comment_new = models.PostComment.objects.filter(article=post_new)
+    print(comment_new)
+    context = {
+        "post": post_new,
+        'comments': comment_new
+    }
+    return render(request, 'app_task_list/pages/post_detail.html', context)
+
+
+def post_comment_create(request):
+    pass

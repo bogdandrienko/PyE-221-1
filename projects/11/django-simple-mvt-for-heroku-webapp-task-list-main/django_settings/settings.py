@@ -21,6 +21,10 @@
 19) Обработчик ошибок
 20) Защита доступа к защищенным старницам другим пользователям
 21) Логирование
+21) Система рейтинга и комментариев(лайк/дизлайк или баллы)
+22) Профиль пользователя(аватарка, bio, расширенная модель)
+23) Система жалоб и претензий(уведомления(web-sockets))
+24)
 """
 
 from pathlib import Path
@@ -30,16 +34,13 @@ import os
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    SECRET_KEY = (str, 'key_1'),
-    ALLOWED_HOSTS = (str, ''),
+    SECRET_KEY=(str, 'key_1'),
+    ALLOWED_HOSTS=(str, ''),
 )
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, "django_settings", '.env' ))
-
+environ.Env.read_env(os.path.join(BASE_DIR, "django_settings", '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -51,11 +52,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-
 ALLOWED_HOSTS = [f'{env("ALLOWED_HOSTS")}']
 
 CORS_ALLOW_ALL_ORIGINS = True
-
 
 # Application definition
 
@@ -112,7 +111,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_settings.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -124,7 +122,6 @@ DATABASES = {
 }
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 100000
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -144,7 +141,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -155,7 +151,6 @@ TIME_ZONE = 'Etc/GMT-6'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

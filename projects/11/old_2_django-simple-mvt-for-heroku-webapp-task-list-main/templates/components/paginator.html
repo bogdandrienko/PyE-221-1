@@ -1,0 +1,29 @@
+<div class="pagination m-3 bd-example">
+    <ul class="pagination">
+
+        {% if page.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if page.number != 1 %}
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        {% endif %}
+
+        {% if page.paginator.num_pages > 1 %}
+            <li class="page-item"><a class="page-link" href="?page={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</a></li>
+        {% endif %}
+
+        {% if page.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+</div>
