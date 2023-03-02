@@ -1,6 +1,8 @@
 # https://intellipaat.com/blog/interview-question/python-interview-questions/
 # https://www.interviewbit.com/python-interview-questions/
 # https://techrocks.ru/2020/10/10/100-python-questions-for-tech-interview/
+import random
+
 from _decimal import Decimal
 
 ########################################################################################################################
@@ -277,6 +279,7 @@ dict1 = {"1": 1, "2": 2, "3": 3, "4": 1, "5": 2, "6": 3, "7": 1, "8": 2, "9": 3}
 print(sys.getsizeof(list1))
 print(sys.getsizeof(dict1))
 
+
 ########################################################################################################################
 
 # Is python case sensitive?
@@ -302,3 +305,64 @@ Func1()
 str1 = "Python"
 print(str1)
 print(str1[::-1])
+
+
+########################################################################################################################
+
+# В чём отличие и необходимость структур данных
+# Каждая структура обладает своими свойствами, но стандартные структуры могут быть
+#
+
+# list7: list[str | int] = [1]
+# list7.append(2)
+
+class MyList(object):
+    def __init__(self, *args):
+        self.__store: list = [*args]
+        self.__length = len(self.__store)
+
+    def in_(self, arg):
+        self.__store.append(arg)
+        self.__length += 1
+
+    def out_first(self) -> any:  # FIFO - QUEUE
+        return self.__store[0]
+
+    def out_last(self) -> any:  # LIFO - STACK
+        return self.__store[len(self.__store)-1]
+
+    def __str__(self):
+        res = ""
+        for i in self.__store:
+            res += str(i) + " "
+        return res
+
+
+my1 = MyList(1, 2, 3)
+my1.append(123)
+print(my1)
+
+list5 = [1, 2, 100]  # O(N) - линейная
+elem = random.randint(1, 100)
+for i in list5:
+    if i == elem:
+        print("НАШЛи")
+        break
+
+dict2 = {"1": 1, "2": 2, "3": 3}  # O(1) - константная
+
+tree1 = []  # O(log(N))
+# 1000
+# 500
+# 250
+# 125
+# 75
+# 50
+# 25
+# 13
+# 7
+# 4
+# 2
+# 1
+
+# https://habr.com/ru/post/188010/

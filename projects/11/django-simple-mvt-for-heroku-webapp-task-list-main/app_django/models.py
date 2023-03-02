@@ -1,7 +1,8 @@
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+
 
 # Create your models here.
 
@@ -28,7 +29,6 @@ class Task(models.Model):
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE
-
     )
 
     title = models.CharField(
@@ -160,3 +160,36 @@ class PostLike(models.Model):
 
     def __str__(self):
         return f"{self.article} | {self.author} | {self.status}"
+
+
+CHOICES = (
+    ("1", "DANGER"),
+    ("2", "WARNING"),
+    ("3", "LIGHT"),
+    ("4", "INFO"),
+)
+
+
+class LogModel(models.Model):
+    """
+    Модель дл хранения как ошибок, так и просто действий пользователя
+    """
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=False, db_index=True)
+    method = models.CharField(max_length=7)  # GET POST PUT PATCH OPTIONS HEAD
+    status = models.IntegerField(
+        validators=[MinValueValidator(100), MaxValueValidator(600)])  # GET POST PUT PATCH OPTIONS HEAD
+    url = models.CharField(max_length=300, default="")
+    description = models.CharField(max_length=500)
+    datetime = models.DateTimeField(default=timezone.now, db_index=True)
+    # level = models.TextChoices(GEEKS_CHOICES)
+    level = models.CharField(max_length=50, choices=CHOICES, default="4")
+
+    class Meta:
+        app_label = 'app_django'
+        ordering = ('-datetime', 'url')
+        verbose_name = 'Лог'
+        verbose_name_plural = 'Логи'
+        # db_table = 'log_model_table'
+
+    def __str__(self):
+        return f"{self.datetime} | {self.status} | {self.url} | {self.user}"

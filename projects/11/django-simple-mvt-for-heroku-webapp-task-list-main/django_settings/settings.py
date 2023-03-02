@@ -56,6 +56,8 @@ ALLOWED_HOSTS = [f'{env("ALLOWED_HOSTS")}']
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+DEBUG_LOG = True
+
 # Application definition
 
 INSTALLED_APPS = [

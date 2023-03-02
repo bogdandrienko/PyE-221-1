@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        {% for obj in success.data %}
+            <li>
+                <div class="card">
+                    <div class="card-body">{{ obj.title }}</div>
+                    <div>
+                        {% if obj.completed %}
+                            111111111111111
+                        {% else %}
+                            2222222222
+                        {% endif %}
+                    </div>
+                    <div>#{{ obj.id }}_</div>
+                </div>
+            </li>
+        {% empty %}
+            Not have any data
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for obj in success.data %}
+            <li>
+                <div class="card">
+                    <div class="card-body">{{ obj.user }}</div>
+                    <div>
+                        {% if obj.status > 299 %}
+                            {{ obj.status }} 11111111111
+                        {% else %}
+                            {{ obj.status }} 222222222
+                        {% endif %}
+                    </div>
+                    <div>#{{ obj.url }}_</div>
+                </div>
+            </li>
+        {% empty %}
+            Not have any data
+        {% endfor %}
+    </ul>
+</body>
+</html>

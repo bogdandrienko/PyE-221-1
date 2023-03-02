@@ -26,7 +26,7 @@
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 </div>
 
-        <form action="{% url 'app_name_task_list:post_comment_create' %}"
+        <form action="{% url 'app_name_task_list:post_comment_create' post.id %}"
                   method="POST"
                   target="_self"
                   enctype="multipart/form-data"
@@ -35,12 +35,17 @@
                   class="text-center"
         >
             {% csrf_token %}
-
+                        <input type="hidden"
+                               name="ids"
+                               value="{{ post.id }}"
+                                required
+                               class="form-control form-control-sm"
+                        />
 
                                 <label class="form-control-sm w-50 m-1">
                         Введите свой комментарий:
                         <input type="text"
-                               name="title"
+                               name="description"
                                required=""
                                value=""
                                minlength="1"

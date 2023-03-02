@@ -1,11 +1,56 @@
+from django import conf
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from django.urls import reverse
 from django.utils import timezone
+from django.views.generic import View
+from django.conf import settings
 from . import models
+
+
+def logging(controller_func):
+    def wrapper(*args, **kwargs):
+        print(args, kwargs)
+        request: WSGIRequest = args[0]
+        print(request.META)
+        # inits = models.LogModel.objects.filter(request.META["host_ip"], datetime__gte=)
+        # if inits.count() > 30:
+        #     raise Exception("подождите час!")
+
+        models.LogModel.objects.create(
+            user=request.user,
+            method=request.method,
+            status=0,
+            url="",
+            description="init"
+        )
+        try:
+            response: HttpResponse = controller_func(*args, **kwargs)
+            if settings.DEBUG_LOG:
+                models.LogModel.objects.create(
+                    user=request.user,
+                    method=request.method,
+                    status=200,
+                    url="",
+                    description="Response: " + str(response.content)
+                )
+            return response
+        except Exception as error:
+            models.LogModel.objects.create(
+                user=request.user,
+                method=request.method,
+                status=500,
+                url="",
+                description="Error: " + str(error)
+            )
+            return HttpResponse(status=500)
+
+    return wrapper
 
 
 # Create your views here.
@@ -60,10 +105,13 @@ def post(request):
     return render(request, 'pages/Post_detail.html', context)
 
 
-def post_detail(request: HttpRequest, pk: int):
+@logging
+def post_detail(request: WSGIRequest, pk: int):
     post_ = models.Post.objects.get(id=pk)
+    post_comment = models.PostComment.objects.filter(article=post_)
     context = {
-        "posts": post_
+        "post": post_,
+        "comments": post_comment
     }
     return render(request, 'app_task_list/pages/post_detail.html', context=context)
 
@@ -167,5 +215,84 @@ def post_ph(request, post_id=None):
     return render(request, 'app_task_list/pages/post_detail.html', context)
 
 
-def post_comment_create(request):
+@logging
+def post_comment_create(request, pk):
+    print(request.POST)
+    post_obj = models.Post.objects.get(id=100)
+    # raise Exception("")
+    models.PostComment.objects.create(
+        article=post_obj,
+        author=request.user,
+        description=request.POST.get("description", ""),
+    )
+
+    return redirect(reverse('app_name_task_list:post_detail', args=(pk,)))
+
+    # all methods before
+    if request.method == "POST":
+        pass
+    if request.method == "GET":
+        pass
+    # all methods after
     pass
+
+
+# TODO ####################################
+def todo_list1(request):
+    import requests
+    response = requests.get("https://jsonplaceholder.typicode.com/todos/").json()
+
+    # 0,1      15.0                                                3.0 (check qwadro 2.5) 15.0
+    # rust (postgresql - index + ssd + nosql + ramdisk, redis) vs python (postgresql, redis) (30x)
+
+    # 1 вставки кода из другого языка программирования (C++, Rust, Go/ Cython)
+    # https://habr.com/ru/company/skillfactory/blog/718894/
+
+    # 2 добавление типизации (pypy, mypy)
+    # 3 использовать встроенные функции на C (itertools, filter, reduce, )
+
+    def return_q(n):
+        return n ** 2
+
+    def check_odd(n):
+        return n % 2 == 0
+
+    def start():
+        counter = 1
+        for idx, elem in enumerate([1, 2, 3, 4], 1):
+            counter += 1
+
+    min_val = 0
+    min_val = min([1, 2, 3, 4])
+    for i in [1, 2, 3, 4]:
+        if i < min_val:
+            min_val = i
+
+    list1 = range(1, 10000)
+    # res = map(return_q, list1)
+    res = filter(lambda n: n % 2 == 0, list1)
+    print(tuple(res))
+
+    return render(request=request, template_name="app_task_list/pages/todo_list1.html",
+                  context={"success": {"data": response}})
+
+
+class TodoList2(View):  # CreateView, LoginRequiredMixin
+    # ftndfntdfg
+    def get(self, request):
+        # if request.user.is_auth:
+        #     return redirect(reverse("login"))
+
+        response = models.LogModel.objects.filter(status__gte=1)  # todo > 299
+        return render(request=request, template_name="app_task_list/pages/todo_list1.html",
+                      context={"success": {"data": response}})
+
+    def post(self, request):
+        # if request.user.is_auth:
+        #     return redirect(reverse("login"))
+
+        response = models.LogModel.objects.filter(status__gte=1)  # todo > 299
+        return render(request=request, template_name="app_task_list/pages/todo_list1.html",
+                      context={"success": {"data": response}})
+
+# TODO ####################################
