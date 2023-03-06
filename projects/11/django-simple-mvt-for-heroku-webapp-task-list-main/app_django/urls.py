@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from . import views
 
-app_name = 'app_name_task_list'
+app_name = 'app_name_task_list'  # todo
 urlpatterns = [
     path('index/', views.index, name='index'),
     path('', views.home, name=''),
@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logout_, name='logout'),
     path('sign_up/', views.sign_up, name='register'),
     path('post/', views.post, name="post"),
+
     path('post/<int:pk>/', views.post_detail, name="post_detail"),  # под капотом - регулярное выражение
     path('post_comment_create/<int:pk>/', views.post_comment_create, name='post_comment_create'),
 

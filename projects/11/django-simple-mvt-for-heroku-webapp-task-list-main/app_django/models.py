@@ -21,6 +21,21 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.title} | {self.description}"
 
+    def pretty(self):
+        return f"{self.title}"
+
+    @staticmethod
+    def get_by_id(pk: int):
+        if pk < 0:
+            raise ValueError("value is too small!")
+        return Post.objects.get(id=pk)
+
+    def get_this_post_comments(self):
+        return PostComment.objects.filter(article=self)
+
+    def get_this_post_is_like(self, user):
+        return len(PostLike.objects.filter(article=self, author=user, status=True)) > 0
+
 
 class Task(models.Model):
     """

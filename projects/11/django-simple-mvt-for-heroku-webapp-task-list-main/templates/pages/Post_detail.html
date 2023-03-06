@@ -1,22 +1,39 @@
+{% extends "components/base.html" %}
+{% load app_django_extras %}
+{% load static %}
 {% load app_django_extras %}
 {% today True as develop %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Hi</h1>
+
+{% block head %}{% endblock head %}
+{% block title %}
+    {% text_upper_case text='Home page' %}
+{% endblock title %}
+
+{% block prestyle %}{% endblock prestyle %}
+{% block icon %}<link rel="icon" href="{% static 'img/logo512.png' %}" type="image/png">{% endblock icon %}
+{% block poststyle %}{% endblock poststyle %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block header %}Register{% endblock header %}
+
+{% block description %}this page contains global information about project{% endblock description %}
+
+{% block main %}
 
 <ul>
 {% for i in names %}
-    <li>{{ i.title}} {{i.description|upper}}<li>
-
+    <li><a href="{% url "app_name_task_list:post_detail" i.id  %}">{{ i.pretty }}</a><li>
 {% endfor %}
-
-
 </ul>
 
-</body>
-</html>
+{% endblock main %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block prescript %}{% endblock prescript %}
+{% block postscript %}{% endblock postscript %}

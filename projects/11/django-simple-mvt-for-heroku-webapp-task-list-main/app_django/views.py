@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpRequest
 from django.urls import reverse
 from django.utils import timezone
@@ -48,7 +48,11 @@ def logging(controller_func):
                 url="",
                 description="Error: " + str(error)
             )
-            return HttpResponse(status=500)
+            # return HttpResponse(status=500)
+            context = {"detail": str(error)}
+            if str(error).find("query does not exist"):
+                context["extra"] = "Такого объекта не существует"
+            return render(request, "components/error.html", context=context)
 
     return wrapper
 
@@ -107,11 +111,14 @@ def post(request):
 
 @logging
 def post_detail(request: WSGIRequest, pk: int):
+    # get_object_or_404(models.Post, id=pk)
     post_ = models.Post.objects.get(id=pk)
-    post_comment = models.PostComment.objects.filter(article=post_)
+    # post_comment = models.PostComment.objects.filter(article=post_)
+    # post_like = len(models.PostLike.objects.filter(author=request.user, article=post_, status=True)) > 0
     context = {
         "post": post_,
-        "comments": post_comment
+        # "comments": post_comment,
+        # "post_like": post_like
     }
     return render(request, 'app_task_list/pages/post_detail.html', context=context)
 
@@ -217,15 +224,13 @@ def post_ph(request, post_id=None):
 
 @logging
 def post_comment_create(request, pk):
-    print(request.POST)
     post_obj = models.Post.objects.get(id=100)
-    # raise Exception("")
-    models.PostComment.objects.create(
-        article=post_obj,
-        author=request.user,
-        description=request.POST.get("description", ""),
-    )
-
+    if post_obj is not None:
+        models.PostComment.objects.create(
+            article=post_obj,
+            author=request.user,
+            description=request.POST.get("description", ""),
+        )
     return redirect(reverse('app_name_task_list:post_detail', args=(pk,)))
 
     # all methods before

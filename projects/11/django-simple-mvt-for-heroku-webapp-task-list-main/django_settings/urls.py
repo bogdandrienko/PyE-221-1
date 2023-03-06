@@ -9,6 +9,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('app_django.urls')),
+
+    path('', include('booking.urls')),
 ]
 
 # urlpatterns += [re_path(r'^.*$', lambda request: redirect('app_name_task_list:', permanent=False), name='redirect')]

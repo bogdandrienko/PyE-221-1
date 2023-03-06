@@ -1,6 +1,8 @@
 from django import template
 import datetime
 
+from app_django import models
+
 register = template.Library()
 
 
@@ -20,6 +22,15 @@ def access_tag(context, slug: str):
     except Exception as error:
         print("error simple_tag access_tag: ", error)
         return True
+
+
+@register.simple_tag(takes_context=True)
+def is_my_like(context, pk):
+    try:
+        return models.Post.objects.get(id=pk).get_this_post_is_like(user=context["request"].user)
+    except Exception as error:
+        print("error simple_tag is_my_like: ", error)
+        return False
 
 
 @register.simple_tag
