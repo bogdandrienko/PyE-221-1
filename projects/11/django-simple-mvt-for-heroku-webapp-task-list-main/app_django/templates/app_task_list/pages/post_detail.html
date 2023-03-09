@@ -37,20 +37,14 @@
                 <small class="text-muted">9 mins </small>
 
                 <small class="text-muted">status:
-
-                    {% if post_like %}
-                        <i class="fa-solid btn btn-sm btn-success fa-heart"></i>
-                    {% else %}
-                        <i class="fa-solid btn btn-sm btn-outline-success fa-heart"></i>
-                    {% endif %}
-
-                    {% is_my_like post.id as val1 %}
-                    {% if val1 %}
-                        <i class="fa-solid btn btn-sm btn-success fa-heart"></i>
-                    {% else %}
-                        <i class="fa-solid btn btn-sm btn-outline-success fa-heart"></i>
-                    {% endif %}
-
+                    <a class="text-decoration-none btn btn-sm" href="{% url 'app_name_task_list:post_like' post.id %}">
+                        {% is_my_like post.id as val1 %}
+                        {% if val1 %}
+                            <i class="fa-solid btn btn-sm btn-success fa-heart"></i>
+                        {% else %}
+                            <i class="fa-solid btn btn-sm btn-danger fa-heart"></i>
+                        {% endif %}
+                    </a>
                 </small>
               </div>
             </div>
@@ -58,8 +52,7 @@
 
 
 <div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
 </div>
 
 <form action="{% url 'app_name_task_list:post_comment_create' post.id %}"
@@ -78,18 +71,10 @@
                                class="form-control form-control-sm"
                         />
 
-                                <label class="form-control-sm w-50 m-1">
-                        Введите свой комментарий:
-                        <input type="text"
-                               name="description"
-                               required=""
-                               value=""
-                               minlength="1"
-                               maxlength="300"
-                               class="form-control form-control-sm"
-                        />
+    <label for="exampleFormControlTextarea1" class="form-label form-control-sm w-50 m-1">Введите свой комментарий:</label>
+  <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" minlength="1" maxlength="300" rows="3" required="" name="description"></textarea>
+
                         <small class="text-muted">кол-во символов: <= 500</small>
-                    </label>
             <li class="m-1">
                 <button class="btn btn-sm btn-outline-primary" type="submit">submit</button>
             </li>
@@ -103,27 +88,56 @@
       <span class="fs-5 fw-semibold">List group</span>
     </a>
     <div class="list-group list-group-flush border-bottom scrollarea">
-        {% for i in post.get_this_post_comments %}
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">{{ i.author}}</strong>
-          <small class="text-muted">{{i.date}}</small>
-        </div>
-        <div class="col-10 mb-1 small">{{i.description}}</div>
-      </a>
-
+        {% for comment in post.get_this_post_comments %}
+          <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+              <strong class="mb-1">{{ comment.author}}</strong>
+              <small class="text-muted">{{comment.date}}</small>
+                {% if comment.author == request.user %}
+                    <a class="text-decoration-none btn text-danger" href="{% url "app_name_task_list:post_comment_delete" comment.id  %}">del</a>
+                {% endif %}
+            </div>
+            <div class="col-10 mb-1 small">{{comment.description}}</div>
+          </a>
+            {% empty %}
+            <div class="col-10 mb-1 small" id="12345">Вы будете первым!</div>
         {% endfor %}
+    <div>
+        <i class="fa-solid fa-eye" id="123456"></i>
+    </div>
+        <input type="password" id="password" name="password"/>
+        <input type="password" id="password1" name="password1"/>
     </div>
   </div>
+<script>
 
+    console.log("Hi!")
+    let obj2 = document.getElementById("123456")
+    let obj3 = document.getElementById("password")
+    let obj4 = document.getElementById("password1")
+    obj2.addEventListener('click', ({ target }) => {
+        if (obj3.type === 'password'){
+            obj3.type = 'text'
+            obj4.type = 'text'
+        } else {
+            obj3.type = 'password'
+            obj4.type = 'password'
+        }
+        console.log("Hi!")
+    })
+</script>
 {% endblock main %}
 
 {% block footer %}
     {% include 'components/footer.html' %}
 {% endblock footer %}
 
-{% block prescript %}{% endblock prescript %}
-{% block postscript %}{% endblock postscript %}
+
+{% block prescript %}
+{% endblock prescript %}
+{% block postscript %}
+    <script defer src="{% static 'js/custom.js' %}"></script>
+{% endblock postscript %}
 
 
 

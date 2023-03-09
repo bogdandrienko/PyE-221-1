@@ -44,7 +44,8 @@
     </main>
     {% block footer %}{% endblock footer %}
     {% block prescript %}{% endblock prescript %}
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <script defer src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+
     {% block postscript %}{% endblock postscript %}
 </body>
 </html>

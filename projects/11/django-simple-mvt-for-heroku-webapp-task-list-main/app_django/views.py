@@ -99,14 +99,7 @@ def home(request):
 
 def post(request):
     posts = models.Post.objects.all()
-    post_comment = models.PostComment.objects.filter(article=posts[0])
-    print(post_comment)
-    # post = models.Post.objects.get(id=post_id)
-    context = {
-        'names':
-            posts
-    }
-    return render(request, 'pages/Post_detail.html', context)
+    return render(request, 'pages/Post_detail.html', context={'posts': posts})
 
 
 @logging
@@ -224,7 +217,7 @@ def post_ph(request, post_id=None):
 
 @logging
 def post_comment_create(request, pk):
-    post_obj = models.Post.objects.get(id=100)
+    post_obj = models.Post.objects.get(id=pk)
     if post_obj is not None:
         models.PostComment.objects.create(
             article=post_obj,
@@ -233,13 +226,28 @@ def post_comment_create(request, pk):
         )
     return redirect(reverse('app_name_task_list:post_detail', args=(pk,)))
 
-    # all methods before
-    if request.method == "POST":
-        pass
-    if request.method == "GET":
-        pass
-    # all methods after
-    pass
+
+@logging
+def post_like(request, pk):
+    post_obj = models.Post.objects.get(id=pk)
+    print(post_obj)
+    try:
+        like_obj = models.PostLike.objects.get(article=post_obj, author=request.user)
+    except Exception as error:
+        like_obj = models.PostLike.objects.create(article=post_obj, author=request.user, status=False)
+
+    like_obj.status = not like_obj.status
+    like_obj.save()
+
+    return redirect(reverse('app_name_task_list:post_detail', args=(pk,)))
+
+
+@logging
+def post_comment_delete(request, comment_pk):
+    comment_obj = models.PostComment.objects.get(id=comment_pk)
+    post_id = comment_obj.article.id
+    comment_obj.delete()
+    return redirect(reverse('app_name_task_list:post_detail', args=(post_id,)))
 
 
 # TODO ####################################

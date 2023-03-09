@@ -33,6 +33,9 @@ class Post(models.Model):
     def get_this_post_comments(self):
         return PostComment.objects.filter(article=self)
 
+    def get_this_post_comments_count(self) -> int:
+        return PostComment.objects.filter(article=self).count()
+
     def get_this_post_is_like(self, user):
         return len(PostLike.objects.filter(article=self, author=user, status=True)) > 0
 

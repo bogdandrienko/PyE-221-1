@@ -9,10 +9,12 @@ urlpatterns = [
     path('sign_in/', views.sing_in, name='sign_in'),
     path('logout/', views.logout_, name='logout'),
     path('sign_up/', views.sign_up, name='register'),
-    path('post/', views.post, name="post"),
 
+    path('post/', views.post, name="post"),
     path('post/<int:pk>/', views.post_detail, name="post_detail"),  # под капотом - регулярное выражение
     path('post_comment_create/<int:pk>/', views.post_comment_create, name='post_comment_create'),
+    path('post_like/<int:pk>/', views.post_like, name='post_like'),
+    path('post_comment_delete/<int:comment_pk>/', views.post_comment_delete, name='post_comment_delete'),
 
     path('task/create/', views.create, name='create'),
     path('task/<int:task_id>/', views.read, name='read'),
