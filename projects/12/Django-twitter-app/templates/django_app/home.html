@@ -1,0 +1,61 @@
+{% extends "components/base.html" %}
+{% load django_app_extras %}
+{% load static %}
+
+
+{% block title %}
+    {% text_upper_case text='twitter app 2.0' %}
+{% endblock title %}
+
+{% block header %}
+    Домашняя страница
+{% endblock header %}
+
+{% block description %}
+    эта страница содержит основное описание проекта
+{% endblock description %}
+
+{% block main %}
+<div class="px-4 pt-5 text-center border-bottom">
+    <h1 class="display-4 fw-bold">Проект "django_mvt_twitter_app"</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead">
+            Простой пример Django MVT(Model-View-Template) для развёртывания на ubuntu
+        </p>
+        <p class="lead mb-4">Особенности проекта:
+            <ul class=" custom-background-transparent-middle">
+                <li class="">Одно монолитное приложение</li>
+                <li class="">Переменные лежат в коде</li>
+                <li class="">База данных SQLite</li>
+                <li class="">Кэширование Locmem</li>
+                <li class="">Обычная модель пользователя</li>
+                <li class="">Обычная django-admin + примитивное отображение(регистрация) моделей</li>
+                <li class="">MVT авторизация</li>
+                <li class="">Вся маршрутизация стандартная</li>
+                <li class="">Есть примеры как функций-контроллеров, так и классов-контроллеров</li>
+                <li class="">Упрощённый формат создания моделей</li>
+                <li class="">Упрощённый ORM</li>
+                <li class="">Все задачи синхронные</li>
+                <li class="">Без тестов</li>
+                <li class="">Только стандартные запросы</li>
+                <li class="">Минимум типизации проекта</li>
+                <li class="">Логирование в .txt файл</li>
+                <li class="">Все скрипты в одной txt-файле</li>
+                <li class="">Описание проекта в readme</li>
+                <li class="">Гифка для показа функционала</li>
+                <li class="">и другое...</li>
+            </ul>
+        </p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+        <a class="text-decoration-none lead btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'django_app:read_list' %}">
+            К постам!
+        </a>
+    </div>
+    </div>
+    <div class="overflow-hidden" style="max-height: 30vh;">
+        <div class="container px-5">
+            <img src="{% static 'img/prstcreen.png' %}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+        </div>
+    </div>
+</div>
+{% endblock main %}

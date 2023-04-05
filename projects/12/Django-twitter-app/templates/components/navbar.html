@@ -1,0 +1,66 @@
+{% load django_app_extras %}
+
+<nav class="container-fluid navbar navbar-expand-lg navbar-light custom-background-transparent-middle-hard">
+    <a class="navbar-brand" href="{% url 'django_app:' %}">Главная страница</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav navbar-collapse collapse" id="navbarSupportedContent">
+        <li class="dropend">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                Профиль
+                <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">аккаунт:
+                    {% if user.is_authenticated %}
+                        {{ user.username }}
+                    {% else %}
+                        аноним
+                    {% endif %}
+                </i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <strong class="dropdown-header">Профили пользователей</strong>
+                    {% if user.is_authenticated %}
+                        <a class="dropdown-item text-danger" href="{% url 'django_app:logout' %}">
+                            <i class="fa-solid fa-list m-0 p-1"></i>
+                            выйти из аккаунта
+                        </a>
+                    {% else %}
+                        <a class="dropdown-item text-warning" href="{% url 'django_app:register' %}">
+                            <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                            регистрация новых пользователей
+                            <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">пользователей: {{ user_count }}</i>
+                        </a>
+                        <a class="dropdown-item text-primary" href="{% url 'django_app:login' %}">
+                            <i class="fa-solid fa-list m-0 p-1"></i>
+                            войти в аккаунт
+                        </a>
+                    {% endif %}
+
+                </li>
+            </ul>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="dropend">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                    Публикация постов
+                    <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">постов: {{ post_count }}</i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <strong class="dropdown-header">Публикация постов</strong>
+                        <a class="dropdown-item" href="{% url 'django_app:create' %}">
+                            <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                            создать новый пост
+                        </a>
+                        <a class="dropdown-item" href="{% url 'django_app:read_list' %}">
+                            <i class="fa-solid fa-list m-0 p-1"></i>
+                            список постов
+                            <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">{{ post_count }}</i>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

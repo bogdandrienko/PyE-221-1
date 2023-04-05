@@ -1,0 +1,82 @@
+{% extends "components/base.html" %}
+{% load django_app_extras %}
+{% load static %}
+
+
+{% block title %}
+    {% text_upper_case text='войти в аккаунт' %}
+{% endblock title %}
+
+{% block header %}
+    войти в аккаунт
+{% endblock header %}
+
+{% block description %}
+    эта страница содержит форму, которая позволяет войти в аккаунт
+{% endblock description %}
+
+{% block main %}
+<div class="container shadow-lg m-0 p-0">
+    <div class="shadow border-bottom">
+        <div class="d-flex">
+            <div class="p-3">
+              <h2>Вход в аккаунт</h2>
+              <p class="lead">заполните поля и нажмите войти</p>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 custom-background-transparent-middle m-0 p-0">
+        <form action="{% url 'django_app:login' %}"
+                  method="POST"
+                  target="_self"
+                  enctype="multipart/form-data"
+                  name="user_login"
+                  autocomplete="on"
+                  class="text-center"
+        >
+            {% csrf_token %}
+            <div>
+                <div>
+                    <label class="form-control-sm w-50 m-1">
+                        Имя пользователя:
+                        <input type="text"
+                               name="username"
+                               required=""
+                               placeholder="вводить 'имя пользователя' здесь..."
+                               value=""
+                               minlength="1"
+                               maxlength="30"
+                               class="form-control form-control-sm"
+                        />
+                        <small class="text-muted">количество символов: <= 30</small>
+                    </label>
+                    <label class="form-control-sm w-50 m-1">
+                        Введите пароль:
+                        <input type="password"
+                               name="password"
+                               required=""
+                               placeholder="вводить 'пароль' здесь..."
+                               value=""
+                               minlength="5"
+                               maxlength="16"
+                               class="form-control form-control-sm"
+                        />
+                        <small class="text-muted">количество символов: от 8 до 16</small>
+                    </label>
+                </div>
+            </div>
+            <hr/>
+            <div class="container-fluid text-center">
+                <ul class="row row-cols-auto row-cols-md-auto row-cols-lg-auto nav justify-content-center">
+                    <li class="m-1">
+                        <button class="btn btn-lg btn-outline-primary" type="submit">войти</button>
+                    </li>
+                    <li class="m-1">
+                        <button class="btn btn-lg btn-outline-warning" type="reset">сбросить</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock main %}

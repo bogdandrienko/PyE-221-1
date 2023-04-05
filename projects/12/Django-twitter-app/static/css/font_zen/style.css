@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Zen Kaku Gothic Antique';
+    src: local('Zen Kaku Gothic Antique Medium'), local('Zen-Kaku-Gothic-Antique-Medium'),
+        url('ZenKakuGothicAntique-Medium.woff2') format('woff2'),
+        url('ZenKakuGothicAntique-Medium.woff') format('woff'),
+        url('ZenKakuGothicAntique-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+  }

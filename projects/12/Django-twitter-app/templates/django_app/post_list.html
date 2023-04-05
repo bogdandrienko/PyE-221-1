@@ -1,0 +1,215 @@
+{% extends "components/base.html" %}
+{% load django_app_extras %}
+{% load static %}
+
+
+{% block title %}
+    {% text_upper_case text='список постов' %}
+{% endblock title %}
+
+{% block header %}
+    список постов
+{% endblock header %}
+
+{% block description %}
+    на этой странице отображены все посты
+{% endblock description %}
+
+{% block main %}
+<div class="container shadow-lg custom-background-transparent-hard m-0 p-0">
+    <div class="shadow border-bottom m-0 p-0">
+        <div class="d-flex justify-content-around">
+            <h6 class="lead fw-bold m-1 p-2">количество постов <i class="btn btn-sm btn-dark bg-opacity-50 badge rounded-pill">{{ post_count }}</i>:</h6>
+            <a class="text-decoration-none btn btn-sm btn-outline-success m-1 p-2" href="{% url 'django_app:create' %}">
+                <i class="fa-solid fa-circle-plus m-0 p-1"></i>
+                создать новый пост
+            </a>
+        </div>
+    </div>
+    <div class="text-end">
+        <form action="{% url 'django_app:read_list' %}"
+        method="GET"
+        target="_self"
+        enctype="multipart/form-data"
+        name="idea_create"
+        autocomplete="on"
+        class="m-0 p-0"
+        >
+        {% csrf_token %}
+        <div>
+        <input type="hidden"
+           name="is_detail_view"
+           required=""
+           placeholder=""
+           {% if is_detail_view %}
+                value="False"
+           {% else %}
+                value="True"
+           {% endif %}
+           minlength="1"
+           maxlength="32"
+           class="form-control form-control-sm"
+        />
+        </div>
+        {% if is_detail_view %}
+            <button class="btn btn-lg btn-light m-0 p-1" type="submit">
+                <i class="fa-solid fa-list-check text-secondary m-0 p-1"></i>
+                вид списком
+            </button>
+        {% else %}
+            <button class="btn btn-lg btn-light m-0 p-1" type="submit">
+                <i class="fa-solid fa-calendar-week text-secondary m-0 p-"></i>
+                детальный вид
+            </button>
+        {% endif %}
+        </form>
+    </div>
+
+    {% if page %}
+        <div class="container d-flex justify-content-center align-self-center">
+            {% include 'components/paginator.html' %}
+        </div>
+
+        {% if is_detail_view %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                {% for post in page %}
+                    <div class="col">
+                        <div class="card border border-1 border-dark custom-background-transparent-middle m-1 p-0">
+                            <div class="card-header">
+                                <div class="m-0 p-3">
+                                    <div class="d-flex justify-content-around">
+                                        <a class="text-decoration-none text-dark" href="{% url 'django_app:read' post.id %}">
+                                            <h5>{{ post.title|cut_string:30 }} [{{ post.author.username }}]</h5>
+                                        </a>
+
+
+                                        <form action="{% url 'django_app:update' post.id %}"
+                                              method="POST"
+                                              target="_self"
+                                              enctype="multipart/form-data"
+                                              name="idea_create"
+                                              autocomplete="on"
+                                              class="m-0 p-0"
+                                        >
+                                            {% csrf_token %}
+                                            <div>
+                                                <input type="hidden"
+                                                   name="is_completed"
+                                                   required=""
+                                                   placeholder=""
+                                                   {% if post.is_completed %}
+                                                        value="False"
+                                                   {% else %}
+                                                        value="True"
+                                                   {% endif %}
+                                                   minlength="1"
+                                                   maxlength="32"
+                                                   class="form-control form-control-sm"
+                                            />
+                                            </div>
+                                            <div class="btn-group m-0 p-1">
+                                                {% if post.is_completed %}
+                                                    <button class="btn btn-sm btn-outline-danger m-0 p-1" type="submit">
+                                                        <i class="fa-solid fa-circle-xmark text-danger m-0 p-1"></i>
+                                                        не выполнено
+                                                    </button>
+                                                {% else %}
+                                                    <button class="btn btn-sm btn-outline-success m-0 p-1" type="submit">
+                                                        <i class="fa-solid fa-circle-check text-success m-0 p-1"></i>
+                                                        выполнено
+                                                    </button>
+                                                {% endif %}
+                                                <a href="{% url 'django_app:delete' post.id %}" class="btn btn-sm btn-outline-danger m-0 p-1">
+                                                    <i class="fa-solid fa-circle-minus text-danger m-0 p-1"></i>
+                                                    удалить
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% if post.is_completed %}
+                                        <div class="feature-icon bg-success bg-gradient text-white">
+                                            <p class="m-0 p-1"></p>
+                                        </div>
+                                    {% else %}
+                                        <div class="feature-icon bg-danger bg-gradient text-white">
+                                            <p class="m-0 p-1"></p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="m-0 p-3">{{ post.description|cut_string:100 }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between m-0 p-1">
+                                    <small class="text-warning m-1 p-0">
+                                        {{ post.created }} [создано]
+                                    </small>
+                                    <small class="">
+                                        {% post_my_rating post.id as my_like %}
+                                        <i
+                                            {% if my_like == 1 %}
+                                                class="fa-solid fa-heart m-1 p-1 text-success"
+                                            {% else %}
+                                                class="fa-regular fa-heart m-1 p-1 text-success"
+                                            {% endif %}
+                                        > {{ post.post_ratings.likes }} </i>
+                                        <i
+                                            {% if my_like == -1 %}
+                                                class="fa-solid fa-heart m-1 p-1 text-danger"
+                                            {% else %}
+                                                class="fa-regular fa-heart m-1 p-1 text-danger"
+                                            {% endif %}
+                                        > {{ post.post_ratings.dislikes }} </i>
+                                    </small>
+                                    <small class="text-success m-1 p-0">
+                                        {{ post.updated }} [обновлено]
+                                    </small>
+                                </div>
+                                <a class="text-decoration-none text-dark" href="{% url 'django_app:read' post.id %}">
+                                    <button class="btn btn-sm btn-outline-primary w-100 m-0 p-1" type="submit">
+                                        <i class="fa-solid fa-circle-info m-0 p-1"></i>
+                                        подробнее
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="m-0 p-1">
+                <ul class="m-0">
+                    {% for post in page %}
+                        <li class="text-start m-0 p-0 border border-1 border-dark p-1">
+                            {% if post.is_completed %}
+                                <div class="feature-icon bg-success d-flex justify-content-between">
+                            {% else %}
+                                <div class="feature-icon bg-danger d-flex justify-content-between">
+                            {% endif %}
+                                <a class="text-decoration-none text-white small w-50" href="{% url 'django_app:read' post.id %}">
+                                    <div class="d-flex">
+                                        <h6 class="lead m-1 p-1">{{ post.description|cut_string:20 }}</h6>
+                                        <small class="m-0 p-2">{{ post.description|cut_string:30 }}</small>
+                                    </div>
+                                </a>
+                                <div class="m-1 p-1">
+                                    <small class="text-white m-1 p-0">
+                                        {{ post.updated }} [обновлено]
+                                    </small>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="container d-flex justify-content-center align-self-center">
+            {% include 'components/paginator.html' %}
+        </div>
+    {% else %}
+        {% include 'components/aborted.html' %}
+    {% endif %}
+</div>
+{% endblock main %}
