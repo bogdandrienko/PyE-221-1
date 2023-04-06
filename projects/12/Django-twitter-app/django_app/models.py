@@ -118,6 +118,19 @@ class PostModel(models.Model):
             else:
                 return -1
 
+    def get_comments(self):
+        """
+        Возвращает все комментарии для поста
+        """
+        return PostCommentModel.objects.filter(post=self)
+
+    def get_comments_count(self):
+        """
+        Возвращает количество комментариев для поста
+        """
+        return PostCommentModel.objects.filter(post=self).count()
+
+
 class PostRatingModel(models.Model):
     """
     Модель Рейтинга Поста
@@ -161,3 +174,52 @@ class PostRatingModel(models.Model):
 
     def __str__(self):
         return f"{self.user}({self.id}) | {'Лайкнул' if self.is_like else 'Дизлайкнул'} | {self.post.title}"
+
+
+class PostCommentModel(models.Model):
+    """
+    Модель Комментария к Посту
+    """
+    user = models.ForeignKey(
+        editable=True,
+        blank=True,
+        null=True,
+        default=None,
+        verbose_name='Пользователь',
+        help_text='<small class="text-muted">ForeignKey</small><hr><br>',
+
+        to=User,
+        on_delete=models.SET_NULL,
+    )
+    post = models.ForeignKey(
+        editable=True,
+        blank=True,
+        null=True,
+        default=None,
+        verbose_name='Пост',
+        help_text='<small class="text-muted">ForeignKey</small><hr><br>',
+
+        to=PostModel,
+        on_delete=models.CASCADE,
+    )
+    message = models.TextField(verbose_name='Текст комментария')
+    created = models.DateTimeField(
+        editable=True,
+        blank=True,
+        null=True,
+        default=timezone.now,
+        verbose_name='Дата и время создания',
+        help_text='<small class="text-muted">DateTimeField</small><hr><br>',
+
+        auto_now=False,
+        auto_now_add=False,
+    )
+
+    class Meta:
+        app_label = 'django_app'
+        ordering = ('-created', 'post')
+        verbose_name = 'Комментарий поста'
+        verbose_name_plural = 'Комментарии постов'
+
+    def __str__(self):
+        return f"{self.user}({self.id}) | {self.created} | {self.message[0:20]}... | {self.post.title}"

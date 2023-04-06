@@ -18,6 +18,8 @@ urlpatterns = [
     path("post/<int:post_id>/rating/like/", views.rating_like, name="rating_like"),
     path("post/<int:post_id>/rating/dislike/", views.rating_dislike, name="rating_dislike"),
 
+    path("post/<int:post_id>/create_comment/", views.create_comment, name="create_comment"),
+
     path("post/list/", views.read_list, name="read_list"),
     path("post/<int:post_id>/update/", views.update, name="update"),
     path("post/<int:post_id>/delete/", views.delete, name="delete"),

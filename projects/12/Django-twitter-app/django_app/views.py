@@ -31,7 +31,7 @@ def index_json(request):
 class Home(View):
     @django_utils.logging_txt_decorator
     def get(self, request, *args, **kwargs):
-        context = {}
+        context = {"salary": 12352133053, "word": "Привет мир! Привет мир! Привет мир! Привет мир!"}
 
         return render(request, "django_app/home.html", context)
 
@@ -124,6 +124,12 @@ def read(request, post_id=None):
 
     # context = {"post": post, "dislikes": _rating_dislikes, "likes": _rating_likes, "status": _my_status}
 
+    # comments = django_models.PostCommentModel.objects.filter(post=post)
+    # context = {"post": post, "comments": comments}
+
+    # count = django_models.PostCommentModel.objects.filter(post=post).count()
+    # context = {"post": post, "count": count}
+
     context = {"post": post}
 
     return render(request, "django_app/post_detail.html", context)
@@ -173,6 +179,18 @@ def rating_dislike(request, post_id=None):
             like.save()  # todo ЕСЛИ В БАЗЕ УЖЕ СТОИТ ЛАЙК
         else:
             like.delete()  # todo ЕСЛИ В БАЗЕ УЖЕ СТОИТ ДИЗЛАЙК
+
+    return redirect(reverse("django_app:read", args=(post_id,)))
+
+
+@django_utils.logging_txt_decorator
+@django_utils.login_required_decorator
+def create_comment(request, post_id=None):
+    django_models.PostCommentModel.objects.create(
+        user=request.user,
+        post=django_models.PostModel.objects.get(id=post_id),
+        message=request.POST.get("message", ""),
+    )
 
     return redirect(reverse("django_app:read", args=(post_id,)))
 

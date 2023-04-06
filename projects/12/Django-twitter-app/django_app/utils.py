@@ -34,7 +34,6 @@ def login_required_decorator(func):
 def logging_txt_decorator(func):
     def wrapper(*args, **kwargs):
         request: HttpRequest = args[-1]
-        print(request.user)
 
         if request.user.is_anonymous:
             username = "Аноним"

@@ -161,6 +161,7 @@
                                                 class="fa-regular fa-heart m-1 p-1 text-danger"
                                             {% endif %}
                                         > {{ post.post_ratings.dislikes }} </i>
+                                        <i class="fa-solid fa-comments m-1 p-1 text-secondary"> {{ post.get_comments_count }}</i>
                                     </small>
                                     <small class="text-success m-1 p-0">
                                         {{ post.updated }} [обновлено]

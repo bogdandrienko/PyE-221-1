@@ -135,6 +135,7 @@
                                     class="fa-regular fa-heart m-1 p-1 text-danger"
                                 {% endif %}
                             > {{ post.post_ratings.dislikes }} </i>
+                            <i class="fa-solid fa-comments m-1 p-1 text-secondary"> {{ post.get_comments_count }}</i>
                         </small>
                         <small class="text-success">
                             {{ post.updated }} [обновлено]
@@ -142,6 +143,48 @@
                     </div>
                 </div>
             </div>
+
+        <hr/>
+
+                <form action="{% url 'django_app:create_comment' post.id %}"
+                          method="POST"
+                          target="_self"
+                          enctype="multipart/form-data"
+                          name="idea_create"
+                          autocomplete="on"
+                          class="text-center card p-2"
+                >
+                {% csrf_token %}
+                  <div class="input-group">
+                    <input type="text"
+                               name="message"
+                               required=""
+                               placeholder="ваше мнение о посте..."
+                               value=""
+                               minlength="1"
+                               maxlength="300"
+                               class="form-control form-control-sm w-75"
+                        />
+                    <button type="submit" class="btn btn-sm btn-secondary w-25">оставить комментарий</button>
+                  </div>
+                </form>
+
+        <hr/>
+
+        <ul class="bg-light custom-background-transparent-low m-0 p-0">
+            {% for comment in post.get_comments %}
+                <div class="col d-flex align-items-start shadow-sm m-1 p-1">
+                    <div class="bi text-muted flex-shrink-0 me-3">{{ comment.created }}</div>
+                    <div>
+                        <h4 class="mb-0 lead btn btn-outline-secondary">{{ comment.user.username }}</h4>
+                        <p class="small">{{ comment.message }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <li>Ни одного комментария нет!</li>
+            {% endfor %}
+        </ul>
+
         </div>
     </div>
 </div>

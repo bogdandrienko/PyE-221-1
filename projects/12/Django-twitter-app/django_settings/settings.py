@@ -42,6 +42,52 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 22) Профиль пользователя(аватарка, bio, расширенная модель)
 23) Система жалоб и претензий(уведомления(web-sockets/native))
 25) TemplateDoesNotExist - во время пересборки
+
+
+-Статистика по количествку комментариев в списке постов
+Статистика по количествку комментариев в детализации поста
+
++Форма для отправки комментариев
++Вывод всех комментариев в детализации поста
+Удаление своего комментария
+
+
+Живой Журнал
+
+* Главная - о чём проект, списки рейтингов, категории и поиск
+навбар(есть разделение по ролям пользователей: модераторы, модераторы контента, админы, пользователя, анонимы)
+футер(о проекта)
+
+* регистрация(nickname, email-required, password-12-16Aa#) + логин + восстановление
+
+* измение профиля (+ fio, avatar, bio) + расширенная модель пользователя
+
+* просмотр профиля (чужого), его посты, его статистика(лайки/комменты - за всё время, за месяц)
+
+* категории (список категорий статей - фильтрация всех статей по этой категории)
+
+* Список статей (+ лайки, репосты, комменты...)
+
+* Детально статья (комментарии + форма)
+
+* форум по "хабам" - нейронные сети/выращивание огурцов
+
+* api - с телеграм ботом
+
+* api - для фронтенда на PyQT6, React, Angural, Android, ios
+
+* платные статьи - интеграция с оплатой
+
+* выгрузка данных: pdf/excel
+
+* CRUD + search / filter - для книг
+
+* сервис по скачивание видео с ютюба
+
+* идеи для улучшения чего-либо(производство, выращивание)
+
+* онлайн-дневник
+
 """
 
 from pathlib import Path
@@ -182,12 +228,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = Path(BASE_DIR / 'static')  # todo ENABLE FOR COLLECT STATIC
+if not DEBUG:
+    STATIC_ROOT = Path(BASE_DIR / 'static')  # todo ENABLE FOR COLLECT STATIC
 STATICFILES_DIRS = [
-    # Path(BASE_DIR / 'static'),  # todo DISABLE FOR COLLECT STATIC
     Path(BASE_DIR / 'static_external'),
 ]
 
+if DEBUG:
+    STATICFILES_DIRS += Path(BASE_DIR / 'static'),  # todo DISABLE FOR COLLECT STATIC
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

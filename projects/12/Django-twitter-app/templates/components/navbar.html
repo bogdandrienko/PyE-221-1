@@ -5,6 +5,14 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
+    {% access_tag as auth %}
+    {% if auth %}
+        <div class="text-secondary">Вы уже вошли в систему</div>
+    {% else %}
+        <div class="text-warning">Вы ещё не вошли в систему</div>
+    {%  endif %}
+
     <ul class="navbar-nav navbar-collapse collapse" id="navbarSupportedContent">
         <li class="dropend">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
