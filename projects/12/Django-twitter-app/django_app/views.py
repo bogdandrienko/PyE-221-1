@@ -25,6 +25,14 @@ def index(request):
 
 @django_utils.logging_txt_decorator
 def index_json(request):
+    a = 5  # создаём "переменную" и даём ей ссылку на оперативную память № 1
+    b = a  # записываем во вторую переменную ССЫЛКУ на оперативную память № 1
+    с = 12  # создаём "переменную" и даём ей ссылку на оперативную память № 2
+
+    a = 12
+    print(b)
+
+
     return JsonResponse(data={"response": "This is a Index Page"}, safe=False)
 
 
